@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: "academicpages is a ready-to-fork GitHub Pages template for academic personal websites"
+title: 
 excerpt: "About me"
 author_profile: true
 redirect_from: 
@@ -8,7 +8,7 @@ redirect_from:
   - /about.html
 ---
 
-Hi everyone! I am Rajarshi Maiti, a third-year BSc Maths student at Queen's University Belfast. I am primarily interested in analytic number theory but I am interested in learning more about other fields of mathematics.
+Hello everyone! I am Rajarshi Maiti, a third-year BSc Maths student at Queen's University Belfast. I am primarily interested in analytic number theory but I am interested in learning more about other fields of mathematics.
 
 Education
 ======
@@ -17,7 +17,7 @@ Education
 Research Experience
 ======
 1. Research Project on the irrationality of zeta values with Dr. Tiago J. Fonseca (Postdoc at Oxford) (Summer-2021)
-2. Research Project on the gaps between sums of two squares with Dr. Thomas Bloom (Royal Society Research Fellow at Oxford) (expected Summer 2022)
+2. Research Project on the gaps between sums of two squares with Dr. Thomas Bloom (Royal Society Research Fellow at Oxford) (Expected Summer 2022)
 
 Talks/Posters
 ------
