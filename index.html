@@ -22,6 +22,7 @@
   <!-- Tailwind Config -->
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           colors: {
@@ -73,6 +74,34 @@
       font-family: 'Inter', system-ui, sans-serif;
     }
     
+    /* Dark mode variables */
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #F9FFF9;
+      --bg-tertiary: #ffffff;
+      --text-primary: #111827;
+      --text-secondary: #4B5563;
+      --text-muted: #6B7280;
+      --border-color: #e5e7eb;
+      --nav-bg: rgba(255, 255, 255, 0.95);
+    }
+    
+    .dark {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-tertiary: #0f172a;
+      --text-primary: #f1f5f9;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --border-color: #334155;
+      --nav-bg: rgba(15, 23, 42, 0.95);
+    }
+    
+    .dark body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+    }
+    
     .section-title {
       font-variant: small-caps;
       letter-spacing: 0.15em;
@@ -80,6 +109,10 @@
       position: relative;
       display: inline-block;
       padding-bottom: 0.5rem;
+    }
+    
+    .dark .section-title {
+      color: #D8F3DC;
     }
     
     .section-title::after {
@@ -90,6 +123,10 @@
       width: 100%;
       height: 2px;
       background: linear-gradient(90deg, #D8F3DC 0%, #1A4731 100%);
+    }
+    
+    .dark .section-title::after {
+      background: linear-gradient(90deg, #1A4731 0%, #D8F3DC 100%);
     }
     
     .card-accent {
@@ -108,9 +145,13 @@
     }
     
     .nav-scrolled {
-      background-color: rgba(255, 255, 255, 0.95);
+      background-color: var(--nav-bg);
       backdrop-filter: blur(10px);
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+    
+    .dark .nav-scrolled {
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     }
     
     /* Staggered animation delays */
@@ -143,6 +184,10 @@
       box-shadow: 0 20px 40px -15px rgba(26, 71, 49, 0.15);
     }
     
+    .dark .research-card:hover {
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.4);
+    }
+    
     /* Link hover underline animation */
     .link-animated {
       position: relative;
@@ -159,11 +204,15 @@
       transition: width 0.3s ease;
     }
     
+    .dark .link-animated::after {
+      background-color: #D8F3DC;
+    }
+    
     .link-animated:hover::after {
       width: 100%;
     }
     
-    /* Photo placeholder floating animation */
+    /* Photo floating animation */
     .photo-float {
       animation: float 6s ease-in-out infinite;
     }
@@ -198,83 +247,126 @@
       transform: translateY(-2px);
       background-color: #D8F3DC;
     }
+    
+    .dark .btn-secondary:hover {
+      background-color: #1A4731;
+      color: #f1f5f9;
+    }
+    
+    /* Dark mode toggle button */
+    .dark-toggle {
+      transition: all 0.3s ease;
+    }
+    
+    .dark-toggle:hover {
+      transform: scale(1.1);
+    }
+    
+    /* Theme transition */
+    * {
+      transition-property: background-color, border-color;
+      transition-duration: 0.3s;
+      transition-timing-function: ease;
+    }
   </style>
 </head>
-<body class="bg-white text-gray-800 antialiased">
+<body class="antialiased">
   
   <!-- NAVBAR -->
-  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b border-gray-200">
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b border-gray-200 dark:border-gray-700">
     <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
       <!-- Logo -->
-      <a href="#" class="text-bmuco-dark font-medium text-sm tracking-wide opacity-0 animate-fade-in" style="font-variant: small-caps; letter-spacing: 0.1em;">
+      <a href="#" class="text-bmuco-dark dark:text-bmuco-light font-medium text-sm tracking-wide opacity-0 animate-fade-in" style="font-variant: small-caps; letter-spacing: 0.1em;">
         Rajarshi Maiti
       </a>
       
       <!-- Desktop Nav Links -->
       <div class="hidden md:flex items-center gap-8 opacity-0 animate-fade-in stagger-2">
-        <a href="#about" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors link-animated">About</a>
-        <span class="text-gray-300">·</span>
-        <a href="#research" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors link-animated">Research</a>
-        <span class="text-gray-300">·</span>
-        <a href="#bmuco" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors link-animated">BMUCO</a>
-        <span class="text-gray-300">·</span>
-        <a href="#achievements" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors link-animated">Achievements</a>
-        <span class="text-gray-300">·</span>
-        <a href="#climate" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors link-animated">Climate</a>
-        <span class="text-gray-300">·</span>
-        <a href="#notes" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors link-animated">Notes</a>
-        <span class="text-gray-300">·</span>
-        <a href="#contact" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors link-animated">Contact</a>
+        <a href="#about" class="text-sm text-gray-600 dark:text-gray-300 hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors link-animated">About</a>
+        <span class="text-gray-300 dark:text-gray-600">·</span>
+        <a href="#research" class="text-sm text-gray-600 dark:text-gray-300 hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors link-animated">Research</a>
+        <span class="text-gray-300 dark:text-gray-600">·</span>
+        <a href="#bmuco" class="text-sm text-gray-600 dark:text-gray-300 hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors link-animated">BMUCO</a>
+        <span class="text-gray-300 dark:text-gray-600">·</span>
+        <a href="#achievements" class="text-sm text-gray-600 dark:text-gray-300 hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors link-animated">Achievements</a>
+        <span class="text-gray-300 dark:text-gray-600">·</span>
+        <a href="#climate" class="text-sm text-gray-600 dark:text-gray-300 hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors link-animated">Climate</a>
+        <span class="text-gray-300 dark:text-gray-600">·</span>
+        <a href="#notes" class="text-sm text-gray-600 dark:text-gray-300 hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors link-animated">Notes</a>
+        <span class="text-gray-300 dark:text-gray-600">·</span>
+        <a href="#contact" class="text-sm text-gray-600 dark:text-gray-300 hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors link-animated">Contact</a>
+        
+        <!-- Dark Mode Toggle -->
+        <button id="dark-mode-toggle" class="dark-toggle ml-4 p-2 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" aria-label="Toggle dark mode">
+          <!-- Sun icon -->
+          <svg id="sun-icon" class="w-5 h-5 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <!-- Moon icon -->
+          <svg id="moon-icon" class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        </button>
       </div>
       
       <!-- Mobile Menu Button -->
-      <button id="mobile-menu-btn" class="md:hidden p-2 text-gray-600 hover:text-bmuco-dark">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="3" y1="12" x2="21" y2="12"></line>
-          <line x1="3" y1="6" x2="21" y2="6"></line>
-          <line x1="3" y1="18" x2="21" y2="18"></line>
-        </svg>
-      </button>
+      <div class="flex items-center gap-2 md:hidden">
+        <button id="dark-mode-toggle-mobile" class="dark-toggle p-2 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" aria-label="Toggle dark mode">
+          <svg id="sun-icon-mobile" class="w-5 h-5 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <svg id="moon-icon-mobile" class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        </button>
+        <button id="mobile-menu-btn" class="p-2 text-gray-600 dark:text-gray-300 hover:text-bmuco-dark dark:hover:text-bmuco-light">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
     </div>
     
     <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-gray-200">
+    <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
       <div class="px-6 py-4 flex flex-col gap-4">
-        <a href="#about" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors">About</a>
-        <a href="#research" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors">Research</a>
-        <a href="#bmuco" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors">BMUCO</a>
-        <a href="#achievements" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors">Achievements</a>
-        <a href="#climate" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors">Climate</a>
-        <a href="#notes" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors">Notes</a>
-        <a href="#contact" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors">Contact</a>
+        <a href="#about" class="text-sm text-gray-600 dark:text-gray-300 hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors">About</a>
+        <a href="#research" class="text-sm text-gray-600 dark:text-gray-300 hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors">Research</a>
+        <a href="#bmuco" class="text-sm text-gray-600 dark:text-gray-300 hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors">BMUCO</a>
+        <a href="#achievements" class="text-sm text-gray-600 dark:text-gray-300 hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors">Achievements</a>
+        <a href="#climate" class="text-sm text-gray-600 dark:text-gray-300 hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors">Climate</a>
+        <a href="#notes" class="text-sm text-gray-600 dark:text-gray-300 hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors">Notes</a>
+        <a href="#contact" class="text-sm text-gray-600 dark:text-gray-300 hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors">Contact</a>
       </div>
     </div>
   </nav>
 
   <!-- HERO SECTION -->
-  <section id="about" class="min-h-screen flex items-center pt-20">
+  <section id="about" class="min-h-screen flex items-center pt-20" style="background-color: var(--bg-primary);">
     <div class="max-w-6xl mx-auto px-6 py-20 w-full">
       <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
         
         <!-- Left: Content -->
         <div class="flex-1 lg:w-3/5">
           <!-- Label -->
-          <p class="text-xs tracking-widest text-gray-400 mb-6 opacity-0 animate-fade-in-up" style="font-variant: small-caps;">
+          <p class="text-xs tracking-widest text-gray-400 dark:text-gray-500 mb-6 opacity-0 animate-fade-in-up" style="font-variant: small-caps;">
             Mathematics · Bonn · 2026
           </p>
           
           <!-- Name -->
-          <h1 class="text-4xl md:text-5xl font-normal text-gray-900 mb-4 opacity-0 animate-fade-in-up stagger-1">
+          <h1 class="text-4xl md:text-5xl font-normal mb-4 opacity-0 animate-fade-in-up stagger-1" style="color: var(--text-primary);">
             Rajarshi Maiti
           </h1>
           
           <!-- Subtitle -->
-          <p class="text-gray-500 mb-8 opacity-0 animate-fade-in-up stagger-2">
+          <p class="mb-8 opacity-0 animate-fade-in-up stagger-2" style="color: var(--text-muted);">
             Graduate Student in Mathematics, University of Bonn
           </p>
           
           <!-- Bio -->
-          <p class="text-gray-700 leading-[1.8] max-w-[560px] mb-8 text-[15px] opacity-0 animate-fade-in-up stagger-3">
+          <p class="leading-[1.8] max-w-[560px] mb-8 text-[15px] opacity-0 animate-fade-in-up stagger-3" style="color: var(--text-secondary);">
             I'm a mathematics graduate student at the University of Bonn, where I'm specialising in number theory. Since 2019 I've been co-building BMUCO alongside other like-minded university students — we've run programs including in research, outreach and education reaching 20k people worldwide, co-hosted the Abel Symposium 2025, and interviewed Fields Medalists and Nobel Laureates. Right now I'm focused on the formalisation of graduate mathematics in Lean 4 and its implications for AI. Outside mathematics I work on climate policy and quantitative finance.
           </p>
           
@@ -283,7 +375,7 @@
             <a href="cv.pdf" target="_blank" class="btn-primary inline-flex items-center px-6 py-3 bg-bmuco-dark text-white text-sm font-medium rounded-md">
               View CV
             </a>
-            <a href="#contact" class="btn-secondary inline-flex items-center px-6 py-3 border border-bmuco-dark text-bmuco-dark text-sm font-medium rounded-md">
+            <a href="#contact" class="btn-secondary inline-flex items-center px-6 py-3 border border-bmuco-dark dark:border-bmuco-light text-bmuco-dark dark:text-bmuco-light text-sm font-medium rounded-md">
               Get in Touch
             </a>
           </div>
@@ -291,7 +383,7 @@
         
         <!-- Right: Photo -->
         <div class="lg:w-2/5 flex flex-col items-center opacity-0 animate-fade-in stagger-5">
-          <div class="photo-float w-48 h-48 md:w-56 md:h-56 rounded-full border-4 border-bmuco-dark overflow-hidden shadow-xl">
+          <div class="photo-float w-48 h-48 md:w-56 md:h-56 rounded-full border-4 border-bmuco-dark dark:border-bmuco-light overflow-hidden shadow-xl">
             <img src="photo.png" alt="Rajarshi Maiti" class="w-full h-full object-cover">
           </div>
         </div>
@@ -300,13 +392,13 @@
   </section>
 
   <!-- RESEARCH INTERESTS -->
-  <section id="research" class="py-24 bg-bmuco-pale">
+  <section id="research" class="py-24" style="background-color: var(--bg-secondary);">
     <div class="max-w-6xl mx-auto px-6">
       <!-- Section Title -->
       <h2 class="section-title text-2xl mb-4 reveal">Research</h2>
       
       <!-- Intro -->
-      <p class="text-gray-600 max-w-2xl mb-12 leading-relaxed reveal">
+      <p class="max-w-2xl mb-12 leading-relaxed reveal" style="color: var(--text-secondary);">
         My mathematical interests sit at the intersection of number theory, formal verification, and the emerging field of AI for mathematics.
       </p>
       
@@ -314,17 +406,17 @@
       <div class="grid md:grid-cols-2 gap-8 max-w-4xl">
         
         <!-- Card 1 -->
-        <div class="research-card bg-white rounded-lg border border-bmuco-light card-accent p-8 reveal">
-          <h3 class="text-lg font-medium text-bmuco-dark mb-4">Number Theory</h3>
-          <p class="text-sm text-gray-600 leading-relaxed">
+        <div class="research-card rounded-lg border card-accent p-8 reveal" style="background-color: var(--bg-tertiary); border-color: var(--border-color);">
+          <h3 class="text-lg font-medium text-bmuco-dark dark:text-bmuco-light mb-4">Number Theory</h3>
+          <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">
             Sums of two squares, gaps between arithmetic sequences, L-functions and zeta functions. Summer research at Oxford (2021, 2022) supervised by Dr Thomas Bloom (Royal Society Research Fellow) and Dr Tiago Jardim da Fonseca. Graduate coursework at Bonn includes the Smooth Circle Method (Heath-Brown).
           </p>
         </div>
         
         <!-- Card 2 -->
-        <div class="research-card bg-white rounded-lg border border-bmuco-light card-accent p-8 reveal">
-          <h3 class="text-lg font-medium text-bmuco-dark mb-4">Formal Verification & AI for Mathematics</h3>
-          <p class="text-sm text-gray-600 leading-relaxed">
+        <div class="research-card rounded-lg border card-accent p-8 reveal" style="background-color: var(--bg-tertiary); border-color: var(--border-color);">
+          <h3 class="text-lg font-medium text-bmuco-dark dark:text-bmuco-light mb-4">Formal Verification & AI for Mathematics</h3>
+          <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">
             Interested in formalism in mathematics, and the use of AI/ML in mathematics.
           </p>
         </div>
@@ -334,12 +426,12 @@
   </section>
 
   <!-- BMUCO SECTION -->
-  <section id="bmuco" class="py-24 bg-white">
+  <section id="bmuco" class="py-24" style="background-color: var(--bg-primary);">
     <div class="max-w-6xl mx-auto px-6">
       <!-- Section Title -->
       <div class="flex items-baseline gap-3 mb-8 reveal">
         <h2 class="section-title text-2xl">BMUCO</h2>
-        <a href="https://bmuco.org" target="_blank" rel="noopener" class="text-sm text-bmuco-muted hover:text-bmuco-dark transition-colors">
+        <a href="https://bmuco.org" target="_blank" rel="noopener" class="text-sm text-bmuco-muted hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors">
           bmuco.org →
         </a>
       </div>
@@ -349,36 +441,36 @@
         
         <!-- Left Column -->
         <div class="reveal">
-          <h3 class="text-xl font-medium text-gray-900 mb-4">
+          <h3 class="text-xl font-medium mb-4" style="color: var(--text-primary);">
             Building the ecosystem for the future of sciences
           </h3>
-          <p class="text-gray-600 leading-relaxed mb-6">
+          <p class="leading-relaxed mb-6" style="color: var(--text-secondary);">
             Since 2019, I've co-built BMUCO alongside like-minded university students into a global science organisation. We run research mentorships, winter schools, and talks — and have built partnerships with leading institutions across Europe.
           </p>
           
           <!-- Achievements List -->
           <ul class="space-y-3">
             <li class="achievement-item flex items-start gap-3">
-              <span class="w-1.5 h-1.5 rounded-full bg-bmuco-dark mt-2 shrink-0"></span>
-              <span class="text-sm text-gray-600">Co-hosted Abel Symposium 2025 with Norwegian Academy of Science and Letters and Hausdorff Center for Mathematics</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-bmuco-dark dark:bg-bmuco-light mt-2 shrink-0"></span>
+              <span class="text-sm" style="color: var(--text-secondary);">Co-hosted Abel Symposium 2025 with Norwegian Academy of Science and Letters and Hausdorff Center for Mathematics</span>
             </li>
             <li class="achievement-item flex items-start gap-3">
-              <span class="w-1.5 h-1.5 rounded-full bg-bmuco-dark mt-2 shrink-0"></span>
-              <span class="text-sm text-gray-600">Public interviews with Fields Medalists and Nobel Laureates</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-bmuco-dark dark:bg-bmuco-light mt-2 shrink-0"></span>
+              <span class="text-sm" style="color: var(--text-secondary);">Public interviews with Fields Medalists and Nobel Laureates</span>
             </li>
             <li class="achievement-item flex items-start gap-3">
-              <span class="w-1.5 h-1.5 rounded-full bg-bmuco-dark mt-2 shrink-0"></span>
-              <span class="text-sm text-gray-600">Programs cumulatively reaching 20k+ in total</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-bmuco-dark dark:bg-bmuco-light mt-2 shrink-0"></span>
+              <span class="text-sm" style="color: var(--text-secondary);">Programs cumulatively reaching 20k+ in total</span>
             </li>
           </ul>
         </div>
         
         <!-- Right Column -->
-        <div class="bg-bmuco-pale rounded-lg p-8 reveal">
-          <h3 class="text-lg font-medium text-bmuco-dark mb-4">
+        <div class="rounded-lg p-8 reveal" style="background-color: var(--bg-secondary);">
+          <h3 class="text-lg font-medium text-bmuco-dark dark:text-bmuco-light mb-4">
             Current focus: Lean Formalisation Initiative
           </h3>
-          <p class="text-gray-600 leading-relaxed mb-6">
+          <p class="leading-relaxed mb-6" style="color: var(--text-secondary);">
             BMUCO is building the first structured student pipeline for expert-verified, graduate-level formal mathematics datasets in Lean 4 — feeding the next generation of AI reasoning models. We run a Directed Reading Programme (DRP) followed by intensive workshops at Bonn, producing human-verified proof corpora.
           </p>
           <a href="https://bmuco.org" target="_blank" rel="noopener" class="btn-primary inline-flex items-center px-5 py-2.5 bg-bmuco-dark text-white text-sm font-medium rounded-md">
@@ -391,7 +483,7 @@
   </section>
 
   <!-- ACHIEVEMENTS SECTION -->
-  <section id="achievements" class="py-24 bg-bmuco-pale">
+  <section id="achievements" class="py-24" style="background-color: var(--bg-secondary);">
     <div class="max-w-6xl mx-auto px-6">
       <!-- Section Title -->
       <h2 class="section-title text-2xl mb-8 reveal">Achievements</h2>
@@ -399,40 +491,53 @@
       <div class="grid md:grid-cols-3 gap-6">
         
         <!-- Achievement 1 -->
-        <div class="achievement-card bg-white rounded-lg border border-bmuco-light p-6 reveal transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-          <div class="w-10 h-10 rounded-full bg-bmuco-light flex items-center justify-center mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A4731" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <div class="achievement-card rounded-lg border p-6 reveal transition-all duration-300 hover:-translate-y-1 hover:shadow-lg" style="background-color: var(--bg-tertiary); border-color: var(--border-color);">
+          <div class="w-10 h-10 rounded-full bg-bmuco-light dark:bg-bmuco-dark flex items-center justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A4731" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dark:hidden">
+              <circle cx="12" cy="8" r="6"></circle>
+              <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D8F3DC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden dark:block">
               <circle cx="12" cy="8" r="6"></circle>
               <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path>
             </svg>
           </div>
-          <h3 class="text-sm font-medium text-bmuco-dark mb-2">DAAD STIBET Scholar</h3>
-          <p class="text-sm text-gray-600">Competitive merit scholarship, University of Bonn</p>
+          <h3 class="text-sm font-medium text-bmuco-dark dark:text-bmuco-light mb-2">DAAD STIBET Scholar</h3>
+          <p class="text-sm" style="color: var(--text-secondary);">Competitive merit scholarship, University of Bonn</p>
         </div>
         
         <!-- Achievement 2 -->
-        <div class="achievement-card bg-white rounded-lg border border-bmuco-light p-6 reveal transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-          <div class="w-10 h-10 rounded-full bg-bmuco-light flex items-center justify-center mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A4731" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <div class="achievement-card rounded-lg border p-6 reveal transition-all duration-300 hover:-translate-y-1 hover:shadow-lg" style="background-color: var(--bg-tertiary); border-color: var(--border-color);">
+          <div class="w-10 h-10 rounded-full bg-bmuco-light dark:bg-bmuco-dark flex items-center justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A4731" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dark:hidden">
+              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D8F3DC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden dark:block">
               <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
               <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
             </svg>
           </div>
-          <h3 class="text-sm font-medium text-bmuco-dark mb-2">AI×Mathematics Conference</h3>
-          <p class="text-sm text-gray-600">Full funding for ICMS Edinburgh, 2026</p>
+          <h3 class="text-sm font-medium text-bmuco-dark dark:text-bmuco-light mb-2">AI×Mathematics Conference</h3>
+          <p class="text-sm" style="color: var(--text-secondary);">Full funding for ICMS Edinburgh, 2026</p>
         </div>
         
         <!-- Achievement 3 -->
-        <div class="achievement-card bg-white rounded-lg border border-bmuco-light p-6 reveal transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-          <div class="w-10 h-10 rounded-full bg-bmuco-light flex items-center justify-center mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A4731" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <div class="achievement-card rounded-lg border p-6 reveal transition-all duration-300 hover:-translate-y-1 hover:shadow-lg" style="background-color: var(--bg-tertiary); border-color: var(--border-color);">
+          <div class="w-10 h-10 rounded-full bg-bmuco-light dark:bg-bmuco-dark flex items-center justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A4731" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dark:hidden">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+              <path d="M2 17l10 5 10-5"></path>
+              <path d="M2 12l10 5 10-5"></path>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D8F3DC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden dark:block">
               <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
               <path d="M2 17l10 5 10-5"></path>
               <path d="M2 12l10 5 10-5"></path>
             </svg>
           </div>
-          <h3 class="text-sm font-medium text-bmuco-dark mb-2">Isaac Newton Institute</h3>
-          <p class="text-sm text-gray-600">Full funding for conference participation</p>
+          <h3 class="text-sm font-medium text-bmuco-dark dark:text-bmuco-light mb-2">Isaac Newton Institute</h3>
+          <p class="text-sm" style="color: var(--text-secondary);">Full funding for conference participation</p>
         </div>
         
       </div>
@@ -440,13 +545,13 @@
   </section>
 
   <!-- CLIMATE SECTION -->
-  <section id="climate" class="py-24 bg-white">
+  <section id="climate" class="py-24" style="background-color: var(--bg-primary);">
     <div class="max-w-3xl mx-auto px-6 text-center">
       <!-- Section Title -->
       <h2 class="section-title text-2xl mb-6 reveal">Climate</h2>
       
       <!-- Intro -->
-      <p class="text-gray-600 leading-relaxed mb-12 reveal">
+      <p class="leading-relaxed mb-12 reveal" style="color: var(--text-secondary);">
         I engage with climate policy through the ACE Youth Hub programme, attending UNFCCC sessions as a youth delegate.
       </p>
       
@@ -454,17 +559,17 @@
       <div class="grid sm:grid-cols-2 gap-6 max-w-xl mx-auto">
         
         <!-- Event 1 -->
-        <div class="bg-bmuco-pale rounded-lg border border-bmuco-light p-6 text-left reveal transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-          <p class="text-3xl font-light text-bmuco-muted mb-2">2024</p>
-          <p class="text-sm text-gray-500 mb-1">UNFCCC SB60, Bonn</p>
-          <p class="text-gray-700">Youth delegate, ACE Youth Hub</p>
+        <div class="rounded-lg border p-6 text-left reveal transition-all duration-300 hover:-translate-y-1 hover:shadow-lg" style="background-color: var(--bg-secondary); border-color: var(--border-color);">
+          <p class="text-3xl font-light text-bmuco-muted dark:text-bmuco-light mb-2">2024</p>
+          <p class="text-sm mb-1" style="color: var(--text-muted);">UNFCCC SB60, Bonn</p>
+          <p style="color: var(--text-primary);">Youth delegate, ACE Youth Hub</p>
         </div>
         
         <!-- Event 2 -->
-        <div class="bg-bmuco-pale rounded-lg border border-bmuco-light p-6 text-left reveal transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-          <p class="text-3xl font-light text-bmuco-muted mb-2">2025</p>
-          <p class="text-sm text-gray-500 mb-1">UNFCCC SB62, Bonn</p>
-          <p class="text-gray-700">Youth delegate, ACE Youth Hub</p>
+        <div class="rounded-lg border p-6 text-left reveal transition-all duration-300 hover:-translate-y-1 hover:shadow-lg" style="background-color: var(--bg-secondary); border-color: var(--border-color);">
+          <p class="text-3xl font-light text-bmuco-muted dark:text-bmuco-light mb-2">2025</p>
+          <p class="text-sm mb-1" style="color: var(--text-muted);">UNFCCC SB62, Bonn</p>
+          <p style="color: var(--text-primary);">Youth delegate, ACE Youth Hub</p>
         </div>
         
       </div>
@@ -472,32 +577,32 @@
   </section>
 
   <!-- NOTES SECTION -->
-  <section id="notes" class="py-24 bg-bmuco-pale">
+  <section id="notes" class="py-24" style="background-color: var(--bg-secondary);">
     <div class="max-w-3xl mx-auto px-6 text-center">
       <!-- Section Title -->
       <h2 class="section-title text-2xl mb-6 reveal">Notes</h2>
       
       <!-- Intro -->
-      <p class="text-gray-600 leading-relaxed mb-10 reveal">
+      <p class="leading-relaxed mb-10 reveal" style="color: var(--text-secondary);">
         Mathematical notes, expository writing, and occasional thoughts on formalisation and AI. Coming soon.
       </p>
       
       <!-- Placeholder Card -->
-      <div class="max-w-md mx-auto border-2 border-dashed border-gray-300 rounded-lg p-8 reveal hover:border-bmuco-light transition-colors duration-300">
-        <h3 class="text-lg font-medium text-gray-700 mb-2">Notes coming soon</h3>
-        <p class="text-sm text-gray-500">Check back later</p>
+      <div class="max-w-md mx-auto border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-8 reveal hover:border-bmuco-light dark:hover:border-bmuco-dark transition-colors duration-300">
+        <h3 class="text-lg font-medium mb-2" style="color: var(--text-primary);">Notes coming soon</h3>
+        <p class="text-sm" style="color: var(--text-muted);">Check back later</p>
       </div>
     </div>
   </section>
 
   <!-- CONTACT SECTION -->
-  <section id="contact" class="py-24 bg-white">
+  <section id="contact" class="py-24" style="background-color: var(--bg-primary);">
     <div class="max-w-lg mx-auto px-6 text-center">
       <!-- Section Title -->
       <h2 class="section-title text-2xl mb-6 reveal">Contact</h2>
       
       <!-- Intro -->
-      <p class="text-gray-600 leading-relaxed mb-10 reveal">
+      <p class="leading-relaxed mb-10 reveal" style="color: var(--text-secondary);">
         I'm always happy to hear from mathematicians, students, and anyone working on formalisation, AI for mathematics, or related areas.
       </p>
       
@@ -505,8 +610,8 @@
       <div class="space-y-4 mb-10 text-left max-w-xs mx-auto reveal">
         
         <!-- Email -->
-        <a href="mailto:rmaiti7@gmail.com" class="flex items-center gap-3 text-gray-600 hover:text-bmuco-dark transition-colors group">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-bmuco-muted group-hover:text-bmuco-dark transition-colors">
+        <a href="mailto:rmaiti7@gmail.com" class="flex items-center gap-3 transition-colors group" style="color: var(--text-secondary);" onmouseover="this.style.color='#1A4731'" onmouseout="this.style.color='var(--text-secondary)'">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-bmuco-muted dark:text-bmuco-light">
             <rect x="2" y="4" width="20" height="16" rx="2"></rect>
             <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
           </svg>
@@ -514,8 +619,8 @@
         </a>
         
         <!-- GitHub -->
-        <a href="https://github.com/rmaiti01" target="_blank" rel="noopener" class="flex items-center gap-3 text-gray-600 hover:text-bmuco-dark transition-colors group">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-bmuco-muted group-hover:text-bmuco-dark transition-colors">
+        <a href="https://github.com/rmaiti01" target="_blank" rel="noopener" class="flex items-center gap-3 transition-colors group" style="color: var(--text-secondary);" onmouseover="this.style.color='#1A4731'" onmouseout="this.style.color='var(--text-secondary)'">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-bmuco-muted dark:text-bmuco-light">
             <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
             <path d="M9 18c-4.51 2-5-2-7-2"></path>
           </svg>
@@ -523,8 +628,8 @@
         </a>
         
         <!-- LinkedIn -->
-        <a href="https://linkedin.com/in/1729" target="_blank" rel="noopener" class="flex items-center gap-3 text-gray-600 hover:text-bmuco-dark transition-colors group">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-bmuco-muted group-hover:text-bmuco-dark transition-colors">
+        <a href="https://linkedin.com/in/1729" target="_blank" rel="noopener" class="flex items-center gap-3 transition-colors group" style="color: var(--text-secondary);" onmouseover="this.style.color='#1A4731'" onmouseout="this.style.color='var(--text-secondary)'">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-bmuco-muted dark:text-bmuco-light">
             <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
             <rect x="2" y="9" width="4" height="12"></rect>
             <circle cx="4" cy="4" r="2"></circle>
@@ -544,23 +649,74 @@
   </section>
 
   <!-- FOOTER -->
-  <footer class="py-8 bg-bmuco-pale border-t border-gray-200">
+  <footer class="py-8 border-t border-gray-200 dark:border-gray-700" style="background-color: var(--bg-secondary);">
     <div class="max-w-6xl mx-auto px-6 text-center">
-      <p class="text-sm text-gray-400">
+      <p class="text-sm" style="color: var(--text-muted);">
         © 2026 Rajarshi Maiti · Bonn, Germany
       </p>
-      <div class="mt-3 flex items-center justify-center gap-4 text-xs text-gray-400">
-        <a href="cv.pdf" target="_blank" class="hover:text-bmuco-dark transition-colors link-animated">CV</a>
+      <div class="mt-3 flex items-center justify-center gap-4 text-xs" style="color: var(--text-muted);">
+        <a href="cv.pdf" target="_blank" class="hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors link-animated">CV</a>
         <span>·</span>
-        <a href="https://bmuco.org" target="_blank" rel="noopener" class="hover:text-bmuco-dark transition-colors link-animated">BMUCO</a>
+        <a href="https://bmuco.org" target="_blank" rel="noopener" class="hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors link-animated">BMUCO</a>
         <span>·</span>
-        <a href="https://github.com/rmaiti01" target="_blank" rel="noopener" class="hover:text-bmuco-dark transition-colors link-animated">GitHub</a>
+        <a href="https://github.com/rmaiti01" target="_blank" rel="noopener" class="hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors link-animated">GitHub</a>
       </div>
     </div>
   </footer>
 
   <!-- JAVASCRIPT -->
   <script>
+    // Dark Mode Toggle
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    const darkModeToggleMobile = document.getElementById('dark-mode-toggle-mobile');
+    const sunIcon = document.getElementById('sun-icon');
+    const moonIcon = document.getElementById('moon-icon');
+    const sunIconMobile = document.getElementById('sun-icon-mobile');
+    const moonIconMobile = document.getElementById('moon-icon-mobile');
+    const html = document.documentElement;
+    
+    // Check for saved preference or system preference
+    function getInitialTheme() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        return savedTheme;
+      }
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    
+    // Apply theme
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        html.classList.add('dark');
+        sunIcon.classList.remove('hidden');
+        moonIcon.classList.add('hidden');
+        sunIconMobile.classList.remove('hidden');
+        moonIconMobile.classList.add('hidden');
+      } else {
+        html.classList.remove('dark');
+        sunIcon.classList.add('hidden');
+        moonIcon.classList.remove('hidden');
+        sunIconMobile.classList.add('hidden');
+        moonIconMobile.classList.remove('hidden');
+      }
+    }
+    
+    // Initialize theme
+    const currentTheme = getInitialTheme();
+    applyTheme(currentTheme);
+    
+    // Toggle function
+    function toggleTheme() {
+      const isDark = html.classList.contains('dark');
+      const newTheme = isDark ? 'light' : 'dark';
+      applyTheme(newTheme);
+      localStorage.setItem('theme', newTheme);
+    }
+    
+    // Event listeners
+    darkModeToggle.addEventListener('click', toggleTheme);
+    darkModeToggleMobile.addEventListener('click', toggleTheme);
+    
     // Navbar scroll effect
     const navbar = document.getElementById('navbar');
     
