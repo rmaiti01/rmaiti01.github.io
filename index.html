@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rajarshi Maiti — Mathematics</title>
-  <meta name="description" content="Mathematics graduate student at University of Bonn. Co-founder of BMUCO. Working on analytic number theory, Lean formalisation, and AI for mathematics.">
+  <meta name="description" content="Mathematics graduate student at University of Bonn. Co-founder of BMUCO. Working on number theory, Lean formalisation, and AI for mathematics.">
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,6 +33,35 @@
           fontFamily: {
             'sans': ['Inter', 'system-ui', 'sans-serif'],
           },
+          animation: {
+            'fade-in-up': 'fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards',
+            'fade-in': 'fadeIn 1s ease-out forwards',
+            'slide-in-left': 'slideInLeft 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards',
+            'float': 'float 6s ease-in-out infinite',
+            'pulse-slow': 'pulseSlow 4s ease-in-out infinite',
+          },
+          keyframes: {
+            fadeInUp: {
+              '0%': { opacity: '0', transform: 'translateY(30px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            slideInLeft: {
+              '0%': { opacity: '0', transform: 'translateX(-30px)' },
+              '100%': { opacity: '1', transform: 'translateX(0)' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            pulseSlow: {
+              '0%, 100%': { opacity: '0.4' },
+              '50%': { opacity: '0.8' },
+            },
+          },
         }
       }
     }
@@ -60,7 +89,7 @@
       left: 0;
       width: 100%;
       height: 2px;
-      background-color: #D8F3DC;
+      background: linear-gradient(90deg, #D8F3DC 0%, #1A4731 100%);
     }
     
     .card-accent {
@@ -74,51 +103,128 @@
       left: 0;
       right: 0;
       height: 4px;
-      background-color: #1A4731;
+      background: linear-gradient(90deg, #1A4731 0%, #2D6A4F 100%);
       border-radius: 8px 8px 0 0;
     }
     
     .nav-scrolled {
       background-color: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     }
     
-    /* Smooth reveal animation */
+    /* Staggered animation delays */
+    .stagger-1 { animation-delay: 0.1s; }
+    .stagger-2 { animation-delay: 0.2s; }
+    .stagger-3 { animation-delay: 0.3s; }
+    .stagger-4 { animation-delay: 0.4s; }
+    .stagger-5 { animation-delay: 0.5s; }
+    
+    /* Scroll reveal */
     .reveal {
       opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), 
+                  transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
     }
     
     .reveal.visible {
       opacity: 1;
       transform: translateY(0);
     }
+    
+    /* Card hover effect */
+    .research-card {
+      transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    
+    .research-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px -15px rgba(26, 71, 49, 0.15);
+    }
+    
+    /* Link hover underline animation */
+    .link-animated {
+      position: relative;
+    }
+    
+    .link-animated::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background-color: #1A4731;
+      transition: width 0.3s ease;
+    }
+    
+    .link-animated:hover::after {
+      width: 100%;
+    }
+    
+    /* Photo placeholder floating animation */
+    .photo-float {
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    /* Achievement item animation */
+    .achievement-item {
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    
+    .achievement-item.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    
+    /* Button hover effects */
+    .btn-primary {
+      transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px -10px rgba(26, 71, 49, 0.4);
+    }
+    
+    .btn-secondary {
+      transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      background-color: #D8F3DC;
+    }
   </style>
 </head>
 <body class="bg-white text-gray-800 antialiased">
   
   <!-- NAVBAR -->
-  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-gray-200">
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b border-gray-200">
     <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
       <!-- Logo -->
-      <a href="#" class="text-bmuco-dark font-medium text-sm tracking-wide" style="font-variant: small-caps; letter-spacing: 0.1em;">
+      <a href="#" class="text-bmuco-dark font-medium text-sm tracking-wide opacity-0 animate-fade-in" style="font-variant: small-caps; letter-spacing: 0.1em;">
         Rajarshi Maiti
       </a>
       
       <!-- Desktop Nav Links -->
-      <div class="hidden md:flex items-center gap-8">
-        <a href="#about" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors">About</a>
+      <div class="hidden md:flex items-center gap-8 opacity-0 animate-fade-in stagger-2">
+        <a href="#about" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors link-animated">About</a>
         <span class="text-gray-300">·</span>
-        <a href="#research" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors">Research</a>
+        <a href="#research" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors link-animated">Research</a>
         <span class="text-gray-300">·</span>
-        <a href="#bmuco" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors">BMUCO</a>
+        <a href="#bmuco" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors link-animated">BMUCO</a>
         <span class="text-gray-300">·</span>
-        <a href="#climate" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors">Climate</a>
+        <a href="#achievements" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors link-animated">Achievements</a>
         <span class="text-gray-300">·</span>
-        <a href="#notes" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors">Notes</a>
+        <a href="#climate" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors link-animated">Climate</a>
         <span class="text-gray-300">·</span>
-        <a href="#contact" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors">Contact</a>
+        <a href="#notes" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors link-animated">Notes</a>
+        <span class="text-gray-300">·</span>
+        <a href="#contact" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors link-animated">Contact</a>
       </div>
       
       <!-- Mobile Menu Button -->
@@ -137,6 +243,7 @@
         <a href="#about" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors">About</a>
         <a href="#research" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors">Research</a>
         <a href="#bmuco" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors">BMUCO</a>
+        <a href="#achievements" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors">Achievements</a>
         <a href="#climate" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors">Climate</a>
         <a href="#notes" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors">Notes</a>
         <a href="#contact" class="text-sm text-gray-600 hover:text-bmuco-dark transition-colors">Contact</a>
@@ -152,39 +259,39 @@
         <!-- Left: Content -->
         <div class="flex-1 lg:w-3/5">
           <!-- Label -->
-          <p class="text-xs tracking-widest text-gray-400 mb-6" style="font-variant: small-caps;">
+          <p class="text-xs tracking-widest text-gray-400 mb-6 opacity-0 animate-fade-in-up" style="font-variant: small-caps;">
             Mathematics · Bonn · 2026
           </p>
           
           <!-- Name -->
-          <h1 class="text-4xl md:text-5xl font-normal text-gray-900 mb-4">
+          <h1 class="text-4xl md:text-5xl font-normal text-gray-900 mb-4 opacity-0 animate-fade-in-up stagger-1">
             Rajarshi Maiti
           </h1>
           
           <!-- Subtitle -->
-          <p class="text-gray-500 mb-8">
+          <p class="text-gray-500 mb-8 opacity-0 animate-fade-in-up stagger-2">
             Graduate Student in Mathematics, University of Bonn
           </p>
           
           <!-- Bio -->
-          <p class="text-gray-700 leading-[1.8] max-w-[560px] mb-8 text-[15px]">
-            I'm a mathematics graduate student at the University of Bonn, where I'm specialising in analytic number theory. Since 2019 I've been co-building BMUCO alongside other like-minded university students — we've run research programmes reaching 20,000+ students globally, co-hosted the Abel Symposium 2025, and interviewed Fields Medalists and Nobel Laureates. Right now I'm focused on the formalisation of graduate mathematics in Lean 4 and its implications for AI. Outside mathematics I work on climate policy and quantitative finance.
+          <p class="text-gray-700 leading-[1.8] max-w-[560px] mb-8 text-[15px] opacity-0 animate-fade-in-up stagger-3">
+            I'm a mathematics graduate student at the University of Bonn, where I'm specialising in number theory. Since 2019 I've been co-building BMUCO alongside other like-minded university students — we've run programs including in research, outreach and education reaching 20k people worldwide, co-hosted the Abel Symposium 2025, and interviewed Fields Medalists and Nobel Laureates. Right now I'm focused on the formalisation of graduate mathematics in Lean 4 and its implications for AI. Outside mathematics I work on climate policy and quantitative finance.
           </p>
           
           <!-- CTA Buttons -->
-          <div class="flex flex-wrap gap-4">
-            <a href="#" class="inline-flex items-center px-6 py-3 bg-bmuco-dark text-white text-sm font-medium rounded-md hover:bg-opacity-90 transition-all">
+          <div class="flex flex-wrap gap-4 opacity-0 animate-fade-in-up stagger-4">
+            <a href="#" class="btn-primary inline-flex items-center px-6 py-3 bg-bmuco-dark text-white text-sm font-medium rounded-md">
               View CV
             </a>
-            <a href="#contact" class="inline-flex items-center px-6 py-3 border border-bmuco-dark text-bmuco-dark text-sm font-medium rounded-md hover:bg-bmuco-light transition-all">
+            <a href="#contact" class="btn-secondary inline-flex items-center px-6 py-3 border border-bmuco-dark text-bmuco-dark text-sm font-medium rounded-md">
               Get in Touch
             </a>
           </div>
         </div>
         
         <!-- Right: Photo Placeholder -->
-        <div class="lg:w-2/5 flex flex-col items-center">
-          <div class="w-48 h-48 md:w-56 md:h-56 rounded-full border-4 border-bmuco-dark flex items-center justify-center bg-bmuco-light">
+        <div class="lg:w-2/5 flex flex-col items-center opacity-0 animate-fade-in stagger-5">
+          <div class="photo-float w-48 h-48 md:w-56 md:h-56 rounded-full border-4 border-bmuco-dark flex items-center justify-center bg-bmuco-light">
             <span class="text-5xl md:text-6xl font-light text-bmuco-dark">RM</span>
           </div>
           <p class="mt-4 text-xs text-gray-400">Photo coming soon</p>
@@ -197,37 +304,29 @@
   <section id="research" class="py-24 bg-bmuco-pale">
     <div class="max-w-6xl mx-auto px-6">
       <!-- Section Title -->
-      <h2 class="section-title text-2xl mb-4">Research</h2>
+      <h2 class="section-title text-2xl mb-4 reveal">Research</h2>
       
       <!-- Intro -->
-      <p class="text-gray-600 max-w-2xl mb-12 leading-relaxed">
-        My mathematical interests sit at the intersection of analytic number theory, formal verification, and the emerging field of AI for mathematics.
+      <p class="text-gray-600 max-w-2xl mb-12 leading-relaxed reveal">
+        My mathematical interests sit at the intersection of number theory, formal verification, and the emerging field of AI for mathematics.
       </p>
       
       <!-- Cards Grid -->
-      <div class="grid md:grid-cols-3 gap-6">
+      <div class="grid md:grid-cols-2 gap-8 max-w-4xl">
         
         <!-- Card 1 -->
-        <div class="bg-white rounded-lg border border-bmuco-light card-accent p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-          <h3 class="text-lg font-medium text-bmuco-dark mb-3">Analytic Number Theory</h3>
+        <div class="research-card bg-white rounded-lg border border-bmuco-light card-accent p-8 reveal">
+          <h3 class="text-lg font-medium text-bmuco-dark mb-4">Number Theory</h3>
           <p class="text-sm text-gray-600 leading-relaxed">
             Sums of two squares, gaps between arithmetic sequences, L-functions and zeta functions. Summer research at Oxford (2021, 2022) supervised by Dr Thomas Bloom (Royal Society Research Fellow) and Dr Tiago Jardim da Fonseca. Graduate coursework at Bonn includes the Smooth Circle Method (Heath-Brown).
           </p>
         </div>
         
         <!-- Card 2 -->
-        <div class="bg-white rounded-lg border border-bmuco-light card-accent p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-          <h3 class="text-lg font-medium text-bmuco-dark mb-3">Formal Verification & AI for Mathematics</h3>
+        <div class="research-card bg-white rounded-lg border border-bmuco-light card-accent p-8 reveal">
+          <h3 class="text-lg font-medium text-bmuco-dark mb-4">Formal Verification & AI for Mathematics</h3>
           <p class="text-sm text-gray-600 leading-relaxed">
-            Formalisation of graduate-level mathematics in Lean 4. Currently studying under Floris van Doorn (lead Mathlib contributor) at Bonn. Building BMUCO's Lean formalisation pipeline — DRP + workshops producing human-verified, graduate-level formal proof datasets. Scientific advisor: Prof. Yang-Hui He (Oxford / LIMS).
-          </p>
-        </div>
-        
-        <!-- Card 3 -->
-        <div class="bg-white rounded-lg border border-bmuco-light card-accent p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-          <h3 class="text-lg font-medium text-bmuco-dark mb-3">Quantitative Methods</h3>
-          <p class="text-sm text-gray-600 leading-relaxed">
-            Probability, measure theory, and decision-making under uncertainty. Selected for Jane Street's Quantitative Trading Camp (Spring 2024, London) and invited to their internship process. Interested in the formal mathematical foundations of quantitative finance.
+            Interested in formalism in mathematics, and the use of AI/ML in mathematics.
           </p>
         </div>
         
@@ -239,7 +338,7 @@
   <section id="bmuco" class="py-24 bg-white">
     <div class="max-w-6xl mx-auto px-6">
       <!-- Section Title -->
-      <div class="flex items-baseline gap-3 mb-8">
+      <div class="flex items-baseline gap-3 mb-8 reveal">
         <h2 class="section-title text-2xl">BMUCO</h2>
         <a href="https://bmuco.org" target="_blank" rel="noopener" class="text-sm text-bmuco-muted hover:text-bmuco-dark transition-colors">
           bmuco.org →
@@ -250,7 +349,7 @@
       <div class="grid lg:grid-cols-2 gap-12">
         
         <!-- Left Column -->
-        <div>
+        <div class="reveal">
           <h3 class="text-xl font-medium text-gray-900 mb-4">
             Building the ecosystem for the future of sciences
           </h3>
@@ -260,42 +359,30 @@
           
           <!-- Achievements List -->
           <ul class="space-y-3">
-            <li class="flex items-start gap-3">
+            <li class="achievement-item flex items-start gap-3">
               <span class="w-1.5 h-1.5 rounded-full bg-bmuco-dark mt-2 shrink-0"></span>
               <span class="text-sm text-gray-600">Co-hosted Abel Symposium 2025 with Norwegian Academy of Science and Letters and Hausdorff Center for Mathematics</span>
             </li>
-            <li class="flex items-start gap-3">
+            <li class="achievement-item flex items-start gap-3">
               <span class="w-1.5 h-1.5 rounded-full bg-bmuco-dark mt-2 shrink-0"></span>
               <span class="text-sm text-gray-600">Public interviews with Fields Medalists and Nobel Laureates</span>
             </li>
-            <li class="flex items-start gap-3">
+            <li class="achievement-item flex items-start gap-3">
               <span class="w-1.5 h-1.5 rounded-full bg-bmuco-dark mt-2 shrink-0"></span>
-              <span class="text-sm text-gray-600">Research programmes reaching 20,000+ students globally</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="w-1.5 h-1.5 rounded-full bg-bmuco-dark mt-2 shrink-0"></span>
-              <span class="text-sm text-gray-600">DAAD STIBET Scholar — competitive merit scholarship, University of Bonn</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="w-1.5 h-1.5 rounded-full bg-bmuco-dark mt-2 shrink-0"></span>
-              <span class="text-sm text-gray-600">Full funding: AI×Mathematics Conference (ICMS Edinburgh, 2026)</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="w-1.5 h-1.5 rounded-full bg-bmuco-dark mt-2 shrink-0"></span>
-              <span class="text-sm text-gray-600">Full funding: Isaac Newton Institute conference</span>
+              <span class="text-sm text-gray-600">Programs cumulatively reaching 20k+ in total</span>
             </li>
           </ul>
         </div>
         
         <!-- Right Column -->
-        <div class="bg-bmuco-pale rounded-lg p-8">
+        <div class="bg-bmuco-pale rounded-lg p-8 reveal">
           <h3 class="text-lg font-medium text-bmuco-dark mb-4">
             Current focus: Lean Formalisation Initiative
           </h3>
           <p class="text-gray-600 leading-relaxed mb-6">
-            BMUCO is building the first structured student pipeline for expert-verified, graduate-level formal mathematics datasets in Lean 4 — feeding the next generation of AI reasoning models. We run a Directed Reading Programme (DRP) followed by intensive workshops at Bonn, producing human-verified proof corpora and an open-source graduate autoformaliser (Ramanujan).
+            BMUCO is building the first structured student pipeline for expert-verified, graduate-level formal mathematics datasets in Lean 4 — feeding the next generation of AI reasoning models. We run a Directed Reading Programme (DRP) followed by intensive workshops at Bonn, producing human-verified proof corpora.
           </p>
-          <a href="https://bmuco.org" target="_blank" rel="noopener" class="inline-flex items-center px-5 py-2.5 bg-bmuco-dark text-white text-sm font-medium rounded-md hover:bg-opacity-90 transition-all">
+          <a href="https://bmuco.org" target="_blank" rel="noopener" class="btn-primary inline-flex items-center px-5 py-2.5 bg-bmuco-dark text-white text-sm font-medium rounded-md">
             Learn more at bmuco.org
           </a>
         </div>
@@ -304,14 +391,63 @@
     </div>
   </section>
 
+  <!-- ACHIEVEMENTS SECTION -->
+  <section id="achievements" class="py-24 bg-bmuco-pale">
+    <div class="max-w-6xl mx-auto px-6">
+      <!-- Section Title -->
+      <h2 class="section-title text-2xl mb-8 reveal">Achievements</h2>
+      
+      <div class="grid md:grid-cols-3 gap-6">
+        
+        <!-- Achievement 1 -->
+        <div class="achievement-card bg-white rounded-lg border border-bmuco-light p-6 reveal transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+          <div class="w-10 h-10 rounded-full bg-bmuco-light flex items-center justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A4731" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="8" r="6"></circle>
+              <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path>
+            </svg>
+          </div>
+          <h3 class="text-sm font-medium text-bmuco-dark mb-2">DAAD STIBET Scholar</h3>
+          <p class="text-sm text-gray-600">Competitive merit scholarship, University of Bonn</p>
+        </div>
+        
+        <!-- Achievement 2 -->
+        <div class="achievement-card bg-white rounded-lg border border-bmuco-light p-6 reveal transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+          <div class="w-10 h-10 rounded-full bg-bmuco-light flex items-center justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A4731" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+            </svg>
+          </div>
+          <h3 class="text-sm font-medium text-bmuco-dark mb-2">AI×Mathematics Conference</h3>
+          <p class="text-sm text-gray-600">Full funding for ICMS Edinburgh, 2026</p>
+        </div>
+        
+        <!-- Achievement 3 -->
+        <div class="achievement-card bg-white rounded-lg border border-bmuco-light p-6 reveal transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+          <div class="w-10 h-10 rounded-full bg-bmuco-light flex items-center justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A4731" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+              <path d="M2 17l10 5 10-5"></path>
+              <path d="M2 12l10 5 10-5"></path>
+            </svg>
+          </div>
+          <h3 class="text-sm font-medium text-bmuco-dark mb-2">Isaac Newton Institute</h3>
+          <p class="text-sm text-gray-600">Full funding for conference participation</p>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
   <!-- CLIMATE SECTION -->
-  <section id="climate" class="py-24 bg-bmuco-pale">
+  <section id="climate" class="py-24 bg-white">
     <div class="max-w-3xl mx-auto px-6 text-center">
       <!-- Section Title -->
-      <h2 class="section-title text-2xl mb-6">Climate</h2>
+      <h2 class="section-title text-2xl mb-6 reveal">Climate</h2>
       
       <!-- Intro -->
-      <p class="text-gray-600 leading-relaxed mb-12">
+      <p class="text-gray-600 leading-relaxed mb-12 reveal">
         I engage with climate policy through the ACE Youth Hub programme, attending UNFCCC sessions as a youth delegate.
       </p>
       
@@ -319,15 +455,15 @@
       <div class="grid sm:grid-cols-2 gap-6 max-w-xl mx-auto">
         
         <!-- Event 1 -->
-        <div class="bg-white rounded-lg border border-gray-200 p-6 text-left">
-          <p class="text-3xl font-light text-bmuco-light mb-2">2024</p>
+        <div class="bg-bmuco-pale rounded-lg border border-bmuco-light p-6 text-left reveal transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+          <p class="text-3xl font-light text-bmuco-muted mb-2">2024</p>
           <p class="text-sm text-gray-500 mb-1">UNFCCC SB60, Bonn</p>
           <p class="text-gray-700">Youth delegate, ACE Youth Hub</p>
         </div>
         
         <!-- Event 2 -->
-        <div class="bg-white rounded-lg border border-gray-200 p-6 text-left">
-          <p class="text-3xl font-light text-bmuco-light mb-2">2025</p>
+        <div class="bg-bmuco-pale rounded-lg border border-bmuco-light p-6 text-left reveal transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+          <p class="text-3xl font-light text-bmuco-muted mb-2">2025</p>
           <p class="text-sm text-gray-500 mb-1">UNFCCC SB62, Bonn</p>
           <p class="text-gray-700">Youth delegate, ACE Youth Hub</p>
         </div>
@@ -337,18 +473,18 @@
   </section>
 
   <!-- NOTES SECTION -->
-  <section id="notes" class="py-24 bg-white">
+  <section id="notes" class="py-24 bg-bmuco-pale">
     <div class="max-w-3xl mx-auto px-6 text-center">
       <!-- Section Title -->
-      <h2 class="section-title text-2xl mb-6">Notes</h2>
+      <h2 class="section-title text-2xl mb-6 reveal">Notes</h2>
       
       <!-- Intro -->
-      <p class="text-gray-600 leading-relaxed mb-10">
+      <p class="text-gray-600 leading-relaxed mb-10 reveal">
         Mathematical notes, expository writing, and occasional thoughts on formalisation and AI. Coming soon.
       </p>
       
       <!-- Placeholder Card -->
-      <div class="max-w-md mx-auto border-2 border-dashed border-gray-300 rounded-lg p-8">
+      <div class="max-w-md mx-auto border-2 border-dashed border-gray-300 rounded-lg p-8 reveal hover:border-bmuco-light transition-colors duration-300">
         <h3 class="text-lg font-medium text-gray-700 mb-2">Notes coming soon</h3>
         <p class="text-sm text-gray-500">Check back later</p>
       </div>
@@ -356,68 +492,70 @@
   </section>
 
   <!-- CONTACT SECTION -->
-  <section id="contact" class="py-24 bg-bmuco-pale">
+  <section id="contact" class="py-24 bg-white">
     <div class="max-w-lg mx-auto px-6 text-center">
       <!-- Section Title -->
-      <h2 class="section-title text-2xl mb-6">Contact</h2>
+      <h2 class="section-title text-2xl mb-6 reveal">Contact</h2>
       
       <!-- Intro -->
-      <p class="text-gray-600 leading-relaxed mb-10">
+      <p class="text-gray-600 leading-relaxed mb-10 reveal">
         I'm always happy to hear from mathematicians, students, and anyone working on formalisation, AI for mathematics, or related areas.
       </p>
       
       <!-- Contact Links -->
-      <div class="space-y-4 mb-10 text-left max-w-xs mx-auto">
+      <div class="space-y-4 mb-10 text-left max-w-xs mx-auto reveal">
         
         <!-- Email -->
         <a href="mailto:rmaiti7@gmail.com" class="flex items-center gap-3 text-gray-600 hover:text-bmuco-dark transition-colors group">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-bmuco-muted group-hover:text-bmuco-dark">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-bmuco-muted group-hover:text-bmuco-dark transition-colors">
             <rect x="2" y="4" width="20" height="16" rx="2"></rect>
             <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
           </svg>
-          <span class="text-sm">rmaiti7@gmail.com</span>
+          <span class="text-sm link-animated">rmaiti7@gmail.com</span>
         </a>
         
         <!-- GitHub -->
         <a href="https://github.com/rmaiti01" target="_blank" rel="noopener" class="flex items-center gap-3 text-gray-600 hover:text-bmuco-dark transition-colors group">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-bmuco-muted group-hover:text-bmuco-dark">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-bmuco-muted group-hover:text-bmuco-dark transition-colors">
             <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
             <path d="M9 18c-4.51 2-5-2-7-2"></path>
           </svg>
-          <span class="text-sm">github.com/rmaiti01</span>
+          <span class="text-sm link-animated">github.com/rmaiti01</span>
         </a>
         
         <!-- LinkedIn -->
         <a href="https://linkedin.com/in/1729" target="_blank" rel="noopener" class="flex items-center gap-3 text-gray-600 hover:text-bmuco-dark transition-colors group">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-bmuco-muted group-hover:text-bmuco-dark">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-bmuco-muted group-hover:text-bmuco-dark transition-colors">
             <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
             <rect x="2" y="9" width="4" height="12"></rect>
             <circle cx="4" cy="4" r="2"></circle>
           </svg>
-          <span class="text-sm">linkedin.com/in/1729</span>
+          <span class="text-sm link-animated">linkedin.com/in/1729</span>
         </a>
         
       </div>
       
       <!-- CTA Button -->
-      <a href="mailto:rmaiti7@gmail.com" class="inline-flex items-center px-8 py-3 bg-bmuco-dark text-white text-sm font-medium rounded-md hover:bg-opacity-90 transition-all">
-        Send me an email
-      </a>
+      <div class="reveal">
+        <a href="mailto:rmaiti7@gmail.com" class="btn-primary inline-flex items-center px-8 py-3 bg-bmuco-dark text-white text-sm font-medium rounded-md">
+          Send me an email
+        </a>
+      </div>
     </div>
   </section>
 
   <!-- FOOTER -->
-  <footer class="py-8 bg-white border-t border-gray-100">
+  <footer class="py-8 bg-bmuco-pale border-t border-gray-200">
     <div class="max-w-6xl mx-auto px-6 text-center">
       <p class="text-sm text-gray-400">
         © 2026 Rajarshi Maiti · Bonn, Germany
       </p>
       <div class="mt-3 flex items-center justify-center gap-4 text-xs text-gray-400">
-        <a href="#" class="hover:text-bmuco-dark transition-colors">CV</a>
+        <a href="#" class="hover:text-bmuco-dark transition-colors link-animated">CV</a>
         <span>·</span>
-        <a href="https://bmuco.org" target="_blank" rel="noopener" class="hover:text-bmuco-dark transition-colors">BMUCO</a>
+        <a href="https://bmuco.org" target="_blank" rel="noopener" class="hover:text-bmuco-dark transition-colors link-animated">BMUCO</a>
         <span>·</span>
-        <a href="https://github.com/rmaiti01" target="_blank" rel="noopener" class="hover:text-bmuco-dark transition-colors">GitHub</a>
+        <a href="https://github.com/rmaiti01" target="_blank" rel="noopener" class="hover:text-bmuco-dark transition-colors link-animated">GitHub</a>
       </div>
     </div>
   </footer>
@@ -426,18 +564,13 @@
   <script>
     // Navbar scroll effect
     const navbar = document.getElementById('navbar');
-    let lastScroll = 0;
     
     window.addEventListener('scroll', () => {
-      const currentScroll = window.pageYOffset;
-      
-      if (currentScroll > 50) {
+      if (window.pageYOffset > 50) {
         navbar.classList.add('nav-scrolled');
       } else {
         navbar.classList.remove('nav-scrolled');
       }
-      
-      lastScroll = currentScroll;
     });
     
     // Mobile menu toggle
@@ -461,7 +594,7 @@
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
-          const offset = 80; // Account for sticky navbar
+          const offset = 80;
           const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
           window.scrollTo({
             top: targetPosition,
@@ -469,6 +602,45 @@
           });
         }
       });
+    });
+    
+    // Scroll reveal animation with stagger
+    const revealElements = document.querySelectorAll('.reveal');
+    
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    });
+    
+    revealElements.forEach(el => {
+      revealObserver.observe(el);
+    });
+    
+    // Achievement items stagger animation
+    const achievementItems = document.querySelectorAll('.achievement-item');
+    
+    const achievementObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, index * 100);
+          achievementObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+    
+    achievementItems.forEach(item => {
+      achievementObserver.observe(item);
     });
     
     // Initialize KaTeX auto-render when loaded
@@ -482,25 +654,6 @@
           throwOnError: false
         });
       }
-    });
-    
-    // Reveal animation on scroll
-    const observerOptions = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.1
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, observerOptions);
-    
-    document.querySelectorAll('.reveal').forEach(el => {
-      observer.observe(el);
     });
   </script>
   
