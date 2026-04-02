@@ -1,816 +1,1307 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rajarshi Maiti — Mathematics</title>
-  <meta name="description" content="Mathematics graduate student at University of Bonn. Co-founder of BMUCO. Working on number theory, Lean formalisation, and AI for mathematics.">
-  
-  <!-- Google Fonts -->
+  <meta name="description" content="Mathematics graduate student at University of Bonn, specialising in number theory, Lean 4 formalisation, and AI for mathematics. Co-founder of BMUCO.">
+
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;450;500&display=swap" rel="stylesheet">
+
   <!-- KaTeX -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
-  
-  <!-- Tailwind Config -->
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            'bmuco-dark': '#1A4731',
-            'bmuco-light': '#D8F3DC',
-            'bmuco-muted': '#2D6A4F',
-            'bmuco-pale': '#F9FFF9',
-          },
-          fontFamily: {
-            'sans': ['Inter', 'system-ui', 'sans-serif'],
-          },
-          animation: {
-            'fade-in-up': 'fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards',
-            'fade-in': 'fadeIn 1s ease-out forwards',
-            'slide-in-left': 'slideInLeft 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards',
-            'float': 'float 6s ease-in-out infinite',
-            'pulse-slow': 'pulseSlow 4s ease-in-out infinite',
-          },
-          keyframes: {
-            fadeInUp: {
-              '0%': { opacity: '0', transform: 'translateY(30px)' },
-              '100%': { opacity: '1', transform: 'translateY(0)' },
-            },
-            fadeIn: {
-              '0%': { opacity: '0' },
-              '100%': { opacity: '1' },
-            },
-            slideInLeft: {
-              '0%': { opacity: '0', transform: 'translateX(-30px)' },
-              '100%': { opacity: '1', transform: 'translateX(0)' },
-            },
-            float: {
-              '0%, 100%': { transform: 'translateY(0)' },
-              '50%': { transform: 'translateY(-10px)' },
-            },
-            pulseSlow: {
-              '0%, 100%': { opacity: '0.4' },
-              '50%': { opacity: '0.8' },
-            },
-          },
-        }
-      }
-    }
-  </script>
-  
+
   <style>
-    /* Custom styles */
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-    }
-    
-    /* Dark mode variables */
+    /* =============================================
+       DESIGN TOKENS
+    ============================================= */
     :root {
-      --bg-primary: #ffffff;
-      --bg-secondary: #F9FFF9;
-      --bg-tertiary: #ffffff;
-      --text-primary: #111827;
-      --text-secondary: #4B5563;
-      --text-muted: #6B7280;
-      --border-color: #e5e7eb;
-      --nav-bg: rgba(255, 255, 255, 0.95);
+      --ink:       #0e0e0e;
+      --ink-2:     #1c1c1c;
+      --ink-3:     #3a3a3a;
+      --muted:     #6e6e6e;
+      --subtle:    #a0a0a0;
+      --border:    #e2e2e2;
+      --surface:   #f7f7f5;
+      --bg:        #fafaf8;
+      --white:     #ffffff;
+      --accent:    #0e0e0e;
+      --accent-2:  #2a2a2a;
+
+      --font-serif: 'EB Garamond', Georgia, serif;
+      --font-sans:  'Inter', system-ui, sans-serif;
+
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
     }
-    
-    .dark {
-      --bg-primary: #0f172a;
-      --bg-secondary: #1e293b;
-      --bg-tertiary: #0f172a;
-      --text-primary: #f1f5f9;
-      --text-secondary: #cbd5e1;
-      --text-muted: #94a3b8;
-      --border-color: #334155;
-      --nav-bg: rgba(15, 23, 42, 0.95);
+
+    /* =============================================
+       RESET & BASE
+    ============================================= */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-    
-    .dark body {
-      background-color: var(--bg-primary);
-      color: var(--text-primary);
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
-    
-    .section-title {
-      font-variant: small-caps;
-      letter-spacing: 0.15em;
-      color: #1A4731;
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg);
+      color: var(--ink);
+      font-size: 15px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* =============================================
+       CURSOR GLOW (subtle)
+    ============================================= */
+    .cursor-glow {
+      pointer-events: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(14,14,14,0.04) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+      transition: transform 0.1s linear;
+    }
+
+    /* =============================================
+       NAVBAR
+    ============================================= */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      border-bottom: 1px solid transparent;
+      transition: background 0.4s var(--ease-out-expo),
+                  border-color 0.4s var(--ease-out-expo),
+                  backdrop-filter 0.4s;
+    }
+
+    #navbar.scrolled {
+      background: rgba(250, 250, 248, 0.88);
+      border-color: var(--border);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .nav-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      opacity: 0;
+      animation: fadeIn 0.8s var(--ease-out-expo) 0.1s forwards;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      opacity: 0;
+      animation: fadeIn 0.8s var(--ease-out-expo) 0.2s forwards;
+    }
+
+    .nav-links a {
+      font-size: 12.5px;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      transition: color 0.2s;
       position: relative;
-      display: inline-block;
-      padding-bottom: 0.5rem;
     }
-    
-    .dark .section-title {
-      color: #D8F3DC;
-    }
-    
-    .section-title::after {
+
+    .nav-links a::after {
       content: '';
       position: absolute;
-      bottom: 0;
-      left: 0;
+      bottom: -2px; left: 0;
+      width: 0; height: 1px;
+      background: var(--ink);
+      transition: width 0.25s var(--ease-out-expo);
+    }
+
+    .nav-links a:hover {
+      color: var(--ink);
+    }
+
+    .nav-links a:hover::after {
       width: 100%;
-      height: 2px;
-      background: linear-gradient(90deg, #D8F3DC 0%, #1A4731 100%);
     }
-    
-    .dark .section-title::after {
-      background: linear-gradient(90deg, #1A4731 0%, #D8F3DC 100%);
+
+    /* Mobile */
+    #mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--ink);
+      padding: 4px;
     }
-    
-    .card-accent {
+
+    #mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px; left: 0; right: 0;
+      background: rgba(250, 250, 248, 0.97);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 1.5rem 2rem;
+      flex-direction: column;
+      gap: 1.25rem;
+      z-index: 99;
+    }
+
+    #mobile-menu.open {
+      display: flex;
+    }
+
+    #mobile-menu a {
+      font-size: 14px;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+
+    #mobile-menu a:hover {
+      color: var(--ink);
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      #mobile-menu-btn { display: block; }
+    }
+
+    /* =============================================
+       HERO
+    ============================================= */
+    #about {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 64px;
+    }
+
+    .hero-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 6rem 2rem 5rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 4rem;
+      align-items: center;
+      width: 100%;
+    }
+
+    .hero-label {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--subtle);
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: slideUp 0.9s var(--ease-out-expo) 0.15s forwards;
+    }
+
+    .hero-name {
+      font-family: var(--font-serif);
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin-bottom: 1.25rem;
+      opacity: 0;
+      animation: slideUp 0.9s var(--ease-out-expo) 0.25s forwards;
+    }
+
+    .hero-role {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 2.25rem;
+      opacity: 0;
+      animation: slideUp 0.9s var(--ease-out-expo) 0.33s forwards;
+    }
+
+    .hero-bio {
+      font-size: 15.5px;
+      line-height: 1.85;
+      color: var(--ink-3);
+      max-width: 560px;
+      margin-bottom: 2.75rem;
+      opacity: 0;
+      animation: slideUp 0.9s var(--ease-out-expo) 0.42s forwards;
+    }
+
+    .hero-bio strong {
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      opacity: 0;
+      animation: slideUp 0.9s var(--ease-out-expo) 0.52s forwards;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 13px;
+      font-weight: 450;
+      letter-spacing: 0.02em;
+      padding: 0.65rem 1.4rem;
+      border-radius: 4px;
+      transition: all 0.25s var(--ease-out-expo);
+      cursor: pointer;
+    }
+
+    .btn-dark {
+      background: var(--ink);
+      color: var(--white);
+      border: 1px solid var(--ink);
+    }
+
+    .btn-dark:hover {
+      background: var(--ink-3);
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--border);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--ink);
+      transform: translateY(-1px);
+    }
+
+    /* Photo */
+    .hero-photo-wrap {
+      opacity: 0;
+      animation: fadeIn 1.2s var(--ease-out-expo) 0.5s forwards;
+    }
+
+    .hero-photo {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+    }
+
+    .hero-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    @media (max-width: 768px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        padding: 4rem 1.5rem 3.5rem;
+        text-align: center;
+      }
+      .hero-photo-wrap { order: -1; display: flex; justify-content: center; }
+      .hero-photo { width: 140px; height: 140px; }
+      .hero-bio { max-width: 100%; }
+      .hero-ctas { justify-content: center; }
+    }
+
+    /* =============================================
+       DIVIDER LINE
+    ============================================= */
+    .section-divider {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .section-divider hr {
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    /* =============================================
+       SECTION COMMONS
+    ============================================= */
+    section {
+      padding: 6rem 0;
+    }
+
+    .section-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .section-tag {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--subtle);
+      margin-bottom: 2.5rem;
+      display: block;
+    }
+
+    .section-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(1.9rem, 3vw, 2.5rem);
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--ink);
+      margin-bottom: 1.25rem;
+    }
+
+    .section-intro {
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--ink-3);
+      max-width: 580px;
+    }
+
+    /* =============================================
+       RESEARCH
+    ============================================= */
+    #research {
+      background: var(--surface);
+    }
+
+    .research-grid {
+      margin-top: 3.5rem;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5px;
+      background: var(--border);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .research-card {
+      background: var(--white);
+      padding: 2.5rem;
+      transition: background 0.25s;
+    }
+
+    .research-card:hover {
+      background: var(--bg);
+    }
+
+    .research-card-tag {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--subtle);
+      margin-bottom: 1rem;
+    }
+
+    .research-card h3 {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 0.9rem;
+      line-height: 1.3;
+    }
+
+    .research-card p {
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+
+    @media (max-width: 640px) {
+      .research-grid { grid-template-columns: 1fr; }
+    }
+
+    /* =============================================
+       BMUCO
+    ============================================= */
+    #bmuco {
+      background: var(--bg);
+    }
+
+    .bmuco-layout {
+      margin-top: 3.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+    }
+
+    .bmuco-left p {
+      font-size: 15px;
+      line-height: 1.85;
+      color: var(--ink-3);
+      margin-bottom: 1.75rem;
+    }
+
+    /* Stat pills */
+    .stat-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .stat-pill {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.75rem 1.1rem;
+      min-width: 120px;
+    }
+
+    .stat-pill strong {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.1;
+    }
+
+    .stat-pill span {
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      color: var(--subtle);
+      margin-top: 0.2rem;
+    }
+
+    .bmuco-achievements {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .bmuco-achievements li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--ink-3);
+    }
+
+    .bmuco-achievements li::before {
+      content: '';
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--muted);
+      margin-top: 0.55rem;
+      flex-shrink: 0;
+    }
+
+    /* Right panel */
+    .bmuco-right {
       position: relative;
     }
-    
-    .card-accent::before {
+
+    .bmuco-panel {
+      background: var(--ink);
+      border-radius: 8px;
+      padding: 2.5rem;
+      color: var(--white);
+      position: sticky;
+      top: 100px;
+    }
+
+    .bmuco-panel-tag {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 1.5rem;
+    }
+
+    .bmuco-panel h3 {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      font-weight: 400;
+      line-height: 1.35;
+      margin-bottom: 1.25rem;
+    }
+
+    .bmuco-panel p {
+      font-size: 14px;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 1.75rem;
+    }
+
+    .bmuco-panel a.btn {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: var(--white);
+      font-size: 12.5px;
+    }
+
+    .bmuco-panel a.btn:hover {
+      background: rgba(255,255,255,0.18);
+    }
+
+    /* Tech badge */
+    .lean-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 4px;
+      padding: 0.35rem 0.65rem;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 1.5rem;
+    }
+
+    .lean-badge span.dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #a3e635;
+      display: inline-block;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @media (max-width: 768px) {
+      .bmuco-layout { grid-template-columns: 1fr; gap: 3rem; }
+      .bmuco-panel { position: static; }
+    }
+
+    /* =============================================
+       ACHIEVEMENTS
+    ============================================= */
+    #achievements {
+      background: var(--surface);
+    }
+
+    .achievements-grid {
+      margin-top: 3.5rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .achievement-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      background: var(--white);
+      transition: transform 0.3s var(--ease-out-expo), box-shadow 0.3s var(--ease-out-expo);
+    }
+
+    .achievement-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+    }
+
+    .achievement-icon {
+      width: 36px; height: 36px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+      color: var(--muted);
+    }
+
+    .achievement-card h3 {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 0.4rem;
+      line-height: 1.3;
+    }
+
+    .achievement-card p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    @media (max-width: 768px) {
+      .achievements-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (min-width: 641px) and (max-width: 900px) {
+      .achievements-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* =============================================
+       CLIMATE
+    ============================================= */
+    #climate {
+      background: var(--bg);
+    }
+
+    .climate-inner {
+      max-width: 700px;
+    }
+
+    .climate-events {
+      margin-top: 3rem;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .climate-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.75rem;
+      background: var(--white);
+      transition: transform 0.3s var(--ease-out-expo), box-shadow 0.3s var(--ease-out-expo);
+    }
+
+    .climate-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+    }
+
+    .climate-year {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      color: var(--ink);
+      font-weight: 400;
+      line-height: 1;
+      margin-bottom: 0.75rem;
+    }
+
+    .climate-event {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .climate-role {
+      font-size: 14px;
+      color: var(--ink-3);
+    }
+
+    @media (max-width: 580px) {
+      .climate-events { grid-template-columns: 1fr; }
+    }
+
+    /* =============================================
+       NOTES
+    ============================================= */
+    #notes {
+      background: var(--surface);
+    }
+
+    .notes-placeholder {
+      margin-top: 2.5rem;
+      border: 1.5px dashed var(--border);
+      border-radius: 8px;
+      padding: 3rem 2rem;
+      max-width: 480px;
+      text-align: center;
+    }
+
+    .notes-placeholder h3 {
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--ink-3);
+      margin-bottom: 0.5rem;
+    }
+
+    .notes-placeholder p {
+      font-size: 13px;
+      color: var(--subtle);
+    }
+
+    /* =============================================
+       CONTACT
+    ============================================= */
+    #contact {
+      background: var(--bg);
+    }
+
+    .contact-links {
+      margin-top: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 14px;
+      color: var(--muted);
+      transition: color 0.2s;
+      width: fit-content;
+      position: relative;
+    }
+
+    .contact-link::after {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, #1A4731 0%, #2D6A4F 100%);
-      border-radius: 8px 8px 0 0;
+      bottom: -1px; left: 0;
+      width: 0; height: 1px;
+      background: var(--ink);
+      transition: width 0.25s var(--ease-out-expo);
     }
-    
-    .nav-scrolled {
-      background-color: var(--nav-bg);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+    .contact-link:hover {
+      color: var(--ink);
     }
-    
-    .dark .nav-scrolled {
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+
+    .contact-link:hover::after {
+      width: 100%;
     }
-    
-    /* Staggered animation delays */
-    .stagger-1 { animation-delay: 0.1s; }
-    .stagger-2 { animation-delay: 0.2s; }
-    .stagger-3 { animation-delay: 0.3s; }
-    .stagger-4 { animation-delay: 0.4s; }
-    .stagger-5 { animation-delay: 0.5s; }
-    
-    /* Scroll reveal */
+
+    .contact-link svg {
+      flex-shrink: 0;
+    }
+
+    .contact-cta {
+      margin-top: 2.75rem;
+    }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    footer {
+      padding: 2.5rem 0;
+      border-top: 1px solid var(--border);
+      background: var(--bg);
+    }
+
+    .footer-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--subtle);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-links a {
+      font-size: 12px;
+      color: var(--subtle);
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--ink);
+    }
+
+    @media (max-width: 580px) {
+      .footer-inner { flex-direction: column; gap: 1rem; align-items: flex-start; }
+    }
+
+    /* =============================================
+       SCROLL REVEAL
+    ============================================= */
     .reveal {
       opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), 
-                  transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+      transform: translateY(24px);
+      transition: opacity 0.85s var(--ease-out-expo),
+                  transform 0.85s var(--ease-out-expo);
     }
-    
+
     .reveal.visible {
       opacity: 1;
       transform: translateY(0);
     }
-    
-    /* Card hover effect */
-    .research-card {
-      transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+
+    .reveal-delay-1 { transition-delay: 0.08s; }
+    .reveal-delay-2 { transition-delay: 0.16s; }
+    .reveal-delay-3 { transition-delay: 0.24s; }
+    .reveal-delay-4 { transition-delay: 0.32s; }
+
+    /* =============================================
+       KEYFRAMES
+    ============================================= */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
     }
-    
-    .research-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px -15px rgba(26, 71, 49, 0.15);
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
-    
-    .dark .research-card:hover {
-      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.4);
-    }
-    
-    /* Link hover underline animation */
-    .link-animated {
-      position: relative;
-    }
-    
-    .link-animated::after {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-      width: 0;
-      height: 1px;
-      background-color: #1A4731;
-      transition: width 0.3s ease;
-    }
-    
-    .dark .link-animated::after {
-      background-color: #D8F3DC;
-    }
-    
-    .link-animated:hover::after {
-      width: 100%;
-    }
-    
-    /* Photo floating animation */
-    .photo-float {
-      animation: float 6s ease-in-out infinite;
-    }
-    
-    /* Achievement item animation */
-    .achievement-item {
-      opacity: 0;
-      transform: translateX(-20px);
-      transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    
-    .achievement-item.visible {
-      opacity: 1;
-      transform: translateX(0);
-    }
-    
-    /* Button hover effects */
-    .btn-primary {
-      transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 30px -10px rgba(26, 71, 49, 0.4);
-    }
-    
-    .btn-secondary {
-      transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    
-    .btn-secondary:hover {
-      transform: translateY(-2px);
-      background-color: #D8F3DC;
-    }
-    
-    .dark .btn-secondary:hover {
-      background-color: #1A4731;
-      color: #f1f5f9;
-    }
-    
-    /* Dark mode toggle button */
-    .dark-toggle {
-      transition: all 0.3s ease;
-    }
-    
-    .dark-toggle:hover {
-      transform: scale(1.1);
-    }
-    
-    /* Theme transition */
-    * {
-      transition-property: background-color, border-color;
-      transition-duration: 0.3s;
-      transition-timing-function: ease;
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; }
+      50%       { opacity: 1; }
     }
   </style>
 </head>
-<body class="antialiased">
-  
-  <!-- NAVBAR -->
-  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b border-gray-200 dark:border-gray-700">
-    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-      <!-- Logo -->
-      <a href="#" class="text-bmuco-dark dark:text-bmuco-light font-medium text-sm tracking-wide opacity-0 animate-fade-in" style="font-variant: small-caps; letter-spacing: 0.1em;">
-        Rajarshi Maiti
-      </a>
-      
-      <!-- Desktop Nav Links -->
-      <div class="hidden md:flex items-center gap-8 opacity-0 animate-fade-in stagger-2">
-        <a href="#about" class="text-sm text-gray-600 dark:text-gray-300 hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors link-animated">About</a>
-        <span class="text-gray-300 dark:text-gray-600">·</span>
-        <a href="#research" class="text-sm text-gray-600 dark:text-gray-300 hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors link-animated">Research</a>
-        <span class="text-gray-300 dark:text-gray-600">·</span>
-        <a href="#bmuco" class="text-sm text-gray-600 dark:text-gray-300 hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors link-animated">BMUCO</a>
-        <span class="text-gray-300 dark:text-gray-600">·</span>
-        <a href="#achievements" class="text-sm text-gray-600 dark:text-gray-300 hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors link-animated">Achievements</a>
-        <span class="text-gray-300 dark:text-gray-600">·</span>
-        <a href="#climate" class="text-sm text-gray-600 dark:text-gray-300 hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors link-animated">Climate</a>
-        <span class="text-gray-300 dark:text-gray-600">·</span>
-        <a href="#notes" class="text-sm text-gray-600 dark:text-gray-300 hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors link-animated">Notes</a>
-        <span class="text-gray-300 dark:text-gray-600">·</span>
-        <a href="#contact" class="text-sm text-gray-600 dark:text-gray-300 hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors link-animated">Contact</a>
-        
-        <!-- Dark Mode Toggle -->
-        <button id="dark-mode-toggle" class="dark-toggle ml-4 p-2 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" aria-label="Toggle dark mode">
-          <!-- Sun icon -->
-          <svg id="sun-icon" class="w-5 h-5 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-          </svg>
-          <!-- Moon icon -->
-          <svg id="moon-icon" class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-          </svg>
-        </button>
+<body>
+
+  <!-- Cursor glow -->
+  <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+
+  <!-- ================================================
+       NAVBAR
+  ================================================= -->
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo" aria-label="Rajarshi Maiti — Home">Rajarshi Maiti</a>
+
+      <div class="nav-links" id="nav-links">
+        <a href="#about">About</a>
+        <a href="#research">Research</a>
+        <a href="#bmuco">BMUCO</a>
+        <a href="#achievements">Achievements</a>
+        <a href="#climate">Climate</a>
+        <a href="#notes">Notes</a>
+        <a href="#contact">Contact</a>
+        <a href="cv.pdf" target="_blank" class="btn btn-dark" style="padding: 0.45rem 1rem; font-size: 12px;" aria-label="Download CV">CV ↗</a>
       </div>
-      
-      <!-- Mobile Menu Button -->
-      <div class="flex items-center gap-2 md:hidden">
-        <button id="dark-mode-toggle-mobile" class="dark-toggle p-2 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" aria-label="Toggle dark mode">
-          <svg id="sun-icon-mobile" class="w-5 h-5 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-          </svg>
-          <svg id="moon-icon-mobile" class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-          </svg>
-        </button>
-        <button id="mobile-menu-btn" class="p-2 text-gray-600 dark:text-gray-300 hover:text-bmuco-dark dark:hover:text-bmuco-light">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
-          </svg>
-        </button>
-      </div>
+
+      <button id="mobile-menu-btn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="8" x2="21" y2="8"/>
+          <line x1="3" y1="16" x2="21" y2="16"/>
+        </svg>
+      </button>
     </div>
-    
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
-      <div class="px-6 py-4 flex flex-col gap-4">
-        <a href="#about" class="text-sm text-gray-600 dark:text-gray-300 hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors">About</a>
-        <a href="#research" class="text-sm text-gray-600 dark:text-gray-300 hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors">Research</a>
-        <a href="#bmuco" class="text-sm text-gray-600 dark:text-gray-300 hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors">BMUCO</a>
-        <a href="#achievements" class="text-sm text-gray-600 dark:text-gray-300 hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors">Achievements</a>
-        <a href="#climate" class="text-sm text-gray-600 dark:text-gray-300 hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors">Climate</a>
-        <a href="#notes" class="text-sm text-gray-600 dark:text-gray-300 hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors">Notes</a>
-        <a href="#contact" class="text-sm text-gray-600 dark:text-gray-300 hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors">Contact</a>
-      </div>
+
+    <div id="mobile-menu" role="dialog" aria-label="Navigation menu">
+      <a href="#about">About</a>
+      <a href="#research">Research</a>
+      <a href="#bmuco">BMUCO</a>
+      <a href="#achievements">Achievements</a>
+      <a href="#climate">Climate</a>
+      <a href="#notes">Notes</a>
+      <a href="#contact">Contact</a>
+      <a href="cv.pdf" target="_blank">CV ↗</a>
     </div>
   </nav>
 
-  <!-- HERO SECTION -->
-  <section id="about" class="min-h-screen flex items-center pt-20" style="background-color: var(--bg-primary);">
-    <div class="max-w-6xl mx-auto px-6 py-20 w-full">
-      <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
-        
-        <!-- Left: Content -->
-        <div class="flex-1 lg:w-3/5">
-          <!-- Label -->
-          <p class="text-xs tracking-widest text-gray-400 dark:text-gray-500 mb-6 opacity-0 animate-fade-in-up" style="font-variant: small-caps;">
-            Mathematics · Bonn · 2026
-          </p>
-          
-          <!-- Name -->
-          <h1 class="text-4xl md:text-5xl font-normal mb-4 opacity-0 animate-fade-in-up stagger-1" style="color: var(--text-primary);">
-            Rajarshi Maiti
-          </h1>
-          
-          <!-- Subtitle -->
-          <p class="mb-8 opacity-0 animate-fade-in-up stagger-2" style="color: var(--text-muted);">
-            Graduate Student in Mathematics, University of Bonn
-          </p>
-          
-          <!-- Bio -->
-          <p class="leading-[1.8] max-w-[560px] mb-8 text-[15px] opacity-0 animate-fade-in-up stagger-3" style="color: var(--text-secondary);">
-            I'm a mathematics graduate student at the University of Bonn, where I'm specialising in number theory. Since 2019 I've been co-building BMUCO alongside other like-minded university students — we've run programs including in research, outreach and education reaching 20k people worldwide, co-hosted the Abel Symposium 2025, and interviewed Fields Medalists and Nobel Laureates. Right now I'm focused on the formalisation of graduate mathematics in Lean 4 and its implications for AI. Outside mathematics I work on climate policy and quantitative finance.
-          </p>
-          
-          <!-- CTA Buttons -->
-          <div class="flex flex-wrap gap-4 opacity-0 animate-fade-in-up stagger-4">
-            <a href="cv.pdf" target="_blank" class="btn-primary inline-flex items-center px-6 py-3 bg-bmuco-dark text-white text-sm font-medium rounded-md">
-              View CV
-            </a>
-            <a href="#contact" class="btn-secondary inline-flex items-center px-6 py-3 border border-bmuco-dark dark:border-bmuco-light text-bmuco-dark dark:text-bmuco-light text-sm font-medium rounded-md">
-              Get in Touch
-            </a>
-          </div>
+  <!-- ================================================
+       HERO
+  ================================================= -->
+  <section id="about" aria-labelledby="hero-name">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <p class="hero-label">Mathematics · University of Bonn · 2026</p>
+        <h1 class="hero-name" id="hero-name">Rajarshi Maiti</h1>
+        <p class="hero-role">Graduate Student in Mathematics</p>
+        <p class="hero-bio">
+          I'm a mathematics graduate student at the University of Bonn specialising in number theory.
+          Since 2019 I've been co-building <strong>BMUCO</strong> — a nonprofit theoretical science + AI lab — alongside other like-minded university students.
+          We've run programs in research, outreach and education reaching <strong>20k people worldwide</strong>, co-hosted the Abel Symposium 2025, and interviewed Fields Medalists and Nobel Laureates.
+          Right now I'm focused on the formalisation of graduate mathematics in <strong>Lean 4</strong> and its implications for AI reasoning.
+          Outside mathematics I work on climate policy and quantitative finance.
+        </p>
+        <div class="hero-ctas">
+          <a href="cv.pdf" target="_blank" class="btn btn-dark" id="cv-btn">View CV ↗</a>
+          <a href="#contact" class="btn btn-ghost" id="contact-cta-btn">Get in Touch</a>
         </div>
-        
-        <!-- Right: Photo -->
-        <div class="lg:w-2/5 flex flex-col items-center opacity-0 animate-fade-in stagger-5">
-          <div class="photo-float w-48 h-48 md:w-56 md:h-56 rounded-full border-4 border-bmuco-dark dark:border-bmuco-light overflow-hidden shadow-xl">
-            <img src="photo.png" alt="Rajarshi Maiti" class="w-full h-full object-cover">
-          </div>
+      </div>
+
+      <div class="hero-photo-wrap">
+        <div class="hero-photo">
+          <img src="photo.png" alt="Rajarshi Maiti" width="200" height="200">
         </div>
       </div>
     </div>
   </section>
 
-  <!-- RESEARCH INTERESTS -->
-  <section id="research" class="py-24" style="background-color: var(--bg-secondary);">
-    <div class="max-w-6xl mx-auto px-6">
-      <!-- Section Title -->
-      <h2 class="section-title text-2xl mb-4 reveal">Research</h2>
-      
-      <!-- Intro -->
-      <p class="max-w-2xl mb-12 leading-relaxed reveal" style="color: var(--text-secondary);">
-        My mathematical interests sit at the intersection of number theory, formal verification, and the emerging field of AI for mathematics.
+  <!-- divider -->
+  <div class="section-divider" aria-hidden="true"><hr></div>
+
+  <!-- ================================================
+       RESEARCH
+  ================================================= -->
+  <section id="research" aria-labelledby="research-heading">
+    <div class="section-inner">
+      <span class="section-tag reveal">Research</span>
+      <h2 class="section-heading reveal reveal-delay-1" id="research-heading">
+        Where mathematics meets<br>machine intelligence
+      </h2>
+      <p class="section-intro reveal reveal-delay-2">
+        My work sits at the intersection of analytic number theory, formal verification, and the emerging field of AI for mathematics.
       </p>
-      
-      <!-- Cards Grid -->
-      <div class="grid md:grid-cols-2 gap-8 max-w-4xl">
-        
-        <!-- Card 1 -->
-        <div class="research-card rounded-lg border card-accent p-8 reveal" style="background-color: var(--bg-tertiary); border-color: var(--border-color);">
-          <h3 class="text-lg font-medium text-bmuco-dark dark:text-bmuco-light mb-4">Number Theory</h3>
-          <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">
-            Sums of two squares, gaps between arithmetic sequences, L-functions and zeta functions. Summer research at Oxford (2021, 2022) supervised by Dr Thomas Bloom (Royal Society Research Fellow) and Dr Tiago Jardim da Fonseca. Graduate coursework at Bonn includes the Smooth Circle Method (Heath-Brown).
+
+      <div class="research-grid reveal reveal-delay-3" role="list">
+
+        <div class="research-card" role="listitem">
+          <p class="research-card-tag">Primary</p>
+          <h3>Number Theory</h3>
+          <p>
+            Sums of two squares, gaps between arithmetic sequences, L-functions and zeta functions.
+            Summer research at Oxford (2021, 2022) supervised by Dr Thomas Bloom (Royal Society Research Fellow) and Dr Tiago Jardim da Fonseca.
+            Graduate coursework at Bonn includes the Smooth Circle Method (Heath-Brown).
           </p>
         </div>
-        
-        <!-- Card 2 -->
-        <div class="research-card rounded-lg border card-accent p-8 reveal" style="background-color: var(--bg-tertiary); border-color: var(--border-color);">
-          <h3 class="text-lg font-medium text-bmuco-dark dark:text-bmuco-light mb-4">Formal Verification & AI for Mathematics</h3>
-          <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">
-            Interested in formalism in mathematics, and the use of AI/ML in mathematics.
+
+        <div class="research-card" role="listitem">
+          <p class="research-card-tag">Active</p>
+          <h3>Formal Verification &amp; AI for Mathematics</h3>
+          <p>
+            Interested in the formalisation of graduate mathematics in Lean&nbsp;4 and what expert-verified proof corpora unlock for neural reasoning — training data for the next generation of AI models that can do real mathematics.
           </p>
         </div>
-        
+
       </div>
     </div>
   </section>
 
-  <!-- BMUCO SECTION -->
-  <section id="bmuco" class="py-24" style="background-color: var(--bg-primary);">
-    <div class="max-w-6xl mx-auto px-6">
-      <!-- Section Title -->
-      <div class="flex items-baseline gap-3 mb-8 reveal">
-        <h2 class="section-title text-2xl">BMUCO</h2>
-        <a href="https://bmuco.org" target="_blank" rel="noopener" class="text-sm text-bmuco-muted hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors">
-          bmuco.org →
-        </a>
-      </div>
-      
-      <!-- Two Column Layout -->
-      <div class="grid lg:grid-cols-2 gap-12">
-        
-        <!-- Left Column -->
-        <div class="reveal">
-          <h3 class="text-xl font-medium mb-4" style="color: var(--text-primary);">
-            Building the ecosystem for the future of sciences
-          </h3>
-          <p class="leading-relaxed mb-6" style="color: var(--text-secondary);">
-            Since 2019, I've co-built BMUCO alongside like-minded university students into a global science organisation. We run research mentorships, winter schools, and talks — and have built partnerships with leading institutions across Europe.
+  <!-- divider -->
+  <div class="section-divider" aria-hidden="true"><hr></div>
+
+  <!-- ================================================
+       BMUCO
+  ================================================= -->
+  <section id="bmuco" aria-labelledby="bmuco-heading">
+    <div class="section-inner">
+      <span class="section-tag reveal">BMUCO</span>
+      <h2 class="section-heading reveal reveal-delay-1" id="bmuco-heading">
+        A nonprofit lab at the frontier<br>of theoretical science and AI
+      </h2>
+
+      <div class="bmuco-layout">
+        <!-- Left -->
+        <div class="bmuco-left reveal reveal-delay-2">
+          <p>
+            <strong style="color: var(--ink);">BMUCO</strong> is a nonprofit theoretical science + AI lab and global science organisation that I co-founded in 2019 with a group of like-minded university students.
+            We build programs across research mentorship, winter schools, and public talks — and have established partnerships with leading institutions across Europe.
           </p>
-          
-          <!-- Achievements List -->
-          <ul class="space-y-3">
-            <li class="achievement-item flex items-start gap-3">
-              <span class="w-1.5 h-1.5 rounded-full bg-bmuco-dark dark:bg-bmuco-light mt-2 shrink-0"></span>
-              <span class="text-sm" style="color: var(--text-secondary);">Co-hosted Abel Symposium 2025 with Norwegian Academy of Science and Letters and Hausdorff Center for Mathematics</span>
-            </li>
-            <li class="achievement-item flex items-start gap-3">
-              <span class="w-1.5 h-1.5 rounded-full bg-bmuco-dark dark:bg-bmuco-light mt-2 shrink-0"></span>
-              <span class="text-sm" style="color: var(--text-secondary);">Public interviews with Fields Medalists and Nobel Laureates</span>
-            </li>
-            <li class="achievement-item flex items-start gap-3">
-              <span class="w-1.5 h-1.5 rounded-full bg-bmuco-dark dark:bg-bmuco-light mt-2 shrink-0"></span>
-              <span class="text-sm" style="color: var(--text-secondary);">Programs cumulatively reaching 20k+ in total</span>
-            </li>
+          <p>
+            Our model is to bring the most talented students into direct contact with frontier research and researchers, early.
+          </p>
+
+          <div class="stat-row" aria-label="BMUCO impact statistics">
+            <div class="stat-pill">
+              <strong>20k+</strong>
+              <span>people reached</span>
+            </div>
+            <div class="stat-pill">
+              <strong>6+</strong>
+              <span>years running</span>
+            </div>
+            <div class="stat-pill">
+              <strong>Abel</strong>
+              <span>Symposium 2025</span>
+            </div>
+          </div>
+
+          <ul class="bmuco-achievements" aria-label="BMUCO highlights">
+            <li>Co-hosted the Abel Symposium 2025 with the Norwegian Academy of Science and Letters and the Hausdorff Center for Mathematics, Bonn</li>
+            <li>Public interviews with Fields Medalists and Nobel Laureates</li>
+            <li>Research mentorship programs placing students with leading European academics</li>
+            <li>Winter schools and workshops including intensive Lean 4 formalisation programs at Bonn</li>
           </ul>
         </div>
-        
-        <!-- Right Column -->
-        <div class="rounded-lg p-8 reveal" style="background-color: var(--bg-secondary);">
-          <h3 class="text-lg font-medium text-bmuco-dark dark:text-bmuco-light mb-4">
-            Current focus: Lean Formalisation Initiative
-          </h3>
-          <p class="leading-relaxed mb-6" style="color: var(--text-secondary);">
-            BMUCO is building the first structured student pipeline for expert-verified, graduate-level formal mathematics datasets in Lean 4 — feeding the next generation of AI reasoning models. We run a Directed Reading Programme (DRP) followed by intensive workshops at Bonn, producing human-verified proof corpora.
-          </p>
-          <a href="https://bmuco.org" target="_blank" rel="noopener" class="btn-primary inline-flex items-center px-5 py-2.5 bg-bmuco-dark text-white text-sm font-medium rounded-md">
-            Learn more at bmuco.org
-          </a>
+
+        <!-- Right panel -->
+        <div class="bmuco-right reveal reveal-delay-3">
+          <div class="bmuco-panel">
+            <p class="bmuco-panel-tag">Current Flagship Initiative</p>
+            <div class="lean-badge">
+              <span class="dot" aria-hidden="true"></span>
+              Lean 4 · Active
+            </div>
+            <h3>Graduate Proof Corpus for Lean 4</h3>
+            <p>
+              BMUCO is building the first structured student pipeline for expert-verified, graduate-level formal mathematics — a proof corpus in Lean&nbsp;4 designed to train the next generation of AI reasoning models.
+            </p>
+            <p>
+              We run a Directed Reading Programme (DRP) followed by intensive workshops at Bonn, producing human-verified proofs at graduate level. This dataset addresses a critical gap: current AI training data for mathematics barely reaches undergraduate level.
+            </p>
+            <a href="https://bmuco.org" target="_blank" rel="noopener" class="btn" id="bmuco-learn-btn">
+              bmuco.org ↗
+            </a>
+          </div>
         </div>
-        
       </div>
     </div>
   </section>
 
-  <!-- ACHIEVEMENTS SECTION -->
-  <section id="achievements" class="py-24" style="background-color: var(--bg-secondary);">
-    <div class="max-w-6xl mx-auto px-6">
-      <!-- Section Title -->
-      <h2 class="section-title text-2xl mb-8 reveal">Achievements</h2>
-      
-      <div class="grid md:grid-cols-3 gap-6">
-        
-        <!-- Achievement 1 -->
-        <div class="achievement-card rounded-lg border p-6 reveal transition-all duration-300 hover:-translate-y-1 hover:shadow-lg" style="background-color: var(--bg-tertiary); border-color: var(--border-color);">
-          <div class="w-10 h-10 rounded-full bg-bmuco-light dark:bg-bmuco-dark flex items-center justify-center mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A4731" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dark:hidden">
-              <circle cx="12" cy="8" r="6"></circle>
-              <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path>
-            </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D8F3DC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden dark:block">
-              <circle cx="12" cy="8" r="6"></circle>
-              <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path>
-            </svg>
-          </div>
-          <h3 class="text-sm font-medium text-bmuco-dark dark:text-bmuco-light mb-2">DAAD STIBET Scholar</h3>
-          <p class="text-sm" style="color: var(--text-secondary);">Competitive merit scholarship, University of Bonn</p>
-        </div>
-        
-        <!-- Achievement 2 -->
-        <div class="achievement-card rounded-lg border p-6 reveal transition-all duration-300 hover:-translate-y-1 hover:shadow-lg" style="background-color: var(--bg-tertiary); border-color: var(--border-color);">
-          <div class="w-10 h-10 rounded-full bg-bmuco-light dark:bg-bmuco-dark flex items-center justify-center mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A4731" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dark:hidden">
-              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-            </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D8F3DC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden dark:block">
-              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+  <!-- divider -->
+  <div class="section-divider" aria-hidden="true"><hr></div>
+
+  <!-- ================================================
+       ACHIEVEMENTS
+  ================================================= -->
+  <section id="achievements" aria-labelledby="achievements-heading">
+    <div class="section-inner">
+      <span class="section-tag reveal">Recognition</span>
+      <h2 class="section-heading reveal reveal-delay-1" id="achievements-heading">Achievements</h2>
+
+      <div class="achievements-grid">
+
+        <div class="achievement-card reveal reveal-delay-1" id="achievement-daad">
+          <div class="achievement-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
             </svg>
           </div>
-          <h3 class="text-sm font-medium text-bmuco-dark dark:text-bmuco-light mb-2">AI×Mathematics Conference</h3>
-          <p class="text-sm" style="color: var(--text-secondary);">Full funding for ICMS Edinburgh, 2026</p>
+          <h3>DAAD STIBET Scholar</h3>
+          <p>Competitive merit scholarship, University of Bonn. Awarded to outstanding international students.</p>
         </div>
-        
-        <!-- Achievement 3 -->
-        <div class="achievement-card rounded-lg border p-6 reveal transition-all duration-300 hover:-translate-y-1 hover:shadow-lg" style="background-color: var(--bg-tertiary); border-color: var(--border-color);">
-          <div class="w-10 h-10 rounded-full bg-bmuco-light dark:bg-bmuco-dark flex items-center justify-center mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A4731" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dark:hidden">
-              <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-              <path d="M2 17l10 5 10-5"></path>
-              <path d="M2 12l10 5 10-5"></path>
-            </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D8F3DC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden dark:block">
-              <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-              <path d="M2 17l10 5 10-5"></path>
-              <path d="M2 12l10 5 10-5"></path>
+
+        <div class="achievement-card reveal reveal-delay-2" id="achievement-icms">
+          <div class="achievement-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
             </svg>
           </div>
-          <h3 class="text-sm font-medium text-bmuco-dark dark:text-bmuco-light mb-2">Isaac Newton Institute</h3>
-          <p class="text-sm" style="color: var(--text-secondary);">Full funding for conference participation</p>
+          <h3>AI × Mathematics Conference</h3>
+          <p>Full funding to attend ICMS Edinburgh, 2026 — the leading international conference on AI for mathematics.</p>
         </div>
-        
+
+        <div class="achievement-card reveal reveal-delay-3" id="achievement-ini">
+          <div class="achievement-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+              <path d="M2 17l10 5 10-5"/>
+              <path d="M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <h3>Isaac Newton Institute</h3>
+          <p>Full funding for conference participation at one of the world's premier mathematical research institutes.</p>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- CLIMATE SECTION -->
-  <section id="climate" class="py-24" style="background-color: var(--bg-primary);">
-    <div class="max-w-3xl mx-auto px-6 text-center">
-      <!-- Section Title -->
-      <h2 class="section-title text-2xl mb-6 reveal">Climate</h2>
-      
-      <!-- Intro -->
-      <p class="leading-relaxed mb-12 reveal" style="color: var(--text-secondary);">
-        I engage with climate policy through the ACE Youth Hub programme, attending UNFCCC sessions as a youth delegate.
+  <!-- divider -->
+  <div class="section-divider" aria-hidden="true"><hr></div>
+
+  <!-- ================================================
+       CLIMATE
+  ================================================= -->
+  <section id="climate" aria-labelledby="climate-heading">
+    <div class="section-inner">
+      <div class="climate-inner">
+        <span class="section-tag reveal">Climate</span>
+        <h2 class="section-heading reveal reveal-delay-1" id="climate-heading">Climate Policy</h2>
+        <p class="section-intro reveal reveal-delay-2">
+          I engage with climate policy through the ACE Youth Hub programme, attending UNFCCC sessions as a youth delegate representing the voice of young scientists.
+        </p>
+
+        <div class="climate-events">
+          <div class="climate-card reveal reveal-delay-2" id="climate-2024">
+            <p class="climate-year">2024</p>
+            <p class="climate-event">UNFCCC SB60 · Bonn</p>
+            <p class="climate-role">Youth delegate, ACE Youth Hub</p>
+          </div>
+          <div class="climate-card reveal reveal-delay-3" id="climate-2025">
+            <p class="climate-year">2025</p>
+            <p class="climate-event">UNFCCC SB62 · Bonn</p>
+            <p class="climate-role">Youth delegate, ACE Youth Hub</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- divider -->
+  <div class="section-divider" aria-hidden="true"><hr></div>
+
+  <!-- ================================================
+       NOTES
+  ================================================= -->
+  <section id="notes" aria-labelledby="notes-heading">
+    <div class="section-inner">
+      <span class="section-tag reveal">Writing</span>
+      <h2 class="section-heading reveal reveal-delay-1" id="notes-heading">Notes</h2>
+      <p class="section-intro reveal reveal-delay-2">
+        Mathematical notes, expository writing, and occasional thoughts on formalisation and AI for mathematics.
       </p>
-      
-      <!-- Event Cards -->
-      <div class="grid sm:grid-cols-2 gap-6 max-w-xl mx-auto">
-        
-        <!-- Event 1 -->
-        <div class="rounded-lg border p-6 text-left reveal transition-all duration-300 hover:-translate-y-1 hover:shadow-lg" style="background-color: var(--bg-secondary); border-color: var(--border-color);">
-          <p class="text-3xl font-light text-bmuco-muted dark:text-bmuco-light mb-2">2024</p>
-          <p class="text-sm mb-1" style="color: var(--text-muted);">UNFCCC SB60, Bonn</p>
-          <p style="color: var(--text-primary);">Youth delegate, ACE Youth Hub</p>
-        </div>
-        
-        <!-- Event 2 -->
-        <div class="rounded-lg border p-6 text-left reveal transition-all duration-300 hover:-translate-y-1 hover:shadow-lg" style="background-color: var(--bg-secondary); border-color: var(--border-color);">
-          <p class="text-3xl font-light text-bmuco-muted dark:text-bmuco-light mb-2">2025</p>
-          <p class="text-sm mb-1" style="color: var(--text-muted);">UNFCCC SB62, Bonn</p>
-          <p style="color: var(--text-primary);">Youth delegate, ACE Youth Hub</p>
-        </div>
-        
+      <div class="notes-placeholder reveal reveal-delay-3" id="notes-placeholder">
+        <h3>Coming soon</h3>
+        <p>Notes and writing in progress — check back later.</p>
       </div>
     </div>
   </section>
 
-  <!-- NOTES SECTION -->
-  <section id="notes" class="py-24" style="background-color: var(--bg-secondary);">
-    <div class="max-w-3xl mx-auto px-6 text-center">
-      <!-- Section Title -->
-      <h2 class="section-title text-2xl mb-6 reveal">Notes</h2>
-      
-      <!-- Intro -->
-      <p class="leading-relaxed mb-10 reveal" style="color: var(--text-secondary);">
-        Mathematical notes, expository writing, and occasional thoughts on formalisation and AI. Coming soon.
-      </p>
-      
-      <!-- Placeholder Card -->
-      <div class="max-w-md mx-auto border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-8 reveal hover:border-bmuco-light dark:hover:border-bmuco-dark transition-colors duration-300">
-        <h3 class="text-lg font-medium mb-2" style="color: var(--text-primary);">Notes coming soon</h3>
-        <p class="text-sm" style="color: var(--text-muted);">Check back later</p>
-      </div>
-    </div>
-  </section>
+  <!-- divider -->
+  <div class="section-divider" aria-hidden="true"><hr></div>
 
-  <!-- CONTACT SECTION -->
-  <section id="contact" class="py-24" style="background-color: var(--bg-primary);">
-    <div class="max-w-lg mx-auto px-6 text-center">
-      <!-- Section Title -->
-      <h2 class="section-title text-2xl mb-6 reveal">Contact</h2>
-      
-      <!-- Intro -->
-      <p class="leading-relaxed mb-10 reveal" style="color: var(--text-secondary);">
+  <!-- ================================================
+       CONTACT
+  ================================================= -->
+  <section id="contact" aria-labelledby="contact-heading">
+    <div class="section-inner">
+      <span class="section-tag reveal">Contact</span>
+      <h2 class="section-heading reveal reveal-delay-1" id="contact-heading">Get in Touch</h2>
+      <p class="section-intro reveal reveal-delay-2">
         I'm always happy to hear from mathematicians, students, and anyone working on formalisation, AI for mathematics, or related areas.
       </p>
-      
-      <!-- Contact Links -->
-      <div class="space-y-4 mb-10 text-left max-w-xs mx-auto reveal">
-        
-        <!-- Email -->
-        <a href="mailto:rmaiti7@gmail.com" class="flex items-center gap-3 transition-colors group" style="color: var(--text-secondary);" onmouseover="this.style.color='#1A4731'" onmouseout="this.style.color='var(--text-secondary)'">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-bmuco-muted dark:text-bmuco-light">
-            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+
+      <div class="contact-links reveal reveal-delay-3" role="list" aria-label="Contact methods">
+
+        <a href="mailto:rmaiti7@gmail.com" class="contact-link" id="email-link" role="listitem" aria-label="Email Rajarshi Maiti">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="4" width="20" height="16" rx="2"/>
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
           </svg>
-          <span class="text-sm link-animated">rmaiti7@gmail.com</span>
+          rmaiti7@gmail.com
         </a>
-        
-        <!-- GitHub -->
-        <a href="https://github.com/rmaiti01" target="_blank" rel="noopener" class="flex items-center gap-3 transition-colors group" style="color: var(--text-secondary);" onmouseover="this.style.color='#1A4731'" onmouseout="this.style.color='var(--text-secondary)'">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-bmuco-muted dark:text-bmuco-light">
-            <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
-            <path d="M9 18c-4.51 2-5-2-7-2"></path>
+
+        <a href="https://github.com/rmaiti01" target="_blank" rel="noopener" class="contact-link" id="github-link" role="listitem" aria-label="GitHub profile">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+            <path d="M9 18c-4.51 2-5-2-7-2"/>
           </svg>
-          <span class="text-sm link-animated">github.com/rmaiti01</span>
+          github.com/rmaiti01
         </a>
-        
-        <!-- LinkedIn -->
-        <a href="https://linkedin.com/in/1729" target="_blank" rel="noopener" class="flex items-center gap-3 transition-colors group" style="color: var(--text-secondary);" onmouseover="this.style.color='#1A4731'" onmouseout="this.style.color='var(--text-secondary)'">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-bmuco-muted dark:text-bmuco-light">
-            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-            <rect x="2" y="9" width="4" height="12"></rect>
-            <circle cx="4" cy="4" r="2"></circle>
+
+        <a href="https://linkedin.com/in/1729" target="_blank" rel="noopener" class="contact-link" id="linkedin-link" role="listitem" aria-label="LinkedIn profile">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+            <rect x="2" y="9" width="4" height="12"/>
+            <circle cx="4" cy="4" r="2"/>
           </svg>
-          <span class="text-sm link-animated">linkedin.com/in/1729</span>
+          linkedin.com/in/1729
         </a>
-        
+
       </div>
-      
-      <!-- CTA Button -->
-      <div class="reveal">
-        <a href="mailto:rmaiti7@gmail.com" class="btn-primary inline-flex items-center px-8 py-3 bg-bmuco-dark text-white text-sm font-medium rounded-md">
-          Send me an email
-        </a>
+
+      <div class="contact-cta reveal reveal-delay-4">
+        <a href="mailto:rmaiti7@gmail.com" class="btn btn-dark" id="email-btn">Send me an email</a>
       </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
-  <footer class="py-8 border-t border-gray-200 dark:border-gray-700" style="background-color: var(--bg-secondary);">
-    <div class="max-w-6xl mx-auto px-6 text-center">
-      <p class="text-sm" style="color: var(--text-muted);">
-        © 2026 Rajarshi Maiti · Bonn, Germany
-      </p>
-      <div class="mt-3 flex items-center justify-center gap-4 text-xs" style="color: var(--text-muted);">
-        <a href="cv.pdf" target="_blank" class="hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors link-animated">CV</a>
-        <span>·</span>
-        <a href="https://bmuco.org" target="_blank" rel="noopener" class="hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors link-animated">BMUCO</a>
-        <span>·</span>
-        <a href="https://github.com/rmaiti01" target="_blank" rel="noopener" class="hover:text-bmuco-dark dark:hover:text-bmuco-light transition-colors link-animated">GitHub</a>
-      </div>
+  <!-- ================================================
+       FOOTER
+  ================================================= -->
+  <footer role="contentinfo">
+    <div class="footer-inner">
+      <p class="footer-copy">© 2026 Rajarshi Maiti · Bonn, Germany</p>
+      <nav class="footer-links" aria-label="Footer links">
+        <a href="cv.pdf" target="_blank">CV</a>
+        <a href="https://bmuco.org" target="_blank" rel="noopener">BMUCO</a>
+        <a href="https://github.com/rmaiti01" target="_blank" rel="noopener">GitHub</a>
+      </nav>
     </div>
   </footer>
 
-  <!-- JAVASCRIPT -->
+  <!-- ================================================
+       JAVASCRIPT
+  ================================================= -->
   <script>
-    // Dark Mode Toggle
-    const darkModeToggle = document.getElementById('dark-mode-toggle');
-    const darkModeToggleMobile = document.getElementById('dark-mode-toggle-mobile');
-    const sunIcon = document.getElementById('sun-icon');
-    const moonIcon = document.getElementById('moon-icon');
-    const sunIconMobile = document.getElementById('sun-icon-mobile');
-    const moonIconMobile = document.getElementById('moon-icon-mobile');
-    const html = document.documentElement;
-    
-    // Check for saved preference or system preference
-    function getInitialTheme() {
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme) {
-        return savedTheme;
-      }
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-    
-    // Apply theme
-    function applyTheme(theme) {
-      if (theme === 'dark') {
-        html.classList.add('dark');
-        sunIcon.classList.remove('hidden');
-        moonIcon.classList.add('hidden');
-        sunIconMobile.classList.remove('hidden');
-        moonIconMobile.classList.add('hidden');
-      } else {
-        html.classList.remove('dark');
-        sunIcon.classList.add('hidden');
-        moonIcon.classList.remove('hidden');
-        sunIconMobile.classList.add('hidden');
-        moonIconMobile.classList.remove('hidden');
-      }
-    }
-    
-    // Initialize theme
-    const currentTheme = getInitialTheme();
-    applyTheme(currentTheme);
-    
-    // Toggle function
-    function toggleTheme() {
-      const isDark = html.classList.contains('dark');
-      const newTheme = isDark ? 'light' : 'dark';
-      applyTheme(newTheme);
-      localStorage.setItem('theme', newTheme);
-    }
-    
-    // Event listeners
-    darkModeToggle.addEventListener('click', toggleTheme);
-    darkModeToggleMobile.addEventListener('click', toggleTheme);
-    
-    // Navbar scroll effect
+    // ── Cursor glow ──────────────────────────────────
+    const glow = document.getElementById('cursor-glow');
+    document.addEventListener('mousemove', (e) => {
+      glow.style.transform = `translate(${e.clientX - 150}px, ${e.clientY - 150}px)`;
+    });
+
+    // ── Navbar scroll ────────────────────────────────
     const navbar = document.getElementById('navbar');
-    
     window.addEventListener('scroll', () => {
-      if (window.pageYOffset > 50) {
-        navbar.classList.add('nav-scrolled');
-      } else {
-        navbar.classList.remove('nav-scrolled');
-      }
-    });
-    
-    // Mobile menu toggle
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    // ── Mobile menu ──────────────────────────────────
+    const mobileBtn = document.getElementById('mobile-menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
-    
-    mobileMenuBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
+    let menuOpen = false;
+
+    mobileBtn.addEventListener('click', () => {
+      menuOpen = !menuOpen;
+      mobileMenu.classList.toggle('open', menuOpen);
+      mobileBtn.setAttribute('aria-expanded', menuOpen);
     });
-    
-    // Close mobile menu when clicking a link
+
     mobileMenu.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
-        mobileMenu.classList.add('hidden');
+        menuOpen = false;
+        mobileMenu.classList.remove('open');
+        mobileBtn.setAttribute('aria-expanded', false);
       });
     });
-    
-    // Smooth scroll for anchor links
+
+    // ── Smooth scroll ────────────────────────────────
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+      anchor.addEventListener('click', (e) => {
+        const href = anchor.getAttribute('href');
+        if (href === '#') return;
+        const target = document.querySelector(href);
         if (target) {
-          const offset = 80;
-          const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+          e.preventDefault();
           window.scrollTo({
-            top: targetPosition,
+            top: target.getBoundingClientRect().top + window.scrollY - 80,
             behavior: 'smooth'
           });
         }
       });
     });
-    
-    // Scroll reveal animation with stagger
-    const revealElements = document.querySelectorAll('.reveal');
-    
-    const revealObserver = new IntersectionObserver((entries) => {
+
+    // ── Scroll reveal ────────────────────────────────
+    const revealEls = document.querySelectorAll('.reveal');
+
+    const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
-          revealObserver.unobserve(entry.target);
+          observer.unobserve(entry.target);
         }
       });
-    }, {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    });
-    
-    revealElements.forEach(el => {
-      revealObserver.observe(el);
-    });
-    
-    // Achievement items stagger animation
-    const achievementItems = document.querySelectorAll('.achievement-item');
-    
-    const achievementObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry, index) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => {
-            entry.target.classList.add('visible');
-          }, index * 100);
-          achievementObserver.unobserve(entry.target);
-        }
-      });
-    }, {
-      threshold: 0.1
-    });
-    
-    achievementItems.forEach(item => {
-      achievementObserver.observe(item);
-    });
-    
-    // Initialize KaTeX auto-render when loaded
-    document.addEventListener("DOMContentLoaded", function() {
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    revealEls.forEach(el => observer.observe(el));
+
+    // ── KaTeX ─────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', () => {
       if (typeof renderMathInElement !== 'undefined') {
         renderMathInElement(document.body, {
           delimiters: [
-            {left: '$$', right: '$$', display: true},
-            {left: '$', right: '$', display: false}
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false }
           ],
           throwOnError: false
         });
       }
     });
   </script>
-  
 </body>
 </html>
