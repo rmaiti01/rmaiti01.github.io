@@ -4,18 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Rajarshi Maiti</title>
-<meta name="description" content="Mathematician at Bonn. Co-founder of ProofTree. Number theory, Lean 4, and infrastructure for mathematics done by people and machines together.">
+<meta name="description" content="Mathematician at Bonn, co-founder of ProofTree. Number theory, Lean 4, and the infrastructure for mathematics done by people and machines together.">
 <link rel="canonical" href="https://rmaiti01.github.io/">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Rajarshi Maiti">
-<meta property="og:description" content="Mathematician at Bonn. Co-founder of ProofTree. Number theory, Lean 4, and infrastructure for mathematics done by people and machines together.">
+<meta property="og:description" content="Mathematician at Bonn, co-founder of ProofTree. Number theory, Lean 4, and the infrastructure for mathematics done by people and machines together.">
 <meta property="og:url" content="https://rmaiti01.github.io/">
 <meta property="og:image" content="https://rmaiti01.github.io/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:creator" content="@formaliser_dude">
-<meta name="theme-color" content="#F7F6F1" id="metaTheme">
+<meta name="theme-color" content="#14161D" id="metaTheme">
 
 <script type="application/ld+json">
 {
@@ -34,44 +34,47 @@
 </script>
 
 <script>
-/* theme before paint: stored preference, else system */
+/* skin before paint: stored choice, else the board */
 (function () {
   try {
-    var t = localStorage.getItem('theme');
-    if (t !== 'dark' && t !== 'light') {
-      t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
+    var t = localStorage.getItem('skin');
+    if (t !== 'board' && t !== 'paper') t = 'board';
     document.documentElement.dataset.theme = t;
-  } catch (e) { document.documentElement.dataset.theme = 'light'; }
+  } catch (e) { document.documentElement.dataset.theme = 'board'; }
 })();
 </script>
 
-<link rel="preload" href="fonts/Newsreader-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="fonts/Newsreader-Italic-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="fonts/JetBrainsMono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/LM-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/LM-italic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/LMMath-subset.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/JetBrainsMono-subset.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="fonts/fonts.css">
 
 <style>
 /* =====================================================================
    Rajarshi Maiti · personal site
-   Editorial single column, marginal mono labels, Newsreader display.
-   Hierarchy through type only. Light and dark, same ink.
+   Two skins, one ink. The board: chalk on a dark lecture slate, the
+   palette of animated mathematics. The paper: marker on brown kraft.
+   Latin Modern throughout, because that is what mathematics is set in.
    ===================================================================== */
 
 :root {
-  --paper:        #F7F6F1;
-  --paper-deep:   #F0EEE7;
-  --paper-press:  #E8E5DB;
-  --ink:          #131210;
-  --ink-muted:    #5E5A52;
-  --ink-faint:    #A8A498;
-  --hairline:     #E0DCCE;
-  --accent:       #9A3D2F;
-  --accent-hov:   #6B2A20;
-  --accent-tint:  #F5DDD5;
-  --verified:     #4F7A4B;
+  /* the board */
+  --paper:        #14161D;
+  --paper-deep:   #1B1E27;
+  --paper-press:  #232734;
+  --ink:          #E9E9E4;
+  --ink-muted:    #A0A6B0;
+  --ink-faint:    #8B939E;
+  --hairline:     #2B2F3A;
+  --accent:       #58C4DD;   /* links, structure */
+  --accent-hov:   #8AD8EA;
+  --hl-yellow:    #F2CF4C;   /* emphasis */
+  --hl-green:     #83C167;   /* verified */
+  --hl-red:       #FC6255;   /* collision */
+  --select:       rgba(88, 196, 221, 0.22);
 
-  --serif: 'Newsreader', 'Iowan Old Style', Palatino, Georgia, serif;
+  --serif: 'Latin Modern', 'Computer Modern', 'STIX Two Text', Georgia, serif;
   --mono:  'JetBrains Mono', 'IBM Plex Mono', Menlo, Consolas, monospace;
 
   --fs-label: 11px;
@@ -81,28 +84,30 @@
   --label-col: 132px;
   --gutter: 52px;
 
-  --t-hero:    clamp(1.95rem, 1.2rem + 3.1vw, 3.4rem);
-  --t-section: clamp(1.7rem, 1.35rem + 1.3vw, 2.15rem);
-  --t-deck:    clamp(1.18rem, 1.05rem + 0.6vw, 1.45rem);
-  --t-read:    1.1875rem;
-  --t-small:   0.97rem;
+  --t-hero:    clamp(2.05rem, 1.25rem + 3.3vw, 3.55rem);
+  --t-section: clamp(1.75rem, 1.4rem + 1.3vw, 2.2rem);
+  --t-deck:    clamp(1.22rem, 1.08rem + 0.6vw, 1.5rem);
+  --t-read:    1.235rem;
 
   --ease: cubic-bezier(0.2, 0, 0.2, 1);
   --dur: 180ms;
 }
 
-html[data-theme="dark"] {
-  --paper:        #221F19;
-  --paper-deep:   #2A261F;
-  --paper-press:  #332E25;
-  --ink:          #ECE7DA;
-  --ink-muted:    #A59C8A;
-  --ink-faint:    #6F6758;
-  --hairline:     #3A352B;
-  --accent:       #C7634A;
-  --accent-hov:   #DA8169;
-  --accent-tint:  #46291F;
-  --verified:     #82A87A;
+html[data-theme="paper"] {
+  /* the paper */
+  --paper:        #E6D9BD;
+  --paper-deep:   #DECFB0;
+  --paper-press:  #D3C29E;
+  --ink:          #2A2115;
+  --ink-muted:    #61553F;
+  --ink-faint:    #695C45;
+  --hairline:     #C6B695;
+  --accent:       #1F4F9C;
+  --accent-hov:   #16396F;
+  --hl-yellow:    #75500C;
+  --hl-green:     #44703D;
+  --hl-red:       #A93226;
+  --select:       rgba(31, 79, 156, 0.18);
 }
 
 * { box-sizing: border-box; }
@@ -113,27 +118,28 @@ body {
   color: var(--ink);
   font-family: var(--serif);
   font-size: var(--t-read);
-  line-height: 1.62;
+  line-height: 1.58;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   transition: background-color 200ms var(--ease), color 200ms var(--ease);
 }
 
-::selection { background: var(--accent-tint); color: var(--ink); }
+::selection { background: var(--select); }
 
 a {
   color: var(--accent);
-  text-decoration: none;
+  text-decoration: underline;
   text-underline-offset: 3px;
   text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
   transition: color var(--dur) var(--ease);
 }
-a:hover { color: var(--accent-hov); text-decoration: underline; }
+a:hover { color: var(--accent-hov); text-decoration-color: currentColor; }
 
 p { margin: 0; max-width: var(--measure); }
 em { font-style: italic; }
-strong, b { font-weight: 600; color: var(--ink); }
+strong, b { font-weight: 700; color: var(--ink); }
 sub, sup { font-size: 0.68em; line-height: 0; }
 
 .muted { color: var(--ink-muted); }
@@ -149,7 +155,7 @@ sub, sup { font-size: 0.68em; line-height: 0; }
   margin: 0 auto;
 }
 
-/* top chrome: name + theme switch */
+/* top chrome: name + skin switch */
 .topbar {
   display: flex;
   align-items: baseline;
@@ -184,7 +190,6 @@ sub, sup { font-size: 0.68em; line-height: 0; }
 .mark {
   font-family: var(--mono);
   font-size: var(--fs-label);
-  font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--ink-faint);
@@ -210,10 +215,9 @@ sub, sup { font-size: 0.68em; line-height: 0; }
 
 .section-title {
   font-family: var(--serif);
-  font-weight: 500;
+  font-weight: 400;
   font-size: var(--t-section);
   line-height: 1.12;
-  letter-spacing: -0.012em;
   margin: 0;
 }
 .deck {
@@ -224,12 +228,12 @@ sub, sup { font-size: 0.68em; line-height: 0; }
   line-height: 1.4;
   margin: 0;
 }
-.note { font-size: var(--t-read); line-height: 1.66; }
-.note.big { font-size: 1.28rem; line-height: 1.55; }
+.note { font-size: var(--t-read); line-height: 1.6; }
+.note.big { font-size: 1.32rem; line-height: 1.52; }
 
 .h3 {
   font-family: var(--serif);
-  font-weight: 600;
+  font-weight: 700;
   font-size: var(--t-read);
   margin: 28px 0 0;
 }
@@ -246,20 +250,19 @@ sub, sup { font-size: 0.68em; line-height: 0; }
   margin-bottom: clamp(30px, 5vw, 52px);
 }
 .portrait {
-  width: 116px;
-  height: 148px;
+  width: 112px;
+  height: 142px;
   object-fit: cover;
   object-position: 50% 16%;
-  border-radius: 6px;
+  border-radius: 4px;
   border: 1px solid var(--hairline);
-  filter: saturate(0.82) contrast(1.02);
+  filter: saturate(0.85) contrast(1.02);
   flex-shrink: 0;
 }
 .byline-id { display: flex; flex-direction: column; gap: 3px; }
 .byline-name {
   font-family: var(--mono);
   font-size: var(--fs-chrome);
-  font-weight: 500;
   letter-spacing: 0.02em;
 }
 .byline-role {
@@ -267,30 +270,32 @@ sub, sup { font-size: 0.68em; line-height: 0; }
   font-size: var(--fs-chrome);
   color: var(--ink-muted);
 }
+.byline-role .yc { color: var(--hl-yellow); }
 
 .hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 252px;
-  column-gap: 56px;
+  grid-template-columns: minmax(0, 1fr) 296px;
+  column-gap: 52px;
   align-items: center;
 }
 
 .hero-headline {
   font-family: var(--serif);
-  font-weight: 500;
+  font-weight: 400;
   font-size: var(--t-hero);
-  line-height: 1.12;
-  letter-spacing: -0.016em;
+  line-height: 1.14;
   margin: 0;
   max-width: 24ch;
   text-wrap: balance;
 }
 .hero-headline .turn { font-style: italic; }
+.hl-b { color: var(--accent); }
+.hl-y { color: var(--hl-yellow); }
 
 .hero-lede {
   font-size: var(--t-deck);
   line-height: 1.5;
-  max-width: 40ch;
+  max-width: 42ch;
   margin-top: clamp(20px, 3vw, 30px);
 }
 
@@ -303,13 +308,17 @@ sub, sup { font-size: 0.68em; line-height: 0; }
   font-family: var(--mono);
   font-size: var(--fs-chrome);
 }
+.actions a { text-decoration: none; }
+.actions a:hover { text-decoration: underline; }
 .actions .sep { color: var(--ink-faint); }
 .actions .ghost { color: var(--ink-muted); }
 .actions .ghost:hover { color: var(--ink); }
 
-/* fig. 1 · attempt graph */
-.attempt-fig { margin: 0; }
-.attempt-fig svg { display: block; width: 100%; height: auto; }
+/* ------------------------------------------------------------------ */
+/*  fig. 1 · the packing figure (the area argument behind #1026)       */
+/* ------------------------------------------------------------------ */
+.packing-fig { margin: 0; }
+.packing-fig svg { display: block; width: 100%; height: auto; }
 .figcap {
   font-family: var(--mono);
   font-size: var(--fs-label);
@@ -318,35 +327,46 @@ sub, sup { font-size: 0.68em; line-height: 0; }
   margin-top: 10px;
   line-height: 1.6;
 }
-.fig-edge { stroke: var(--ink-faint); stroke-width: 1; fill: none; opacity: 0.85; }
-.fig-edge.draw { stroke-dasharray: 460; stroke-dashoffset: 460; animation: figdraw 2.6s var(--ease) 0.4s forwards; }
-.fig-edge.dashed { stroke-dasharray: 3 5; opacity: 0.6; }
-.fig-node { stroke-width: 1; opacity: 0; animation: figin 0.5s var(--ease) forwards; }
-.fig-node.hollow { fill: var(--paper); stroke: var(--ink-muted); }
-.fig-node.inked  { fill: var(--ink); stroke: var(--ink); }
-.fig-node.green  { fill: var(--verified); stroke: var(--verified); }
-.fig-node.red    { fill: var(--accent); stroke: var(--accent); }
-.fig-node.ghost  { fill: var(--paper); stroke: var(--ink-faint); }
-.fig-ring {
-  fill: none; stroke: var(--accent); stroke-width: 1;
-  transform-box: fill-box; transform-origin: center;
-  animation: figpulse 5s var(--ease) 3.2s infinite;
-  opacity: 0;
-}
-.fig-tag { font-family: var(--mono); font-size: 9px; letter-spacing: 0.04em; fill: var(--ink-faint); }
-.fig-tag.ok { fill: var(--verified); }
 
-@keyframes figdraw { to { stroke-dashoffset: 0; } }
-@keyframes figin { to { opacity: 1; } }
-@keyframes figpulse {
-  0%   { opacity: 0.55; transform: scale(1); }
-  46%  { opacity: 0; transform: scale(2.4); }
-  100% { opacity: 0; transform: scale(2.4); }
+.pk-grid line { stroke: var(--hairline); stroke-width: 0.6; opacity: 0; animation: pkfade 0.9s var(--ease) 0.1s forwards; }
+.pk-rect {
+  fill: none; stroke: var(--ink-muted); stroke-width: 1.1;
+  stroke-dasharray: 900; stroke-dashoffset: 900;
+  animation: pkdraw 1.7s var(--ease) 0.25s forwards;
 }
+.pk-sq {
+  stroke-width: 1.3; fill-opacity: 0;
+  stroke-dasharray: 200; stroke-dashoffset: 200;
+  animation: pkdraw 0.9s var(--ease) forwards, pkfill 0.8s var(--ease) 2.9s forwards;
+}
+.pk-blue   { stroke: var(--accent);   fill: var(--accent); }
+.pk-yellow { stroke: var(--hl-yellow); fill: var(--hl-yellow); }
+.pk-ghost  {
+  stroke: var(--ink-faint); fill: none; stroke-width: 1;
+  stroke-dasharray: 3 4; opacity: 0;
+  animation: pkhalf 0.8s var(--ease) 2.6s forwards;
+}
+.pk-tag {
+  font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.05em;
+  fill: var(--ink-faint);
+  opacity: 0; animation: pkfade 0.9s var(--ease) 3s forwards;
+}
+.pk-math {
+  font-family: var(--serif); font-style: italic; font-size: 14px;
+  fill: var(--ink-muted);
+  opacity: 0; animation: pkfade 0.9s var(--ease) 3.2s forwards;
+}
+
+@keyframes pkdraw { to { stroke-dashoffset: 0; } }
+@keyframes pkfill { to { fill-opacity: 0.11; } }
+@keyframes pkfade { to { opacity: 1; } }
+@keyframes pkhalf { to { opacity: 0.55; } }
+
 @media (prefers-reduced-motion: reduce) {
-  .fig-edge.draw { stroke-dasharray: none; stroke-dashoffset: 0; animation: none; }
-  .fig-node { opacity: 1; animation: none; }
-  .fig-ring { animation: none; opacity: 0; }
+  .pk-grid line, .pk-tag, .pk-math { animation: none; opacity: 1; }
+  .pk-ghost { animation: none; opacity: 0.55; }
+  .pk-rect, .pk-sq { stroke-dasharray: none; stroke-dashoffset: 0; animation: none; }
+  .pk-sq { fill-opacity: 0.11; }
 }
 
 /* ------------------------------------------------------------------ */
@@ -355,9 +375,8 @@ sub, sup { font-size: 0.68em; line-height: 0; }
 .statement {
   margin: 8px 0 0;
   padding: 14px 20px;
-  border-left: 2px solid var(--accent);
+  border-left: 2px solid var(--hl-yellow);
   font-style: italic;
-  color: var(--ink);
   max-width: var(--measure);
 }
 .statement .who {
@@ -376,7 +395,6 @@ sub, sup { font-size: 0.68em; line-height: 0; }
   font-size: var(--t-deck);
   font-style: italic;
   line-height: 1.45;
-  color: var(--ink);
   border-top: 1px solid var(--hairline);
   border-bottom: 1px solid var(--hairline);
   padding: 22px 0;
@@ -389,7 +407,7 @@ pre.lean {
   padding: 18px 20px;
   background: var(--paper-deep);
   border: 1px solid var(--hairline);
-  border-radius: 6px;
+  border-radius: 4px;
   overflow-x: auto;
   font-family: var(--mono);
   font-size: 12.5px;
@@ -408,17 +426,38 @@ pre.lean .k { color: var(--accent); }
 }
 
 /* ------------------------------------------------------------------ */
-/*  Wordmark, lists, rows                                              */
+/*  Wordmark, chips, lists, rows                                       */
 /* ------------------------------------------------------------------ */
-.nameplate { display: flex; flex-direction: column; gap: 10px; margin-bottom: 6px; }
+.nameplate { display: flex; flex-direction: column; gap: 10px; margin-bottom: 4px; }
 .wm {
   font-family: var(--serif);
-  font-weight: 500;
+  font-weight: 400;
   font-size: var(--t-section);
-  letter-spacing: -0.01em;
+  line-height: 1.12;
+  margin: 0;
 }
 .wm .forall { color: var(--accent); }
 .wm .proof { font-style: italic; }
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+  font-family: var(--mono);
+  font-size: 12px;
+}
+.chip {
+  border: 1px solid var(--hairline);
+  border-radius: 4px;
+  padding: 3px 10px;
+  color: var(--ink-muted);
+  white-space: nowrap;
+}
+.chip-yc {
+  border-color: color-mix(in srgb, var(--hl-yellow) 55%, transparent);
+  color: var(--hl-yellow);
+}
 
 .worklist { list-style: none; margin: 10px 0 0; padding: 0; max-width: var(--measure); }
 .worklist li {
@@ -430,15 +469,13 @@ pre.lean .k { color: var(--accent); }
   border-top: 1px solid var(--hairline);
 }
 .worklist li:last-child { border-bottom: 1px solid var(--hairline); }
-.worklist .idx { font-family: var(--mono); font-size: var(--fs-chrome); color: var(--ink-faint); }
+.worklist .idx { font-family: var(--mono); font-size: var(--fs-chrome); color: var(--accent); opacity: 0.85; }
 .worklist .w-body { font-size: var(--t-read); line-height: 1.5; }
-.worklist .w-body b { font-weight: 600; }
 .worklist .w-body .det { color: var(--ink-muted); }
 
 .rows { display: flex; flex-direction: column; max-width: var(--measure); }
 .rows .row { padding: 13px 0; border-top: 1px solid var(--hairline); line-height: 1.5; }
 .rows .row:first-child { border-top: 0; padding-top: 0; }
-.rows .row b { font-weight: 600; }
 .rows .row .det { color: var(--ink-muted); }
 
 .reclist { line-height: 1.9; max-width: var(--measure); }
@@ -453,6 +490,8 @@ pre.lean .k { color: var(--accent); }
   margin-top: 26px;
   max-width: var(--measure);
 }
+.understack a { text-decoration: none; }
+.understack a:hover { text-decoration: underline; }
 .understack .sep { color: var(--ink-faint); padding: 0 5px; }
 
 .linkrow {
@@ -463,6 +502,8 @@ pre.lean .k { color: var(--accent); }
   font-size: var(--fs-chrome);
   margin-top: 26px;
 }
+.linkrow a { text-decoration: none; }
+.linkrow a:hover { text-decoration: underline; }
 
 /* ------------------------------------------------------------------ */
 /*  Contact, colophon                                                  */
@@ -483,6 +524,8 @@ pre.lean .k { color: var(--accent); }
   align-items: center;
   margin-top: 14px;
 }
+.contacts a { text-decoration: none; }
+.contacts a:hover { text-decoration: underline; }
 .contacts .sep { color: var(--ink-faint); padding: 0 12px; }
 .colophon {
   margin-top: clamp(48px, 8vw, 96px);
@@ -510,9 +553,9 @@ pre.lean .k { color: var(--accent); }
 /* ------------------------------------------------------------------ */
 /*  Small screens                                                      */
 /* ------------------------------------------------------------------ */
-@media (max-width: 860px) {
+@media (max-width: 880px) {
   .hero-grid { grid-template-columns: 1fr; row-gap: 40px; }
-  .attempt-fig { max-width: 320px; }
+  .packing-fig { max-width: 360px; }
 }
 @media (max-width: 720px) {
   .block { grid-template-columns: 1fr; row-gap: 14px; }
@@ -521,11 +564,11 @@ pre.lean .k { color: var(--accent); }
   .mark .big-glyph { font-size: 1.6rem; margin: 0; display: inline; }
   .worklist li { grid-template-columns: 2em 1fr; column-gap: 12px; }
   .hero-headline { max-width: 100%; }
-  .portrait { width: 96px; height: 124px; }
+  .portrait { width: 94px; height: 120px; }
 }
 
 @media print {
-  .themer, .attempt-fig { display: none; }
+  .themer, .packing-fig { display: none; }
   .page { padding: 0; }
   body { background: #fff; color: #000; }
 }
@@ -539,58 +582,126 @@ pre.lean .k { color: var(--accent); }
     <!-- ===================== chrome ===================== -->
     <div class="topbar reveal">
       <span class="id"><span class="forall">&forall;</span>rajarshi maiti</span>
-      <button class="themer" id="themer" aria-label="switch color theme">dark</button>
+      <button class="themer" id="themer">paper</button>
     </div>
 
     <!-- ===================== hero ===================== -->
     <header class="hero">
       <div class="byline reveal">
-        <img class="portrait" src="photo.jpg" alt="Rajarshi Maiti" width="116" height="148">
+        <img class="portrait" src="photo.jpg" alt="Rajarshi Maiti" width="112" height="142">
         <div class="byline-id">
           <span class="byline-name">Rajarshi Maiti</span>
-          <span class="byline-role">number theory at bonn &middot; co-founder, prooftree</span>
+          <span class="byline-role">number theory at bonn &middot; co-founder, prooftree &middot; <span class="yc">yc startup school &rsquo;26</span></span>
         </div>
       </div>
 
       <div class="hero-grid">
         <div>
-          <h1 class="hero-headline reveal">In December 2025 a machine resolved an Erd&#337;s problem in 3,658 lines of Lean. <span class="turn">An hour later a human did it in four sentences.</span></h1>
-          <p class="hero-lede reveal">I work in the gap between those two proofs.</p>
+          <h1 class="hero-headline reveal">In December 2025 a machine resolved an Erd&#337;s problem in <span class="hl-b">3,658 lines of Lean</span>. <span class="turn">An hour later a human did it in <span class="hl-y">four sentences</span>.</span></h1>
+          <p class="hero-lede reveal">I work in the gap between those two proofs. ProofTree is what we are building in it.</p>
           <nav class="actions reveal" aria-label="primary">
             <a href="cv.pdf">Read CV &rarr;</a>
             <span class="sep">&middot;</span>
-            <a class="ghost" href="#artifact">Erd&#337;s #1026, by hand &darr;</a>
+            <a class="ghost" href="#prooftree">ProofTree &darr;</a>
             <span class="sep">&middot;</span>
-            <a class="ghost" href="https://prooftree.ai">prooftree.ai &rarr;</a>
+            <a class="ghost" href="#artifact">Erd&#337;s #1026, by hand &darr;</a>
           </nav>
         </div>
 
-        <figure class="attempt-fig reveal" aria-hidden="true">
-          <svg viewBox="0 0 300 184" xmlns="http://www.w3.org/2000/svg">
-            <path class="fig-edge draw" d="M20 96 L88 58 L146 102 L208 54 L278 88"/>
-            <path class="fig-edge dashed" d="M88 58 L120 150"/>
-            <circle class="fig-node inked"  cx="20"  cy="96"  r="4.5" style="animation-delay:.45s"/>
-            <circle class="fig-node hollow" cx="88"  cy="58"  r="4.5" style="animation-delay:.9s"/>
-            <circle class="fig-node green"  cx="146" cy="102" r="4.5" style="animation-delay:1.5s"/>
-            <circle class="fig-node ghost"  cx="120" cy="150" r="4"   style="animation-delay:1.7s"/>
-            <circle class="fig-node red"    cx="208" cy="54"  r="4.5" style="animation-delay:2.1s"/>
-            <circle class="fig-ring"        cx="208" cy="54"  r="4.5"/>
-            <circle class="fig-node inked"  cx="278" cy="88"  r="5.5" style="animation-delay:2.7s"/>
-            <text class="fig-tag ok" x="146" y="124" text-anchor="middle">lean &#10003;</text>
-            <text class="fig-tag" x="208" y="38" text-anchor="middle">v1:4f9a&#8230;</text>
-            <text class="fig-tag" x="134" y="154">ends</text>
-            <text class="fig-tag" x="278" y="110" text-anchor="middle">qed</text>
+        <figure class="packing-fig reveal" aria-hidden="true">
+          <svg viewBox="0 0 340 230" xmlns="http://www.w3.org/2000/svg">
+            <g class="pk-grid">
+              <line x1="80" y1="26" x2="80" y2="194"/>
+              <line x1="136" y1="26" x2="136" y2="194"/>
+              <line x1="192" y1="26" x2="192" y2="194"/>
+              <line x1="248" y1="26" x2="248" y2="194"/>
+              <line x1="24" y1="68" x2="300" y2="68"/>
+              <line x1="24" y1="110" x2="300" y2="110"/>
+              <line x1="24" y1="152" x2="300" y2="152"/>
+            </g>
+            <rect class="pk-rect" x="24" y="26" width="276" height="168"/>
+
+            <rect class="pk-sq pk-blue" x="24"  y="174" width="20" height="20" style="animation-delay:.9s, 2.9s"/>
+            <rect class="pk-sq pk-blue" x="44"  y="146" width="28" height="28" style="animation-delay:1.15s, 3s"/>
+            <rect class="pk-sq pk-blue" x="72"  y="110" width="36" height="36" style="animation-delay:1.4s, 3.1s"/>
+            <rect class="pk-sq pk-blue" x="108" y="62"  width="48" height="48" style="animation-delay:1.65s, 3.2s"/>
+
+            <rect class="pk-sq pk-yellow" x="170" y="40" width="34" height="34" style="animation-delay:2s, 3.3s"/>
+            <rect class="pk-sq pk-yellow" x="204" y="74" width="26" height="26" style="animation-delay:2.2s, 3.4s"/>
+            <rect class="pk-sq pk-yellow" x="230" y="100" width="20" height="20" style="animation-delay:2.4s, 3.5s"/>
+
+            <rect class="pk-ghost" x="258" y="150" width="22" height="22"/>
+            <rect class="pk-ghost" x="180" y="130" width="16" height="16"/>
+
+            <text class="pk-tag" x="162" y="212" text-anchor="middle">max increasing sum &#8594;</text>
+            <text class="pk-tag" x="12" y="110" text-anchor="middle" transform="rotate(-90 12 110)">max decreasing sum &#8594;</text>
+            <text class="pk-math" x="296" y="184" text-anchor="end">&#8721;&#8201;x<tspan dy="3" font-size="10">i</tspan><tspan dy="-10" font-size="10">2</tspan><tspan dy="7">&#8202;&#8804;&#8202;M</tspan><tspan dy="-7" font-size="10">2</tspan></text>
           </svg>
-          <figcaption class="figcap">fig. 1 &middot; an attempt graph &middot; shared proof states, forks kept visible</figcaption>
+          <figcaption class="figcap">fig. 1 &middot; the area argument behind erd&#337;s #1026 &middot; squares packed by monotone staircases</figcaption>
         </figure>
       </div>
     </header>
 
-    <!-- ===================== §01 the artifact ===================== -->
+    <!-- ===================== §01 prooftree ===================== -->
+    <section class="block" id="prooftree">
+      <div class="mark reveal">
+        <span class="big-glyph">&forall;</span>
+        <span class="n">&sect; 01</span>
+        prooftree
+      </div>
+      <div class="body-track">
+        <div class="nameplate reveal">
+          <h2 class="wm"><span class="forall">&forall;&nbsp;</span><span class="proof">Proof</span>Tree</h2>
+          <span class="deck">The place where mathematics gets done.</span>
+        </div>
+
+        <div class="chips reveal">
+          <span class="chip chip-yc">Y Combinator AI Startup School &rsquo;26</span>
+          <span class="chip">Microsoft for Startups</span>
+          <span class="chip">Renaissance Philanthropy shortlist</span>
+        </div>
+
+        <p class="note big reveal">A proof lives in five places at once: a chat thread, a forum question, a Lean repository, an Overleaf draft, and the real reasons in somebody&rsquo;s head. The result survives. The reasoning evaporates.</p>
+
+        <p class="note reveal">ProofTree keeps one persistent object per proof: statement, drafts, Lean and discussion together, every step checked by the kernel. For mathematicians, it is the first place the whole proof lives in one object. For AI labs, the byproduct is the scarce input: live, verified human and machine reasoning traces, the kind of record that almost never survives into print.</p>
+
+        <p class="note reveal">Three founders, all mathematicians, between Bonn and Munich. Yang-Hui He of the London Institute for Mathematical Sciences advises. My work is the proof-state layer:</p>
+
+        <ol class="worklist reveal">
+          <li>
+            <span class="idx">01</span>
+            <span class="w-body"><b>Content-addressed proof states.</b> <span class="det">Tier, verified and source kept as three independent dimensions of a state instead of one collapsed hash.</span></span>
+          </li>
+          <li>
+            <span class="idx">02</span>
+            <span class="w-body"><b>A frozen syntactic canonicaliser.</b> <span class="det">&alpha;-renaming, hypothesis and multi-goal sorting, v1:&lt;sha256&gt; addressing. Definitional equivalence is recorded as a verified edge between states, so nothing merges silently.</span></span>
+          </li>
+          <li>
+            <span class="idx">03</span>
+            <span class="w-body"><b>A drift checker, in progress.</b> <span class="det">Whether AI-generated Lean still says what the informal text said. Compiling is the easy half.</span></span>
+          </li>
+          <li>
+            <span class="idx">04</span>
+            <span class="w-body"><b>LeanDojo Benchmark 4 instrumentation.</b> <span class="det">The raw surface form of proof states: exact codepoints, notation, provenance.</span></span>
+          </li>
+        </ol>
+
+        <p class="note reveal">Some arguments are larger than any one head. The Langlands program is a conversation sixty years old, running across thousands of people who mostly never met, coordinated by journals and seminars: instruments older than the telephone. When the medium that holds an argument changes, what a field can attempt changes with it. That is the bet. It also happens to be the business: whoever hosts the reasoning holds training data no lab can buy.</p>
+
+        <h3 class="h3 reveal">The formalisation programme</h3>
+        <p class="note reveal">I also direct ProofTree&rsquo;s Lean formalisation programme: ten weeks taking graduate mathematicians from zero Lean to completed Mathlib PR cycles, with curriculum input from Michael Rothgang, Mario Carneiro and Ya&euml;l Dillies. Shortlisted for Renaissance Philanthropy&rsquo;s AI for Math fund, backed by XTX Markets.</p>
+
+        <p class="understack reveal">
+          <a href="https://prooftree.ai">prooftree.ai &rarr;</a><span class="sep">&middot;</span>$25k in credits via YC&rsquo;s AI Startup School, 2026
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================== §02 the artifact ===================== -->
     <section class="block" id="artifact">
       <div class="mark reveal">
         <span class="big-glyph">&#8718;</span>
-        <span class="n">&sect; 01</span>
+        <span class="n">&sect; 02</span>
         the artifact
       </div>
       <div class="body-track">
@@ -604,9 +715,9 @@ pre.lean .k { color: var(--accent); }
           If x<sub>1</sub>, &hellip;, x<sub>k&sup2;</sub> are distinct positive reals with x<sub>1</sub> + &#8943; + x<sub>k&sup2;</sub> = 1, some monotone subsequence has sum at least 1/k.
         </blockquote>
 
-        <p class="note reveal">The AI prover Aristotle settled it first, autonomously, in 3,658 generated lines of Lean. Koishi Chan, a human reading the same problem list, posted four sentences an hour later. Most people read the episode as a story about machines. What interested me was what a precise reading of both proofs would surface.</p>
+        <p class="note reveal">The AI prover Aristotle settled it first, autonomously, in 3,658 generated lines of Lean. Koishi Chan, a human reading the same problem list, posted four sentences an hour later. A small-world footnote: that list is erdosproblems.com, kept by Thomas Bloom, who three years earlier supervised my research summer at Oxford.</p>
 
-        <p class="note reveal">So I formalized it the way a person would write it: about 330 lines of structured Lean&nbsp;4 establishing the same theorem. Zero sorries, CI on every push, kernel-checked axiom audit. The Lean is the receipt. The deliverable is the reading around it:</p>
+        <p class="note reveal">Most people read the episode as a story about machines. I read both proofs the way a referee would, then formalized the theorem the way a person would write it: about 330 lines of structured Lean&nbsp;4. Zero sorries, CI on every push, kernel-checked axiom audit. The Lean is the receipt. The deliverable is the reading around it:</p>
 
         <ol class="worklist reveal">
           <li>
@@ -641,53 +752,6 @@ pre.lean .k { color: var(--accent); }
       </div>
     </section>
 
-    <!-- ===================== §02 prooftree ===================== -->
-    <section class="block" id="prooftree">
-      <div class="mark reveal">
-        <span class="big-glyph">&forall;</span>
-        <span class="n">&sect; 02</span>
-        prooftree
-      </div>
-      <div class="body-track">
-        <div class="nameplate reveal">
-          <span class="wm"><span class="forall">&forall;&nbsp;</span><span class="proof">Proof</span>Tree</span>
-          <span class="deck">The place where mathematics gets done.</span>
-        </div>
-
-        <p class="note big reveal">A proof lives in five places before it is finished: the argument in a chat thread, the question on a forum, the Lean in a repository, the write-up in Overleaf, and the actual reasons in somebody&rsquo;s head. The result survives. The reasoning evaporates.</p>
-
-        <p class="note reveal">ProofTree holds the statement, the drafts, the Lean and the discussion in one persistent object, with every step checked by the kernel, so the reasoning compounds instead of evaporating. Co-founded with Carl Jontza and Yola Zhou; Yang-Hui He advises. I work on the proof-state layer:</p>
-
-        <ol class="worklist reveal">
-          <li>
-            <span class="idx">01</span>
-            <span class="w-body"><b>Content-addressed proof states.</b> <span class="det">Tier, verified and source kept as three independent dimensions of a state instead of one collapsed hash.</span></span>
-          </li>
-          <li>
-            <span class="idx">02</span>
-            <span class="w-body"><b>A frozen syntactic canonicaliser.</b> <span class="det">&alpha;-renaming, hypothesis and multi-goal sorting, v1:&lt;sha256&gt; addressing. Definitional equivalence is a verified edge between states, never a silent merge.</span></span>
-          </li>
-          <li>
-            <span class="idx">03</span>
-            <span class="w-body"><b>A drift checker, in progress.</b> <span class="det">Whether AI-generated Lean is faithful to its informal source, not merely compilable.</span></span>
-          </li>
-          <li>
-            <span class="idx">04</span>
-            <span class="w-body"><b>LeanDojo Benchmark 4 instrumentation.</b> <span class="det">The raw surface form of proof states: exact codepoints, notation, provenance.</span></span>
-          </li>
-        </ol>
-
-        <p class="note reveal">Some arguments are larger than any one head. The Langlands program is a conversation sixty years old, distributed across thousands of people who mostly never met, coordinated by journals and seminars: instruments older than the telephone. When the medium that holds an argument changes, what a field can attempt changes with it. That is the bet.</p>
-
-        <h3 class="h3 reveal">The formalisation programme</h3>
-        <p class="note reveal">I also direct ProofTree&rsquo;s Lean formalisation programme: ten weeks taking graduate mathematicians from zero Lean to completed Mathlib PR cycles, with curriculum input from Michael Rothgang, Mario Carneiro and Ya&euml;l Dillies. Shortlisted for Renaissance Philanthropy&rsquo;s AI for Math fund, backed by XTX Markets.</p>
-
-        <p class="understack reveal">
-          <a href="https://prooftree.ai">prooftree.ai</a><span class="sep">&middot;</span>Y Combinator AI Startup School 2026<span class="sep">&middot;</span>Microsoft for Startups
-        </p>
-      </div>
-    </section>
-
     <!-- ===================== §03 mathematics ===================== -->
     <section class="block" id="mathematics">
       <div class="mark reveal">
@@ -697,8 +761,9 @@ pre.lean .k { color: var(--accent); }
       </div>
       <div class="body-track">
         <h2 class="section-title reveal">Number theory, leaning analytic.</h2>
-        <p class="note reveal">Gaps between sums of two squares with Thomas Bloom at Oxford, 2022. Special values of zeta and L-functions with Tiago Jardim da Fonseca, 2021. At Bonn: the smooth circle method after Heath-Brown, presented as a graduate seminar, and the Logic of Proof Assistants with Floris van Doorn, where the type theory underneath Lean stopped being folklore and became coursework.</p>
-        <p class="note muted reveal">Open right now, with Yang-Hui He: whether the optimisation problems inside the circle method are amenable to machine learning. Early, and labeled as such.</p>
+        <p class="note reveal">Oxford, 2022, was a research summer with Thomas Bloom: gaps between sums of two squares. Thomas now keeps erdosproblems.com, the problem list at the center of the AI prover moment. The corner of mathematics I grew up in turned out to be the one the machines visited first.</p>
+        <p class="note reveal">The summer before, special values of zeta and L-functions with Tiago Jardim da Fonseca. At Bonn: the smooth circle method after Heath-Brown, presented as a graduate seminar, and the Logic of Proof Assistants with Floris van Doorn, where the type theory underneath Lean stopped being folklore and became coursework.</p>
+        <p class="note reveal">And Yang-Hui He, who was teaching machines mathematics years before it was fashionable, advises ProofTree and keeps an open line of work with me: whether the optimisation problems inside the circle method are amenable to machine learning. Early, and labeled as such.</p>
       </div>
     </section>
 
@@ -710,8 +775,9 @@ pre.lean .k { color: var(--accent); }
         how i got here
       </div>
       <div class="body-track">
-        <p class="note reveal">I was certain about mathematics long before I was certain about anything else. The subject was never in question; the question was which mathematical life to live, and I was bad at choosing. Belfast for the degree, Bonn for number theory, and a number of half-started futures in between.</p>
-        <p class="note reveal">AI arrived as a toy, not a plan. I used it for fun, then to do mathematics faster, then to map exactly where it fails. Meanwhile the people I knew from the mathematical world, the ones who run the seminars and keep the problem lists, began asking the same question from the other side: what happens to mathematics when proofs get cheap. ProofTree is where the two lines crossed.</p>
+        <p class="note reveal">I loved mathematics long before I could prove it on paper. I am neurodivergent, and for years my grades said one thing while every spare hour said another. What I had instead was luck and a habit of ending up in the right rooms: a research summer at Oxford, and then, somehow, Bonn.</p>
+        <p class="note reveal">Bonn is a humbling place to love this subject. Fields medalists in the corridors, a century of mathematics in the walls, peers who are frighteningly quick. I struggled there and I learnt there, in that order. It is where the obsession finally became something I could build with, and where I met one of my cofounders.</p>
+        <p class="note reveal">AI arrived as a toy, not a plan. I used it for fun, then to do mathematics faster, then to map exactly where it fails. Somewhere in that mapping the two threads lined up. The ambition I had never managed to narrow down turned out to be the right size for exactly one thing: building the field itself. ProofTree is that, with a kernel checking every line of it.</p>
       </div>
     </section>
 
@@ -740,12 +806,12 @@ pre.lean .k { color: var(--accent); }
       </div>
       <div class="body-track">
         <p class="reclist reveal">
-          <span class="item"><b>Lean&ndash;LMFDB Bridge Workshop</b>, Norwich <span class="det">(invited, fully funded &middot; Jun&ndash;Jul 2026)</span></span><span class="sep">&middot;</span>
-          <span class="item">AI &times; Mathematics Conference, ICMS Edinburgh <span class="det">(fully sponsored)</span></span><span class="sep">&middot;</span>
-          <span class="item">Y Combinator AI Startup School <span class="det">($25k credits)</span></span><span class="sep">&middot;</span>
+          <span class="item"><b>Y Combinator AI Startup School</b> <span class="det">(selected, 2026 &middot; $25k credits)</span></span><span class="sep">&middot;</span>
           <span class="item">Microsoft for Startups</span><span class="sep">&middot;</span>
-          <span class="item">DAAD STIBET Scholarship</span><span class="sep">&middot;</span>
-          <span class="item">Renaissance Philanthropy AI for Math shortlist</span>
+          <span class="item">Renaissance Philanthropy AI for Math shortlist</span><span class="sep">&middot;</span>
+          <span class="item">Lean&ndash;LMFDB Bridge Workshop, Norwich <span class="det">(invited, fully funded &middot; Jun&ndash;Jul 2026)</span></span><span class="sep">&middot;</span>
+          <span class="item">AI &times; Mathematics Conference, ICMS Edinburgh <span class="det">(fully sponsored)</span></span><span class="sep">&middot;</span>
+          <span class="item">DAAD STIBET Scholarship</span>
         </p>
       </div>
     </section>
@@ -767,7 +833,7 @@ pre.lean .k { color: var(--accent); }
           <span class="sep">&middot;</span>
           <a href="https://www.linkedin.com/in/1729">linkedin</a>
         </p>
-        <p class="colophon reveal">Set in Newsreader, Inter Tight &amp; JetBrains Mono &middot; static HTML, no framework, no tracking &middot; Bonn &middot; MMXXVI</p>
+        <p class="colophon reveal">Set in Latin Modern &amp; JetBrains Mono &middot; static HTML, no framework, no tracking &middot; Bonn &middot; MMXXVI</p>
       </div>
     </section>
 
@@ -775,19 +841,20 @@ pre.lean .k { color: var(--accent); }
 </main>
 
 <script>
-/* theme switch */
+/* skin switch: the board / the paper */
 (function () {
   var btn = document.getElementById('themer');
   var meta = document.getElementById('metaTheme');
   function paint() {
-    var dark = document.documentElement.dataset.theme === 'dark';
-    btn.textContent = dark ? 'light' : 'dark';
-    if (meta) meta.setAttribute('content', dark ? '#221F19' : '#F7F6F1');
+    var board = document.documentElement.dataset.theme !== 'paper';
+    btn.textContent = board ? 'paper' : 'board';
+    btn.setAttribute('aria-label', board ? 'switch to the paper skin' : 'switch to the board skin');
+    if (meta) meta.setAttribute('content', board ? '#14161D' : '#E6D9BD');
   }
   btn.addEventListener('click', function () {
-    var next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    var next = document.documentElement.dataset.theme === 'paper' ? 'board' : 'paper';
     document.documentElement.dataset.theme = next;
-    try { localStorage.setItem('theme', next); } catch (e) {}
+    try { localStorage.setItem('skin', next); } catch (e) {}
     paint();
   });
   paint();
