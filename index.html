@@ -1,941 +1,113 @@
 <!DOCTYPE html>
-<html lang="en"><head>
+<html lang="en">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Rajarshi Maiti</title>
-<meta name="description" content="Rajarshi Maiti — a mathematician building AI systems for formal mathematics. Number theory at Bonn; proof infrastructure for theorem provers.">
-<style>/* =========================================================================
-   ProofTree Design System — Foundations
-   ----------------------------------------------------------------
-   Token layer (color, type, space, radius, motion) + semantic styles.
-   Drop this in <head> and you have a journal page.
-   ========================================================================= */
+<meta name="description" content="Mathematician at Bonn. Co-founder of ProofTree. Number theory, Lean 4, and infrastructure for mathematics done by people and machines together.">
+<link rel="canonical" href="https://rmaiti01.github.io/">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-/* ---------- Font faces ---------- */
-/* Newsreader — body & display serif (Google Fonts via @import) */
-/* Inter Tight — UI sans for chrome (Google Fonts) */
-/* JetBrains Mono — substitute for Berkeley Mono (Google Fonts) */
-/* cyrillic-ext */
-@font-face {
-  font-family: 'Inter Tight';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("fonts/InterTight-cyrillic-ext.woff2") format('woff2');
-  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-/* cyrillic */
-@font-face {
-  font-family: 'Inter Tight';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("fonts/InterTight-cyrillic.woff2") format('woff2');
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-/* greek-ext */
-@font-face {
-  font-family: 'Inter Tight';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("fonts/InterTight-greek-ext.woff2") format('woff2');
-  unicode-range: U+1F00-1FFF;
-}
-/* greek */
-@font-face {
-  font-family: 'Inter Tight';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("fonts/InterTight-greek.woff2") format('woff2');
-  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-/* vietnamese */
-@font-face {
-  font-family: 'Inter Tight';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("fonts/InterTight-vietnamese.woff2") format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Inter Tight';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("fonts/InterTight-latin-ext.woff2") format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Inter Tight';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("fonts/InterTight-latin.woff2") format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* cyrillic-ext */
-@font-face {
-  font-family: 'Inter Tight';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("fonts/InterTight-cyrillic-ext.woff2") format('woff2');
-  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-/* cyrillic */
-@font-face {
-  font-family: 'Inter Tight';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("fonts/InterTight-cyrillic.woff2") format('woff2');
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-/* greek-ext */
-@font-face {
-  font-family: 'Inter Tight';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("fonts/InterTight-greek-ext.woff2") format('woff2');
-  unicode-range: U+1F00-1FFF;
-}
-/* greek */
-@font-face {
-  font-family: 'Inter Tight';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("fonts/InterTight-greek.woff2") format('woff2');
-  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-/* vietnamese */
-@font-face {
-  font-family: 'Inter Tight';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("fonts/InterTight-vietnamese.woff2") format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Inter Tight';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("fonts/InterTight-latin-ext.woff2") format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Inter Tight';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("fonts/InterTight-latin.woff2") format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* cyrillic-ext */
-@font-face {
-  font-family: 'Inter Tight';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("fonts/InterTight-cyrillic-ext.woff2") format('woff2');
-  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-/* cyrillic */
-@font-face {
-  font-family: 'Inter Tight';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("fonts/InterTight-cyrillic.woff2") format('woff2');
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-/* greek-ext */
-@font-face {
-  font-family: 'Inter Tight';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("fonts/InterTight-greek-ext.woff2") format('woff2');
-  unicode-range: U+1F00-1FFF;
-}
-/* greek */
-@font-face {
-  font-family: 'Inter Tight';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("fonts/InterTight-greek.woff2") format('woff2');
-  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-/* vietnamese */
-@font-face {
-  font-family: 'Inter Tight';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("fonts/InterTight-vietnamese.woff2") format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Inter Tight';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("fonts/InterTight-latin-ext.woff2") format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Inter Tight';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("fonts/InterTight-latin.woff2") format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* cyrillic-ext */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("fonts/JetBrainsMono-cyrillic-ext.woff2") format('woff2');
-  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-/* cyrillic */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("fonts/JetBrainsMono-cyrillic.woff2") format('woff2');
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-/* greek */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("fonts/JetBrainsMono-greek.woff2") format('woff2');
-  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-/* vietnamese */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("fonts/JetBrainsMono-vietnamese.woff2") format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("fonts/JetBrainsMono-latin-ext.woff2") format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("fonts/JetBrainsMono-latin.woff2") format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* cyrillic-ext */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("fonts/JetBrainsMono-cyrillic-ext.woff2") format('woff2');
-  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-/* cyrillic */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("fonts/JetBrainsMono-cyrillic.woff2") format('woff2');
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-/* greek */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("fonts/JetBrainsMono-greek.woff2") format('woff2');
-  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-/* vietnamese */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("fonts/JetBrainsMono-vietnamese.woff2") format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("fonts/JetBrainsMono-latin-ext.woff2") format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("fonts/JetBrainsMono-latin.woff2") format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* cyrillic-ext */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("fonts/JetBrainsMono-cyrillic-ext.woff2") format('woff2');
-  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-/* cyrillic */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("fonts/JetBrainsMono-cyrillic.woff2") format('woff2');
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-/* greek */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("fonts/JetBrainsMono-greek.woff2") format('woff2');
-  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-/* vietnamese */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("fonts/JetBrainsMono-vietnamese.woff2") format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("fonts/JetBrainsMono-latin-ext.woff2") format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("fonts/JetBrainsMono-latin.woff2") format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* vietnamese */
-@font-face {
-  font-family: 'Newsreader';
-  font-style: italic;
-  font-weight: 400;
-  font-display: swap;
-  src: url("fonts/Newsreader-Italic-vietnamese.woff2") format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Newsreader';
-  font-style: italic;
-  font-weight: 400;
-  font-display: swap;
-  src: url("fonts/Newsreader-Italic-latin-ext.woff2") format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Newsreader';
-  font-style: italic;
-  font-weight: 400;
-  font-display: swap;
-  src: url("fonts/Newsreader-Italic-latin.woff2") format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* vietnamese */
-@font-face {
-  font-family: 'Newsreader';
-  font-style: italic;
-  font-weight: 500;
-  font-display: swap;
-  src: url("fonts/Newsreader-Italic-vietnamese.woff2") format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Newsreader';
-  font-style: italic;
-  font-weight: 500;
-  font-display: swap;
-  src: url("fonts/Newsreader-Italic-latin-ext.woff2") format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Newsreader';
-  font-style: italic;
-  font-weight: 500;
-  font-display: swap;
-  src: url("fonts/Newsreader-Italic-latin.woff2") format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* vietnamese */
-@font-face {
-  font-family: 'Newsreader';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("fonts/Newsreader-vietnamese.woff2") format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Newsreader';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("fonts/Newsreader-latin-ext.woff2") format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Newsreader';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("fonts/Newsreader-latin.woff2") format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* vietnamese */
-@font-face {
-  font-family: 'Newsreader';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("fonts/Newsreader-vietnamese.woff2") format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Newsreader';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("fonts/Newsreader-latin-ext.woff2") format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Newsreader';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("fonts/Newsreader-latin.woff2") format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* vietnamese */
-@font-face {
-  font-family: 'Newsreader';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("fonts/Newsreader-vietnamese.woff2") format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Newsreader';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("fonts/Newsreader-latin-ext.woff2") format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Newsreader';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("fonts/Newsreader-latin.woff2") format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
+<meta property="og:type" content="website">
+<meta property="og:title" content="Rajarshi Maiti">
+<meta property="og:description" content="Mathematician at Bonn. Co-founder of ProofTree. Number theory, Lean 4, and infrastructure for mathematics done by people and machines together.">
+<meta property="og:url" content="https://rmaiti01.github.io/">
+<meta property="og:image" content="https://rmaiti01.github.io/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@formaliser_dude">
+<meta name="theme-color" content="#F7F6F1" id="metaTheme">
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Rajarshi Maiti",
+  "url": "https://rmaiti01.github.io/",
+  "jobTitle": "Co-founder, ProofTree",
+  "affiliation": { "@type": "CollegeOrUniversity", "name": "University of Bonn" },
+  "sameAs": [
+    "https://github.com/rmaiti01",
+    "https://x.com/formaliser_dude",
+    "https://www.linkedin.com/in/1729"
+  ]
+}
+</script>
+
+<script>
+/* theme before paint: stored preference, else system */
+(function () {
+  try {
+    var t = localStorage.getItem('theme');
+    if (t !== 'dark' && t !== 'light') {
+      t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    document.documentElement.dataset.theme = t;
+  } catch (e) { document.documentElement.dataset.theme = 'light'; }
+})();
+</script>
+
+<link rel="preload" href="fonts/Newsreader-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/Newsreader-Italic-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/JetBrainsMono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts/fonts.css">
+
+<style>
+/* =====================================================================
+   Rajarshi Maiti · personal site
+   Editorial single column, marginal mono labels, Newsreader display.
+   Hierarchy through type only. Light and dark, same ink.
+   ===================================================================== */
 
 :root {
-  /* ---------- Color tokens ----------
-     v2.1: cool off-white with a hair of warmth — still unmistakably a
-     screen, but the surface and ink carry the slightest paper memory in
-     their hue. Burgundy accent unchanged. */
-  --paper:        #F7F6F1;  /* base background — barely-warm off-white */
-  --paper-deep:   #F0EEE7;  /* recessed panels, rails */
-  --paper-press:  #E8E5DB;  /* press state, focused-row tint */
+  --paper:        #F7F6F1;
+  --paper-deep:   #F0EEE7;
+  --paper-press:  #E8E5DB;
+  --ink:          #131210;
+  --ink-muted:    #5E5A52;
+  --ink-faint:    #A8A498;
+  --hairline:     #E0DCCE;
+  --accent:       #9A3D2F;
+  --accent-hov:   #6B2A20;
+  --accent-tint:  #F5DDD5;
+  --verified:     #4F7A4B;
 
-  --ink:          #131210;  /* primary text — near-black with a hair of warmth */
-  --ink-muted:    #5E5A52;  /* secondary text, metadata, mono labels */
-  --ink-faint:    #ABA89E;  /* placeholders, divider labels, empty state */
-  --hairline:     #E0DCCE;  /* borders, rules */
+  --serif: 'Newsreader', 'Iowan Old Style', Palatino, Georgia, serif;
+  --mono:  'JetBrains Mono', 'IBM Plex Mono', Menlo, Consolas, monospace;
 
-  --accent:       #9A3D2F;  /* primary actions, links, collision state */
-  --accent-deep:  #6B2A20;  /* hover, pressed */
-  --accent-tint:  #F5DDD5;  /* soft accent surfaces, kernel-pulse start */
+  --fs-label: 11px;
+  --fs-chrome: 13px;
 
-  --verified:     #4F7A4B;  /* Lean-checked green */
-  --verified-tint:#DFE7D9;
-  --stub:         #A88A3F;  /* Lean-stub amber */
-  --stub-tint:    #EFE5C9;
-  --draft:        #5E5A52;
-  --draft-tint:   #EAE7DD;
+  --measure: 660px;
+  --label-col: 132px;
+  --gutter: 52px;
 
-  --agent-ink:    #232A2F;  /* agent glyph backgrounds */
+  --t-hero:    clamp(1.95rem, 1.2rem + 3.1vw, 3.4rem);
+  --t-section: clamp(1.7rem, 1.35rem + 1.3vw, 2.15rem);
+  --t-deck:    clamp(1.18rem, 1.05rem + 0.6vw, 1.45rem);
+  --t-read:    1.1875rem;
+  --t-small:   0.97rem;
 
-  /* Identity colors — avatar fills only, NOT status */
-  --ident-yellow: #C9A227;
-  --ident-green:  #4F7A4B;
-  --ident-blue:   #3D6A8C;
-  --ident-red:    #9A3D2F;
-
-  /* ---------- Font stacks ---------- */
-  --serif: 'Newsreader', 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Source Serif Pro', Georgia, serif; /* @kind font */
-  --sans:  'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; /* @kind font */
-  --mono:  'Berkeley Mono', 'JetBrains Mono', 'IBM Plex Mono', 'Menlo', 'Consolas', monospace; /* @kind font */
-  --math:  'Latin Modern Math', 'STIX Two Math', 'Cambria Math', serif; /* @kind font */
-
-  /* ---------- Type scale (16px root) ---------- */
-  --fs-display: 32px;
-  --fs-title:   22px;
-  --fs-body:    18px;
-  --fs-small:   15px;
-  --fs-label:   11px;
-  --fs-chrome:  13px;
-  --fs-mono:    14px;
-
-  --lh-display: 1.18; /* @kind font */
-  --lh-title:   1.3;  /* @kind font */
-  --lh-body:    1.55; /* @kind font */
-
-  /* ---------- Spacing — multiples of 4 anchored to 28px line-height ---------- */
-  --space-1:  4px;
-  --space-2:  8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 24px;
-  --space-6: 32px;
-  --space-7: 48px;
-  --space-8: 64px;
-
-  /* ---------- Radius ---------- */
-  --radius-chip: 4px;
-  --radius:      6px;
-
-  /* ---------- Borders ---------- */
-  --hair:        1px solid var(--hairline);
-  --hair-dashed: 1px dashed var(--hairline);
-  --rail-accent: 3px solid var(--accent);
-  --rail-verified: 3px solid var(--verified);
-
-  /* ---------- Motion ---------- */
-  --ease:    cubic-bezier(0.2, 0.0, 0.2, 1); /* @kind other */
-  --dur-fast: 120ms; /* @kind other */
-  --dur:      180ms; /* @kind other */
-  --dur-slow: 240ms; /* @kind other */
-
-  /* ---------- Layout ---------- */
-  --topbar-h:  56px;     /* @kind other */
-  --tabbar-h:  48px;     /* @kind other */
-  --right-rail-w: 360px; /* @kind other */
-  --left-rail-w:  240px; /* @kind other */
-  --reading-w: 760px;    /* @kind other */
+  --ease: cubic-bezier(0.2, 0, 0.2, 1);
+  --dur: 180ms;
 }
 
-/* =========================================================================
-   Semantic — body
-   ========================================================================= */
-html, body {
-  background: var(--paper);
-  color: var(--ink);
-  font-family: var(--serif);
-  font-size: var(--fs-body);
-  line-height: var(--lh-body);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-}
-
-::selection { background: var(--accent-tint); color: var(--ink); }
-
-/* Headings — Newsreader, 500 */
-h1, .h1, .display {
-  font-family: var(--serif);
-  font-weight: 500;
-  font-size: var(--fs-display);
-  line-height: var(--lh-display);
-  letter-spacing: -0.005em;
-  color: var(--ink);
-  margin: 0;
-}
-
-h2, .h2, .title {
-  font-family: var(--serif);
-  font-weight: 500;
-  font-size: var(--fs-title);
-  line-height: var(--lh-title);
-  color: var(--ink);
-  margin: 0;
-}
-
-h3, .h3 {
-  font-family: var(--serif);
-  font-weight: 500;
-  font-size: var(--fs-body);
-  line-height: var(--lh-body);
-  margin: 0;
-}
-
-p, .p { font-family: var(--serif); font-size: var(--fs-body); line-height: var(--lh-body); margin: 0; color: var(--ink); }
-.small, small { font-size: var(--fs-small); line-height: 1.5; color: var(--ink-muted); }
-
-/* The italic flourish — the journal-cover voice. Use sparingly. */
-.flourish {
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: 400;
-  font-size: var(--fs-body);
-  color: var(--ink-muted);
-}
-
-/* Uppercase tracked label — the journal's small caps */
-.label {
-  font-family: var(--mono);
-  font-size: var(--fs-label);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--ink-muted);
-  line-height: 1.2;
-}
-
-/* Mono chrome — tab labels, tags, mono buttons */
-.chrome, .mono-ui {
-  font-family: var(--mono);
-  font-size: var(--fs-chrome);
-  font-weight: 400;
-  color: var(--ink);
-}
-
-/* Code, hashes, paths, Lean source */
-code, .mono, kbd, samp {
-  font-family: var(--mono);
-  font-size: var(--fs-mono);
-  color: var(--ink);
-}
-
-/* Links — accent, underline on hover */
-a {
-  color: var(--accent);
-  text-decoration: none;
-  transition: color var(--dur-fast) var(--ease);
-}
-a:hover { color: var(--accent-deep); text-decoration: underline; text-underline-offset: 2px; }
-
-/* Hairline rule */
-hr { border: 0; border-top: var(--hair); margin: var(--space-5) 0; }
-
-/* =========================================================================
-   Cards (the only three patterns)
-   ========================================================================= */
-.card {
-  background: var(--paper);
-  border: var(--hair);
-  border-radius: var(--radius);
-  padding: var(--space-5) var(--space-5);
-}
-.card--recessed { background: var(--paper-deep); }
-.card--focus { border-left: var(--rail-accent); }
-
-/* =========================================================================
-   Status pills — the four-state system
-   ========================================================================= */
-.pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 2px 8px;
-  border-radius: var(--radius-chip);
-  background: var(--paper);
-  border: 1px solid color-mix(in oklab, var(--ink-muted) 30%, transparent);
-  font-family: var(--mono);
-  font-size: var(--fs-chrome);
-  line-height: 1.4;
-  color: var(--ink);
-}
-.pill::before {
-  content: '●';
-  font-size: 9px;
-  line-height: 1;
-}
-.pill--verified { color: var(--verified); border-color: color-mix(in oklab, var(--verified) 40%, transparent); }
-.pill--verified::before { color: var(--verified); }
-.pill--stub { color: var(--stub); border-color: color-mix(in oklab, var(--stub) 40%, transparent); }
-.pill--stub::before { color: var(--stub); }
-.pill--collision { color: var(--accent); border-color: color-mix(in oklab, var(--accent) 40%, transparent); }
-.pill--collision::before { color: var(--accent); }
-.pill--draft { color: var(--ink-muted); border-color: color-mix(in oklab, var(--ink-muted) 30%, transparent); }
-.pill--draft::before { content: '◳'; font-size: 11px; }
-.pill--accepted { color: var(--verified); border-color: color-mix(in oklab, var(--verified) 40%, transparent); }
-.pill--accepted::before { content: '●'; color: var(--verified); }
-
-/* =========================================================================
-   Tag chip — lowercase mono, no dot
-   ========================================================================= */
-.tag {
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: var(--radius-chip);
-  background: var(--paper);
-  border: var(--hair);
-  font-family: var(--mono);
-  font-size: var(--fs-chrome);
-  color: var(--ink-muted);
-}
-
-/* =========================================================================
-   Buttons
-   ========================================================================= */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  border-radius: var(--radius-chip);
-  background: var(--paper);
-  border: var(--hair);
-  font-family: var(--mono);
-  font-size: var(--fs-chrome);
-  color: var(--ink);
-  cursor: pointer;
-  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
-}
-.btn:hover  { background: var(--paper-deep); }
-.btn:active { background: var(--paper-press); }
-
-.btn--primary {
-  background: var(--accent);
-  color: var(--paper);
-  border-color: var(--accent);
-}
-.btn--primary:hover  { background: var(--accent-deep); border-color: var(--accent-deep); }
-
-.btn--dark {
-  background: var(--ink);
-  color: var(--paper);
-  border-color: var(--ink);
-}
-.btn--dark:hover { background: #2A241E; }
-
-.btn--ghost {
-  background: transparent;
-  border-color: transparent;
-  color: var(--accent);
-}
-.btn--ghost:hover { background: var(--accent-tint); }
-
-/* =========================================================================
-   Formality dots (5-dot scale)
-   ========================================================================= */
-.dots {
-  display: inline-flex;
-  gap: 3px;
-  align-items: center;
-}
-.dots i {
-  display: inline-block;
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--ink-faint);
-}
-.dots i.on { background: var(--accent); }
-.dots--verified i.on { background: var(--verified); }
-.dots--stub i.on { background: var(--stub); }
-
-/* =========================================================================
-   Avatar (human monogram + presence rail)
-   ========================================================================= */
-.avatar {
-  width: 28px; height: 28px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 1;
-  color: var(--ink);
-  background: var(--paper);
-  border: 1px solid color-mix(in oklab, var(--ink-muted) 40%, transparent);
-  flex-shrink: 0;
-}
-.avatar > * { transform: translate(-1px, 0); }
-.avatar > *.no-shift { transform: none; }
-.avatar--yellow { background: color-mix(in oklab, var(--ident-yellow) 22%, var(--paper)); border-color: color-mix(in oklab, var(--ident-yellow) 60%, transparent); }
-.avatar--green  { background: color-mix(in oklab, var(--ident-green)  22%, var(--paper)); border-color: color-mix(in oklab, var(--ident-green)  60%, transparent); }
-.avatar--blue   { background: color-mix(in oklab, var(--ident-blue)   22%, var(--paper)); border-color: color-mix(in oklab, var(--ident-blue)   60%, transparent); }
-.avatar--red    { background: color-mix(in oklab, var(--ident-red)    22%, var(--paper)); border-color: color-mix(in oklab, var(--ident-red)    60%, transparent); }
-
-/* Agent avatar — geometric glyph on agent-ink fill */
-.avatar--agent {
-  background: var(--agent-ink);
-  color: var(--paper);
-  border-color: var(--agent-ink);
-  font-family: var(--mono);
-  font-style: normal;
-  font-weight: 500;
-}
-
-/* Presence rail (used on member rows) — left border on the row, not the avatar */
-.presence {
-  border-left: 3px solid transparent;
-  padding-left: 13px; /* 16 - 3 */
-}
-.presence--reading { border-left-color: var(--verified); }
-.presence--editing { border-left-color: var(--accent); }
-.presence--offline { border-left-color: transparent; }
-
-/* =========================================================================
-   Misc utilities
-   ========================================================================= */
-.hash { font-family: var(--mono); font-size: 12px; color: var(--ink-muted); }
-.italic { font-style: italic; }
-.muted { color: var(--ink-muted); }
-.faint { color: var(--ink-faint); }
-.center { display: flex; align-items: center; gap: var(--space-2); }
-
-/* =========================================================================
-   Liveness primitives — the system is alive; let it show.
-   ========================================================================= */
-@keyframes pulse-fresh {
-  0%   { background: var(--accent-tint); border-color: color-mix(in oklab, var(--accent) 50%, transparent); }
-  60%  { background: var(--accent-tint); border-color: color-mix(in oklab, var(--accent) 50%, transparent); }
-  100% { background: var(--paper); border-color: color-mix(in oklab, var(--verified) 40%, transparent); }
-}
-.pulse-fresh { animation: pulse-fresh 1.4s var(--ease) 1; }
-
-@keyframes typing-blink {
-  0%, 100% { opacity: 0.25; transform: scale(0.7); }
-  50%      { opacity: 1; transform: scale(1); }
-}
-.typing-dot {
-  display: inline-block; width: 6px; height: 6px; border-radius: 50%;
-  background: var(--accent); margin: 0 2px;
-  animation: typing-blink 900ms var(--ease) infinite;
-}
-.typing-dot:nth-child(2) { animation-delay: 180ms; }
-.typing-dot:nth-child(3) { animation-delay: 360ms; }
-
-@keyframes slide-in-margin {
-  0%   { opacity: 0; transform: translateX(12px); }
-  100% { opacity: 1; transform: translateX(0); }
-}
-.slide-in-margin { animation: slide-in-margin 280ms var(--ease) 1; }
-
-/* Subtle node-edge watermark for empty panels */
-.dag-watermark {
-  background-image:
-    radial-gradient(circle at 20% 30%, var(--hairline) 0 2.5px, transparent 3px),
-    radial-gradient(circle at 60% 25%, var(--hairline) 0 2.5px, transparent 3px),
-    radial-gradient(circle at 78% 70%, var(--hairline) 0 2.5px, transparent 3px),
-    radial-gradient(circle at 30% 78%, var(--hairline) 0 2.5px, transparent 3px),
-    linear-gradient(135deg, transparent 49.6%, var(--hairline) 49.7%, var(--hairline) 50.3%, transparent 50.4%),
-    linear-gradient( 70deg, transparent 49.7%, var(--hairline) 49.8%, var(--hairline) 50.2%, transparent 50.3%);
-  background-size: 240px 200px;
-  background-position: center;
-  background-repeat: no-repeat;
-  opacity: 0.5;
-}
-
-/* Live cursor caret — Figma style */
-.live-caret {
-  display: inline-block; width: 2px; height: 1.2em;
-  vertical-align: text-bottom;
-  background: currentColor;
-  position: relative;
-  animation: typing-blink 1100ms steps(2) infinite;
-}
-.live-caret::after {
-  content: attr(data-name);
-  position: absolute; top: -1.5em; left: -2px;
-  background: currentColor; color: var(--paper);
-  font-family: var(--mono); font-size: 10px; line-height: 1;
-  padding: 2px 5px; border-radius: 2px;
-  white-space: nowrap;
-}
-</style>
-<style>/* =========================================================================
-   Rajarshi Maiti — personal site
-   Editorial layer on top of the ProofTree design tokens (colors_and_type.css).
-   Single dense column, marginal mono labels, big Newsreader display.
-   No boxes, no shadows: hierarchy through type weight + scale only.
-   ========================================================================= */
-
-:root {
-  --scale: 1;                 /* tweakable reading-size multiplier */
-  --measure: 660px;           /* text column width */
-  --label-col: 132px;         /* marginal label column */
-  --gutter: 52px;             /* gap between label margin and text */
-
-  /* derived type sizes — all respect --scale */
-  --t-hero:    calc(clamp(2.45rem, 1.4rem + 4.3vw, 4.45rem) * var(--scale));
-  --t-section: calc(clamp(1.7rem, 1.35rem + 1.3vw, 2.15rem) * var(--scale));
-  --t-deck:    calc(clamp(1.18rem, 1.05rem + 0.6vw, 1.45rem) * var(--scale));
-  --t-read:    calc(1.1875rem * var(--scale));   /* 19px */
-  --t-small:   calc(0.96rem  * var(--scale));
+html[data-theme="dark"] {
+  --paper:        #221F19;
+  --paper-deep:   #2A261F;
+  --paper-press:  #332E25;
+  --ink:          #ECE7DA;
+  --ink-muted:    #A59C8A;
+  --ink-faint:    #6F6758;
+  --hairline:     #3A352B;
+  --accent:       #C7634A;
+  --accent-hov:   #DA8169;
+  --accent-tint:  #46291F;
+  --verified:     #82A87A;
 }
 
 * { box-sizing: border-box; }
-
 html, body { margin: 0; }
+
 body {
   background: var(--paper);
   color: var(--ink);
@@ -944,33 +116,71 @@ body {
   line-height: 1.62;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 200ms var(--ease), color 200ms var(--ease);
 }
 
-/* selection in current accent */
 ::selection { background: var(--accent-tint); color: var(--ink); }
 
-/* --------------------------------------------------------------------- */
-/*  Page frame                                                            */
-/* --------------------------------------------------------------------- */
-.page {
-  padding: clamp(40px, 7vw, 92px) clamp(22px, 7vw, 96px) clamp(72px, 12vw, 140px);
+a {
+  color: var(--accent);
+  text-decoration: none;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: color var(--dur) var(--ease);
 }
+a:hover { color: var(--accent-hov); text-decoration: underline; }
+
+p { margin: 0; max-width: var(--measure); }
+em { font-style: italic; }
+strong, b { font-weight: 600; color: var(--ink); }
+sub, sup { font-size: 0.68em; line-height: 0; }
+
+.muted { color: var(--ink-muted); }
+.faint { color: var(--ink-faint); }
+
+/* ------------------------------------------------------------------ */
+/*  Page frame                                                         */
+/* ------------------------------------------------------------------ */
+.page { padding: clamp(28px, 4.5vw, 52px) clamp(22px, 7vw, 96px) clamp(72px, 12vw, 140px); }
 .col {
   width: 100%;
   max-width: calc(var(--label-col) + var(--gutter) + var(--measure));
   margin: 0 auto;
 }
 
-/* The two-track grid: marginal label | text. Collapses on small screens. */
+/* top chrome: name + theme switch */
+.topbar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: var(--fs-chrome);
+  margin-bottom: clamp(48px, 8vw, 96px);
+}
+.topbar .id { color: var(--ink); letter-spacing: 0.02em; }
+.topbar .id .forall { color: var(--accent); margin-right: 8px; }
+.themer {
+  font-family: var(--mono);
+  font-size: var(--fs-chrome);
+  color: var(--ink-muted);
+  background: none;
+  border: 0;
+  padding: 2px 0;
+  cursor: pointer;
+  border-bottom: 1px solid transparent;
+}
+.themer:hover { color: var(--ink); border-bottom-color: var(--hairline); }
+
+/* two-track section grid */
 .block {
   display: grid;
   grid-template-columns: var(--label-col) minmax(0, 1fr);
   column-gap: var(--gutter);
   align-items: start;
 }
-.block + .block { margin-top: clamp(56px, 8vw, 104px); }
+.block + .block { margin-top: clamp(60px, 9vw, 112px); }
 
-/* marginal label — the journal's small caps */
 .mark {
   font-family: var(--mono);
   font-size: var(--fs-label);
@@ -979,7 +189,7 @@ body {
   letter-spacing: 0.1em;
   color: var(--ink-faint);
   line-height: 1.5;
-  padding-top: 0.55em;          /* optically aligns with first text line */
+  padding-top: 0.55em;
   position: sticky;
   top: 28px;
 }
@@ -996,18 +206,14 @@ body {
 }
 
 .body-track { min-width: 0; }
-.body-track > * + * { margin-top: var(--space-4); }
+.body-track > * + * { margin-top: 16px; }
 
-/* --------------------------------------------------------------------- */
-/*  Type                                                                  */
-/* --------------------------------------------------------------------- */
 .section-title {
   font-family: var(--serif);
   font-weight: 500;
   font-size: var(--t-section);
   line-height: 1.12;
   letter-spacing: -0.012em;
-  color: var(--ink);
   margin: 0;
 }
 .deck {
@@ -1018,46 +224,33 @@ body {
   line-height: 1.4;
   margin: 0;
 }
-p { margin: 0; max-width: var(--measure); }
-.lede { font-size: var(--t-deck); line-height: 1.5; }
-.muted { color: var(--ink-muted); }
-.faint { color: var(--ink-faint); }
-strong, .lead-in { font-weight: 600; color: var(--ink); }
-em { font-style: italic; }
+.note { font-size: var(--t-read); line-height: 1.66; }
+.note.big { font-size: 1.28rem; line-height: 1.55; }
 
-/* links — accent, underline on hover only */
-a {
-  color: var(--accent);
-  text-decoration: none;
-  text-underline-offset: 3px;
-  text-decoration-thickness: 1px;
-  transition: color var(--dur-fast) var(--ease);
+.h3 {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: var(--t-read);
+  margin: 28px 0 0;
 }
-a:hover { color: var(--accent-deep); text-decoration: underline; }
 
-/* hairline rule used very sparingly */
-.rule { border: 0; border-top: 1px solid var(--hairline); margin: 0; }
-
-/* mono inline (paths, stacks) */
-.mono { font-family: var(--mono); font-size: 0.82em; color: var(--ink-muted); }
-
-/* --------------------------------------------------------------------- */
-/*  Hero                                                                  */
-/* --------------------------------------------------------------------- */
+/* ------------------------------------------------------------------ */
+/*  Hero                                                               */
+/* ------------------------------------------------------------------ */
 .hero { margin-bottom: clamp(64px, 9vw, 116px); }
 
 .byline {
   display: flex;
   align-items: center;
   gap: 24px;
-  margin-bottom: clamp(34px, 5vw, 56px);
+  margin-bottom: clamp(30px, 5vw, 52px);
 }
 .portrait {
-  width: 132px;
-  height: 168px;
+  width: 116px;
+  height: 148px;
   object-fit: cover;
   object-position: 50% 16%;
-  border-radius: var(--radius);
+  border-radius: 6px;
   border: 1px solid var(--hairline);
   filter: saturate(0.82) contrast(1.02);
   flex-shrink: 0;
@@ -1068,24 +261,28 @@ a:hover { color: var(--accent-deep); text-decoration: underline; }
   font-size: var(--fs-chrome);
   font-weight: 500;
   letter-spacing: 0.02em;
-  color: var(--ink);
 }
 .byline-role {
   font-family: var(--mono);
   font-size: var(--fs-chrome);
   color: var(--ink-muted);
-  letter-spacing: 0.01em;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 252px;
+  column-gap: 56px;
+  align-items: center;
 }
 
 .hero-headline {
   font-family: var(--serif);
   font-weight: 500;
   font-size: var(--t-hero);
-  line-height: 1.04;
-  letter-spacing: -0.02em;
-  color: var(--ink);
+  line-height: 1.12;
+  letter-spacing: -0.016em;
   margin: 0;
-  max-width: 18ch;
+  max-width: 24ch;
   text-wrap: balance;
 }
 .hero-headline .turn { font-style: italic; }
@@ -1093,9 +290,8 @@ a:hover { color: var(--accent-deep); text-decoration: underline; }
 .hero-lede {
   font-size: var(--t-deck);
   line-height: 1.5;
-  color: var(--ink);
-  max-width: 36ch;
-  margin-top: clamp(22px, 3vw, 34px);
+  max-width: 40ch;
+  margin-top: clamp(20px, 3vw, 30px);
 }
 
 .actions {
@@ -1103,96 +299,181 @@ a:hover { color: var(--accent-deep); text-decoration: underline; }
   flex-wrap: wrap;
   align-items: center;
   gap: 10px 22px;
-  margin-top: clamp(28px, 4vw, 40px);
+  margin-top: clamp(26px, 4vw, 38px);
   font-family: var(--mono);
   font-size: var(--fs-chrome);
 }
-.actions a { color: var(--accent); white-space: nowrap; }
 .actions .sep { color: var(--ink-faint); }
 .actions .ghost { color: var(--ink-muted); }
-.actions .ghost:hover { color: var(--ink); text-decoration: underline; }
+.actions .ghost:hover { color: var(--ink); }
 
-/* --------------------------------------------------------------------- */
-/*  ProofTree wordmark + section nameplate                                */
-/* --------------------------------------------------------------------- */
-.nameplate { display: flex; flex-direction: column; gap: 10px; margin-bottom: 22px; }
+/* fig. 1 · attempt graph */
+.attempt-fig { margin: 0; }
+.attempt-fig svg { display: block; width: 100%; height: auto; }
+.figcap {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.06em;
+  color: var(--ink-faint);
+  margin-top: 10px;
+  line-height: 1.6;
+}
+.fig-edge { stroke: var(--ink-faint); stroke-width: 1; fill: none; opacity: 0.85; }
+.fig-edge.draw { stroke-dasharray: 460; stroke-dashoffset: 460; animation: figdraw 2.6s var(--ease) 0.4s forwards; }
+.fig-edge.dashed { stroke-dasharray: 3 5; opacity: 0.6; }
+.fig-node { stroke-width: 1; opacity: 0; animation: figin 0.5s var(--ease) forwards; }
+.fig-node.hollow { fill: var(--paper); stroke: var(--ink-muted); }
+.fig-node.inked  { fill: var(--ink); stroke: var(--ink); }
+.fig-node.green  { fill: var(--verified); stroke: var(--verified); }
+.fig-node.red    { fill: var(--accent); stroke: var(--accent); }
+.fig-node.ghost  { fill: var(--paper); stroke: var(--ink-faint); }
+.fig-ring {
+  fill: none; stroke: var(--accent); stroke-width: 1;
+  transform-box: fill-box; transform-origin: center;
+  animation: figpulse 5s var(--ease) 3.2s infinite;
+  opacity: 0;
+}
+.fig-tag { font-family: var(--mono); font-size: 9px; letter-spacing: 0.04em; fill: var(--ink-faint); }
+.fig-tag.ok { fill: var(--verified); }
+
+@keyframes figdraw { to { stroke-dashoffset: 0; } }
+@keyframes figin { to { opacity: 1; } }
+@keyframes figpulse {
+  0%   { opacity: 0.55; transform: scale(1); }
+  46%  { opacity: 0; transform: scale(2.4); }
+  100% { opacity: 0; transform: scale(2.4); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fig-edge.draw { stroke-dasharray: none; stroke-dashoffset: 0; animation: none; }
+  .fig-node { opacity: 1; animation: none; }
+  .fig-ring { animation: none; opacity: 0; }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Statement quote, pull line, code                                   */
+/* ------------------------------------------------------------------ */
+.statement {
+  margin: 8px 0 0;
+  padding: 14px 20px;
+  border-left: 2px solid var(--accent);
+  font-style: italic;
+  color: var(--ink);
+  max-width: var(--measure);
+}
+.statement .who {
+  display: block;
+  font-family: var(--mono);
+  font-style: normal;
+  font-size: var(--fs-label);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-faint);
+  margin-bottom: 6px;
+}
+
+.pull {
+  font-family: var(--serif);
+  font-size: var(--t-deck);
+  font-style: italic;
+  line-height: 1.45;
+  color: var(--ink);
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+  padding: 22px 0;
+  margin-top: 28px;
+  max-width: var(--measure);
+}
+
+pre.lean {
+  margin: 24px 0 0;
+  padding: 18px 20px;
+  background: var(--paper-deep);
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  overflow-x: auto;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--ink);
+  max-width: var(--measure);
+}
+pre.lean .c { color: var(--ink-muted); font-style: italic; }
+pre.lean .k { color: var(--accent); }
+.lean-cap {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.05em;
+  color: var(--ink-faint);
+  margin-top: 10px;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Wordmark, lists, rows                                              */
+/* ------------------------------------------------------------------ */
+.nameplate { display: flex; flex-direction: column; gap: 10px; margin-bottom: 6px; }
 .wm {
   font-family: var(--serif);
   font-weight: 500;
   font-size: var(--t-section);
   letter-spacing: -0.01em;
-  color: var(--ink);
 }
-.wm .all  { font-style: normal; }
+.wm .forall { color: var(--accent); }
 .wm .proof { font-style: italic; }
-.wm .tree { font-style: normal; }
 
-.note { font-size: var(--t-read); line-height: 1.66; }
-.note.big { font-size: calc(1.28rem * var(--scale)); line-height: 1.55; }
-
-/* the "what's under it" technical line + provenance note */
-.understack {
-  font-family: var(--mono);
-  font-size: var(--fs-chrome);
-  line-height: 1.85;
-  color: var(--ink-muted);
-  margin-top: var(--space-5);
-}
-.understack .k { color: var(--ink); }
-.understack .sep { color: var(--ink-faint); padding: 0 4px; }
-.understack .provenance {
-  display: block;
-  margin-top: 8px;
-  color: var(--ink-faint);
-}
-
-/* --------------------------------------------------------------------- */
-/*  Numbered work list                                                    */
-/* --------------------------------------------------------------------- */
-.worklist { list-style: none; margin: var(--space-2) 0 0; padding: 0; }
+.worklist { list-style: none; margin: 10px 0 0; padding: 0; max-width: var(--measure); }
 .worklist li {
   display: grid;
   grid-template-columns: 2.4em 1fr;
   column-gap: 16px;
   align-items: baseline;
-  padding: var(--space-4) 0;
+  padding: 15px 0;
   border-top: 1px solid var(--hairline);
 }
 .worklist li:last-child { border-bottom: 1px solid var(--hairline); }
-.worklist .idx {
-  font-family: var(--mono);
-  font-size: var(--fs-chrome);
-  color: var(--ink-faint);
-}
-.worklist .w-body { font-size: var(--t-read); line-height: 1.4; }
+.worklist .idx { font-family: var(--mono); font-size: var(--fs-chrome); color: var(--ink-faint); }
+.worklist .w-body { font-size: var(--t-read); line-height: 1.5; }
 .worklist .w-body b { font-weight: 600; }
 .worklist .w-body .det { color: var(--ink-muted); }
 
-/* --------------------------------------------------------------------- */
-/*  Credibility rows (Background)                                         */
-/* --------------------------------------------------------------------- */
-.rows { display: flex; flex-direction: column; }
-.rows .row {
-  padding: var(--space-3) 0;
-  border-top: 1px solid var(--hairline);
-  line-height: 1.42;
-}
+.rows { display: flex; flex-direction: column; max-width: var(--measure); }
+.rows .row { padding: 13px 0; border-top: 1px solid var(--hairline); line-height: 1.5; }
 .rows .row:first-child { border-top: 0; padding-top: 0; }
 .rows .row b { font-weight: 600; }
 .rows .row .det { color: var(--ink-muted); }
 
-/* --------------------------------------------------------------------- */
-/*  Recognition (dot-separated flowing list)                              */
-/* --------------------------------------------------------------------- */
-.reclist { line-height: 1.85; }
-.reclist .item { color: var(--ink); }
-.reclist .item.lead b { font-weight: 600; }
+.reclist { line-height: 1.9; max-width: var(--measure); }
 .reclist .det { color: var(--ink-muted); }
 .reclist .sep { color: var(--ink-faint); padding: 0 6px; }
 
-/* --------------------------------------------------------------------- */
-/*  Contact                                                               */
-/* --------------------------------------------------------------------- */
+.understack {
+  font-family: var(--mono);
+  font-size: var(--fs-chrome);
+  line-height: 1.9;
+  color: var(--ink-muted);
+  margin-top: 26px;
+  max-width: var(--measure);
+}
+.understack .sep { color: var(--ink-faint); padding: 0 5px; }
+
+.linkrow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  font-family: var(--mono);
+  font-size: var(--fs-chrome);
+  margin-top: 26px;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Contact, colophon                                                  */
+/* ------------------------------------------------------------------ */
+.nowline {
+  font-family: var(--mono);
+  font-size: var(--fs-chrome);
+  color: var(--ink-muted);
+  line-height: 1.8;
+}
+.nowline .k { color: var(--accent); }
 .contacts {
   display: flex;
   flex-wrap: wrap;
@@ -1200,10 +481,9 @@ a:hover { color: var(--accent-deep); text-decoration: underline; }
   font-family: var(--mono);
   font-size: var(--fs-chrome);
   align-items: center;
+  margin-top: 14px;
 }
-.contacts a { color: var(--accent); }
 .contacts .sep { color: var(--ink-faint); padding: 0 12px; }
-
 .colophon {
   margin-top: clamp(48px, 8vw, 96px);
   font-family: var(--mono);
@@ -1211,14 +491,12 @@ a:hover { color: var(--accent-deep); text-decoration: underline; }
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-faint);
+  line-height: 1.9;
 }
 
-/* --------------------------------------------------------------------- */
-/*  Scroll reveal — base state is VISIBLE. JS hides only below-the-fold    */
-/*  elements (.pending) and reveals them on scroll. So content is never    */
-/*  dependent on JS/observer to appear: no-JS, print, reduced-motion, and  */
-/*  everything above the fold all render immediately.                      */
-/* --------------------------------------------------------------------- */
+/* ------------------------------------------------------------------ */
+/*  Reveal: base state visible; JS hides below-fold, fades on scroll   */
+/* ------------------------------------------------------------------ */
 .reveal { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: no-preference) {
   .reveal.pending { opacity: 0; transform: translateY(12px); }
@@ -1229,187 +507,302 @@ a:hover { color: var(--accent-deep); text-decoration: underline; }
   }
 }
 
-/* --------------------------------------------------------------------- */
-/*  Mobile — single dense column, labels become eyebrows                  */
-/* --------------------------------------------------------------------- */
+/* ------------------------------------------------------------------ */
+/*  Small screens                                                      */
+/* ------------------------------------------------------------------ */
+@media (max-width: 860px) {
+  .hero-grid { grid-template-columns: 1fr; row-gap: 40px; }
+  .attempt-fig { max-width: 320px; }
+}
 @media (max-width: 720px) {
   .block { grid-template-columns: 1fr; row-gap: 14px; }
-  .mark {
-    position: static;
-    padding-top: 0;
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
-  }
+  .mark { position: static; padding-top: 0; display: flex; align-items: baseline; gap: 10px; }
   .mark .n { display: inline; }
-  .mark .big-glyph {
-    font-size: 1.6rem;
-    margin: 0;
-    display: inline;
-  }
+  .mark .big-glyph { font-size: 1.6rem; margin: 0; display: inline; }
   .worklist li { grid-template-columns: 2em 1fr; column-gap: 12px; }
   .hero-headline { max-width: 100%; }
+  .portrait { width: 96px; height: 124px; }
+}
+
+@media print {
+  .themer, .attempt-fig { display: none; }
+  .page { padding: 0; }
+  body { background: #fff; color: #000; }
 }
 </style>
-
-
 </head>
-<body data-motion="on">
+<body>
 
 <main class="page">
   <div class="col">
 
-    <!-- ===================== HERO ===================== -->
-    <header class="hero" data-screen-label="hero">
+    <!-- ===================== chrome ===================== -->
+    <div class="topbar reveal">
+      <span class="id"><span class="forall">&forall;</span>rajarshi maiti</span>
+      <button class="themer" id="themer" aria-label="switch color theme">dark</button>
+    </div>
+
+    <!-- ===================== hero ===================== -->
+    <header class="hero">
       <div class="byline reveal">
-        <img class="portrait" src="photo.jpg" alt="Rajarshi Maiti">
+        <img class="portrait" src="photo.jpg" alt="Rajarshi Maiti" width="116" height="148">
         <div class="byline-id">
           <span class="byline-name">Rajarshi Maiti</span>
-          <span class="byline-role">math at Bonn · infrastructure for verified reasoning</span>
+          <span class="byline-role">number theory at bonn &middot; co-founder, prooftree</span>
         </div>
       </div>
 
-      <h1 class="hero-headline reveal">Machines can now write and check a proof. <span class="turn">They still can’t explain it to you.</span></h1>
+      <div class="hero-grid">
+        <div>
+          <h1 class="hero-headline reveal">In December 2025 a machine resolved an Erd&#337;s problem in 3,658 lines of Lean. <span class="turn">An hour later a human did it in four sentences.</span></h1>
+          <p class="hero-lede reveal">I work in the gap between those two proofs.</p>
+          <nav class="actions reveal" aria-label="primary">
+            <a href="cv.pdf">Read CV &rarr;</a>
+            <span class="sep">&middot;</span>
+            <a class="ghost" href="#artifact">Erd&#337;s #1026, by hand &darr;</a>
+            <span class="sep">&middot;</span>
+            <a class="ghost" href="https://prooftree.ai">prooftree.ai &rarr;</a>
+          </nav>
+        </div>
 
-      <p class="hero-lede reveal">I’m a mathematician building the infrastructure for the native human&nbsp;×&nbsp;AI collaboration.</p>
-
-      <nav class="actions reveal" aria-label="primary">
-        <a href="cv.pdf">Read CV →</a>
-        <span class="sep">·</span>
-        <a class="ghost" href="#building">What I’m building ↓</a>
-      </nav>
+        <figure class="attempt-fig reveal" aria-hidden="true">
+          <svg viewBox="0 0 300 184" xmlns="http://www.w3.org/2000/svg">
+            <path class="fig-edge draw" d="M20 96 L88 58 L146 102 L208 54 L278 88"/>
+            <path class="fig-edge dashed" d="M88 58 L120 150"/>
+            <circle class="fig-node inked"  cx="20"  cy="96"  r="4.5" style="animation-delay:.45s"/>
+            <circle class="fig-node hollow" cx="88"  cy="58"  r="4.5" style="animation-delay:.9s"/>
+            <circle class="fig-node green"  cx="146" cy="102" r="4.5" style="animation-delay:1.5s"/>
+            <circle class="fig-node ghost"  cx="120" cy="150" r="4"   style="animation-delay:1.7s"/>
+            <circle class="fig-node red"    cx="208" cy="54"  r="4.5" style="animation-delay:2.1s"/>
+            <circle class="fig-ring"        cx="208" cy="54"  r="4.5"/>
+            <circle class="fig-node inked"  cx="278" cy="88"  r="5.5" style="animation-delay:2.7s"/>
+            <text class="fig-tag ok" x="146" y="124" text-anchor="middle">lean &#10003;</text>
+            <text class="fig-tag" x="208" y="38" text-anchor="middle">v1:4f9a&#8230;</text>
+            <text class="fig-tag" x="134" y="154">ends</text>
+            <text class="fig-tag" x="278" y="110" text-anchor="middle">qed</text>
+          </svg>
+          <figcaption class="figcap">fig. 1 &middot; an attempt graph &middot; shared proof states, forks kept visible</figcaption>
+        </figure>
+      </div>
     </header>
 
-    <!-- ===================== §01 — PROOFTREE ===================== -->
-    <section class="block" id="building" data-screen-label="what i'm building">
+    <!-- ===================== §01 the artifact ===================== -->
+    <section class="block" id="artifact">
       <div class="mark reveal">
-        <span class="big-glyph">∀</span>
-        <span class="n">§ 01</span>
-        what i’m building
+        <span class="big-glyph">&#8718;</span>
+        <span class="n">&sect; 01</span>
+        the artifact
+      </div>
+      <div class="body-track">
+        <h2 class="section-title reveal">Erd&#337;s #1026, by hand.</h2>
+        <p class="deck reveal">What the four sentences were hiding.</p>
+
+        <p class="note reveal">The problem both solvers settled is Cambie&rsquo;s conjecture, open since 1995:</p>
+
+        <blockquote class="statement reveal">
+          <span class="who">erd&#337;s problem #1026</span>
+          If x<sub>1</sub>, &hellip;, x<sub>k&sup2;</sub> are distinct positive reals with x<sub>1</sub> + &#8943; + x<sub>k&sup2;</sub> = 1, some monotone subsequence has sum at least 1/k.
+        </blockquote>
+
+        <p class="note reveal">The AI prover Aristotle settled it first, autonomously, in 3,658 generated lines of Lean. Koishi Chan, a human reading the same problem list, posted four sentences an hour later. Most people read the episode as a story about machines. What interested me was what a precise reading of both proofs would surface.</p>
+
+        <p class="note reveal">So I formalized it the way a person would write it: about 330 lines of structured Lean&nbsp;4 establishing the same theorem. Zero sorries, CI on every push, kernel-checked axiom audit. The Lean is the receipt. The deliverable is the reading around it:</p>
+
+        <ol class="worklist reveal">
+          <li>
+            <span class="idx">01</span>
+            <span class="w-body"><b>A referee&rsquo;s report on both informal proofs.</b> <span class="det">Every gap, hidden assumption and unstated lemma, flagged and priced. The four-sentence proof conceals seven, one of them an entire missing Mathlib theorem hiding behind the single word &ldquo;with&rdquo;.</span></span>
+          </li>
+          <li>
+            <span class="idx">02</span>
+            <span class="w-body"><b>The proof, architected for reading.</b> <span class="det">The order-carrying map is decoupled from the weights, so dualization is free and the theorem comes out strictly stronger than the problem it came from: classical Erd&#337;s&ndash;Szekeres falls out as the unit-weight corollary.</span></span>
+          </li>
+          <li>
+            <span class="idx">03</span>
+            <span class="w-body"><b>A failure atlas for the automation.</b> <span class="det">Root causes wherever tactics or the library fell short, hard subgoals extracted into a standalone benchmark set for provers, and three concrete Mathlib gaps surfaced.</span></span>
+          </li>
+        </ol>
+
+        <p class="pull reveal">The two proofs are morally the same argument, yet one costs three to four times the other to formalize. In each, the step the informal text spends the fewest words on is the most expensive one.</p>
+
+<pre class="lean reveal"><code><span class="c">/-- Weighted Erd&#337;s&ndash;Szekeres, &#8467;&sup2; form. -/</span>
+<span class="k">theorem</span> sum_sq_le_sq_maxMonoSum
+    (v : Fin n &rarr; &beta;) (w : Fin n &rarr; &#8477;)
+    (hv : Function.Injective v) (hw : &forall; i, 0 &lt; w i) :
+    &sum; i, w i ^ 2 &le; maxMonoSum v w ^ 2</code></pre>
+        <p class="lean-cap reveal">with v = w = x this is erd&#337;s #1026 &middot; with w &equiv; 1 it is classical erd&#337;s&ndash;szekeres</p>
+
+        <nav class="linkrow reveal" aria-label="artifact links">
+          <a href="https://github.com/rmaiti01/weighted-erdos-szekeres">repository &rarr;</a>
+          <a href="https://github.com/rmaiti01/weighted-erdos-szekeres/blob/main/INFORMAL.md">the referee&rsquo;s report &rarr;</a>
+          <a href="https://github.com/rmaiti01/weighted-erdos-szekeres/blob/main/FAILURE_ATLAS.md">the failure atlas &rarr;</a>
+          <a href="https://terrytao.wordpress.com/2025/12/08/the-story-of-erdos-problem-126/">Tao&rsquo;s account &rarr;</a>
+        </nav>
+      </div>
+    </section>
+
+    <!-- ===================== §02 prooftree ===================== -->
+    <section class="block" id="prooftree">
+      <div class="mark reveal">
+        <span class="big-glyph">&forall;</span>
+        <span class="n">&sect; 02</span>
+        prooftree
       </div>
       <div class="body-track">
         <div class="nameplate reveal">
-          <span class="wm"><span class="all">∀&nbsp;</span><span class="proof">Proof</span><span class="tree">Tree</span></span>
-          <span class="deck">AI-native social workspace for mathematics research.</span>
+          <span class="wm"><span class="forall">&forall;&nbsp;</span><span class="proof">Proof</span>Tree</span>
+          <span class="deck">The place where mathematics gets done.</span>
         </div>
 
-        <p class="note big reveal">Infrastructure for verified human-in-the-loop reasoning.</p>
+        <p class="note big reveal">A proof lives in five places before it is finished: the argument in a chat thread, the question on a forum, the Lean in a repository, the write-up in Overleaf, and the actual reasons in somebody&rsquo;s head. The result survives. The reasoning evaporates.</p>
 
-        <p class="note reveal">Content-addressed by its proof state. Process traces captured at all levels. Lean formalisation translation built at the native layer.</p>
+        <p class="note reveal">ProofTree holds the statement, the drafts, the Lean and the discussion in one persistent object, with every step checked by the kernel, so the reasoning compounds instead of evaporating. Co-founded with Carl Jontza and Yola Zhou; Yang-Hui He advises. I work on the proof-state layer:</p>
+
+        <ol class="worklist reveal">
+          <li>
+            <span class="idx">01</span>
+            <span class="w-body"><b>Content-addressed proof states.</b> <span class="det">Tier, verified and source kept as three independent dimensions of a state instead of one collapsed hash.</span></span>
+          </li>
+          <li>
+            <span class="idx">02</span>
+            <span class="w-body"><b>A frozen syntactic canonicaliser.</b> <span class="det">&alpha;-renaming, hypothesis and multi-goal sorting, v1:&lt;sha256&gt; addressing. Definitional equivalence is a verified edge between states, never a silent merge.</span></span>
+          </li>
+          <li>
+            <span class="idx">03</span>
+            <span class="w-body"><b>A drift checker, in progress.</b> <span class="det">Whether AI-generated Lean is faithful to its informal source, not merely compilable.</span></span>
+          </li>
+          <li>
+            <span class="idx">04</span>
+            <span class="w-body"><b>LeanDojo Benchmark 4 instrumentation.</b> <span class="det">The raw surface form of proof states: exact codepoints, notation, provenance.</span></span>
+          </li>
+        </ol>
+
+        <p class="note reveal">Some arguments are larger than any one head. The Langlands program is a conversation sixty years old, distributed across thousands of people who mostly never met, coordinated by journals and seminars: instruments older than the telephone. When the medium that holds an argument changes, what a field can attempt changes with it. That is the bet.</p>
+
+        <h3 class="h3 reveal">The formalisation programme</h3>
+        <p class="note reveal">I also direct ProofTree&rsquo;s Lean formalisation programme: ten weeks taking graduate mathematicians from zero Lean to completed Mathlib PR cycles, with curriculum input from Michael Rothgang, Mario Carneiro and Ya&euml;l Dillies. Shortlisted for Renaissance Philanthropy&rsquo;s AI for Math fund, backed by XTX Markets.</p>
 
         <p class="understack reveal">
-          <span class="k">Next.js</span><span class="sep">·</span><span class="k">Supabase</span><span class="sep">·</span><span class="k">Lean verification backend</span><span class="sep">·</span>agentic tooling (<span class="k">Claude Code</span>, <span class="k">Cursor</span>) native throughout.
-          <span class="provenance">app code open · trace dataset proprietary</span>
+          <a href="https://prooftree.ai">prooftree.ai</a><span class="sep">&middot;</span>Y Combinator AI Startup School 2026<span class="sep">&middot;</span>Microsoft for Startups
         </p>
       </div>
     </section>
 
-    <!-- ===================== §02 — SELECTED WORK ===================== -->
-    <section class="block" data-screen-label="selected technical work">
+    <!-- ===================== §03 mathematics ===================== -->
+    <section class="block" id="mathematics">
       <div class="mark reveal">
-        <span class="n">§ 02</span>
-        selected<br>technical work
-      </div>
-      <div class="body-track">
-        <ol class="worklist reveal">
-          <li>
-            <span class="idx">01</span>
-            <span class="w-body"><b>Proof-state identity layer.</b></span>
-          </li>
-          <li>
-            <span class="idx">02</span>
-            <span class="w-body"><b>Syntactic-vs-definitional equivalence.</b> <span class="det">Frozen canonicaliser + verified edges.</span></span>
-          </li>
-          <li>
-            <span class="idx">03</span>
-            <span class="w-body"><b>Drift checker.</b> <span class="det">Semantic faithfulness of AI-generated Lean.</span></span>
-          </li>
-          <li>
-            <span class="idx">04</span>
-            <span class="w-body"><b>LeanDojo Benchmark 4.</b> <span class="det">Surface-form instrumentation.</span></span>
-          </li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- ===================== §03 — RESEARCH ===================== -->
-    <section class="block" data-screen-label="research">
-      <div class="mark reveal">
-        <span class="n">§ 03</span>
-        research
+        <span class="big-glyph">&zeta;</span>
+        <span class="n">&sect; 03</span>
+        mathematics
       </div>
       <div class="body-track">
         <h2 class="section-title reveal">Number theory, leaning analytic.</h2>
-        <p class="note reveal">Gaps between sums of two squares. Oxford research summers under Dr.&nbsp;Thomas Bloom (2022, creator and maintainer of erdosproblems.com) and Dr.&nbsp;Tiago Jardim&nbsp;da&nbsp;Fonseca (2021), and the smooth circle method (Heath-Brown) seminar at Bonn.</p>
-        <p class="note muted reveal">Early-stage: exploring ML methods for optimisation-type problems in the circle method, with Prof.&nbsp;Yang-Hui&nbsp;He (LIMS). Nascent — a direction I’m opening, not a finished collaboration.</p>
+        <p class="note reveal">Gaps between sums of two squares with Thomas Bloom at Oxford, 2022. Special values of zeta and L-functions with Tiago Jardim da Fonseca, 2021. At Bonn: the smooth circle method after Heath-Brown, presented as a graduate seminar, and the Logic of Proof Assistants with Floris van Doorn, where the type theory underneath Lean stopped being folklore and became coursework.</p>
+        <p class="note muted reveal">Open right now, with Yang-Hui He: whether the optimisation problems inside the circle method are amenable to machine learning. Early, and labeled as such.</p>
       </div>
     </section>
 
-    <!-- ===================== §04 — BACKGROUND ===================== -->
-    <section class="block" data-screen-label="background">
+    <!-- ===================== §04 how i got here ===================== -->
+    <section class="block" id="path">
       <div class="mark reveal">
-        <span class="n">§ 04</span>
+        <span class="big-glyph">&there4;</span>
+        <span class="n">&sect; 04</span>
+        how i got here
+      </div>
+      <div class="body-track">
+        <p class="note reveal">I was certain about mathematics long before I was certain about anything else. The subject was never in question; the question was which mathematical life to live, and I was bad at choosing. Belfast for the degree, Bonn for number theory, and a number of half-started futures in between.</p>
+        <p class="note reveal">AI arrived as a toy, not a plan. I used it for fun, then to do mathematics faster, then to map exactly where it fails. Meanwhile the people I knew from the mathematical world, the ones who run the seminars and keep the problem lists, began asking the same question from the other side: what happens to mathematics when proofs get cheap. ProofTree is where the two lines crossed.</p>
+      </div>
+    </section>
+
+    <!-- ===================== §05 background ===================== -->
+    <section class="block" id="background">
+      <div class="mark reveal">
+        <span class="n">&sect; 05</span>
         background
       </div>
       <div class="body-track">
         <div class="rows reveal">
-          <div class="row"><b>MSc Mathematics, Bonn.</b> <span class="det">Including the Logic of Proof Assistants course with Prof.&nbsp;Floris&nbsp;van&nbsp;Doorn.</span></div>
-          <div class="row"><b>BSc Mathematics, Queen’s University Belfast.</b></div>
-          <div class="row"><b>Mercor · Alignerr · Jane Street.</b> <span class="det">Math AI trainer and consultant for top AI firms; Jane Street QTC, 2024.</span></div>
-          <div class="row"><b>BMUCO.</b> <span class="det">Co-organised the Abel Symposium 2025; 20k+ students reached.</span></div>
+          <div class="row"><b>MSc Mathematics, University of Bonn.</b> <span class="det">Number theory, 2025&ndash;2027.</span></div>
+          <div class="row"><b>BSc Mathematics, Queen&rsquo;s University Belfast.</b> <span class="det">Pure mathematics.</span></div>
+          <div class="row"><b>Mathematical reasoning evaluation for frontier AI labs.</b> <span class="det">Via Mercor and Alignerr: benchmark curation, fine-grained proof annotation, multi-turn system review.</span></div>
+          <div class="row"><b>Jane Street, Quantitative Trading Camp.</b> <span class="det">London, 2024.</span></div>
+          <div class="row"><b>Director, BMUCO.</b> <span class="det">Science nonprofit, since 2019. Co-organised the Abel Symposium 2025 with the Norwegian Academy of Science and Letters and the Hausdorff Center for Mathematics; public interviews with Fields Medalists reaching 20,000+ students.</span></div>
         </div>
       </div>
     </section>
 
-    <!-- ===================== §05 — RECOGNITION ===================== -->
-    <section class="block" data-screen-label="recognition">
+    <!-- ===================== §06 recognition ===================== -->
+    <section class="block" id="recognition">
       <div class="mark reveal">
-        <span class="n">§ 05</span>
+        <span class="n">&sect; 06</span>
         recognition
       </div>
       <div class="body-track">
         <p class="reclist reveal">
-          <span class="item lead"><b>YC AI Startup School, Bangalore</b> <span class="det">($25k credits)</span></span><span class="sep">·</span><span class="item">Lean–LMFDB Bridge Workshop <span class="det">(UEA Norwich, fully funded)</span></span><span class="sep">·</span><span class="item">AI×Mathematics Conference <span class="det">(ICMS Edinburgh, fully funded)</span></span><span class="sep">·</span><span class="item">DAAD STIBET Scholarship</span><span class="sep">·</span><span class="item">Microsoft for Startups</span>
+          <span class="item"><b>Lean&ndash;LMFDB Bridge Workshop</b>, Norwich <span class="det">(invited, fully funded &middot; Jun&ndash;Jul 2026)</span></span><span class="sep">&middot;</span>
+          <span class="item">AI &times; Mathematics Conference, ICMS Edinburgh <span class="det">(fully sponsored)</span></span><span class="sep">&middot;</span>
+          <span class="item">Y Combinator AI Startup School <span class="det">($25k credits)</span></span><span class="sep">&middot;</span>
+          <span class="item">Microsoft for Startups</span><span class="sep">&middot;</span>
+          <span class="item">DAAD STIBET Scholarship</span><span class="sep">&middot;</span>
+          <span class="item">Renaissance Philanthropy AI for Math shortlist</span>
         </p>
       </div>
     </section>
 
-    <!-- ===================== §06 — CONTACT ===================== -->
-    <section class="block" data-screen-label="contact">
+    <!-- ===================== §07 contact ===================== -->
+    <section class="block" id="contact">
       <div class="mark reveal">
-        <span class="n">§ 06</span>
+        <span class="n">&sect; 07</span>
         contact
       </div>
       <div class="body-track">
+        <p class="nowline reveal"><span class="k">now</span> &middot; bonn. this summer: lean&ndash;lmfdb bridge workshop, norwich.</p>
         <p class="contacts reveal">
           <a href="mailto:rmaiti7@gmail.com">rmaiti7@gmail.com</a>
-          <span class="sep">·</span>
-          <a href="https://github.com/rmaiti01">github.com/rmaiti01</a>
-          <span class="sep">·</span>
-          <a href="https://linkedin.com/in/1729">linkedin.com/in/1729</a>
-          <span class="sep">·</span>
-          <a href="https://x.com/formaliser_dude">x.com/formaliser_dude</a>
+          <span class="sep">&middot;</span>
+          <a href="https://github.com/rmaiti01">github</a>
+          <span class="sep">&middot;</span>
+          <a href="https://x.com/formaliser_dude">x</a>
+          <span class="sep">&middot;</span>
+          <a href="https://www.linkedin.com/in/1729">linkedin</a>
         </p>
-        <p class="colophon reveal">Rajarshi Maiti · Bonn · 2026</p>
+        <p class="colophon reveal">Set in Newsreader, Inter Tight &amp; JetBrains Mono &middot; static HTML, no framework, no tracking &middot; Bonn &middot; MMXXVI</p>
       </div>
     </section>
 
   </div>
 </main>
 
-<!-- Scroll reveal — plain JS, independent of Babel/React. Base state is
-     visible; we only hide below-the-fold elements after layout settles, then
-     fade them in on scroll. Above-the-fold content is always immediately
-     visible, and a fallback guarantees nothing stays hidden. -->
 <script>
+/* theme switch */
+(function () {
+  var btn = document.getElementById('themer');
+  var meta = document.getElementById('metaTheme');
+  function paint() {
+    var dark = document.documentElement.dataset.theme === 'dark';
+    btn.textContent = dark ? 'light' : 'dark';
+    if (meta) meta.setAttribute('content', dark ? '#221F19' : '#F7F6F1');
+  }
+  btn.addEventListener('click', function () {
+    var next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = next;
+    try { localStorage.setItem('theme', next); } catch (e) {}
+    paint();
+  });
+  paint();
+})();
+
+/* scroll reveal: base state visible; only below-the-fold elements are
+   hidden after layout settles, then faded in. A timeout guarantees
+   nothing stays hidden. */
 (function () {
   var els = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
-  if (!els.length) { return; }
-  var motionOn = function () { return document.body.dataset.motion !== 'off'; };
+  if (!els.length) return;
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function arm() {
-    if (reduce || !motionOn() || !('IntersectionObserver' in window)) { return; }
+    if (reduce || !('IntersectionObserver' in window)) return;
     var vh = window.innerHeight || 800;
     var pending = els.filter(function (el) {
       return el.getBoundingClientRect().top > vh * 0.86;
@@ -1423,16 +816,12 @@ a:hover { color: var(--accent-deep); text-decoration: underline; }
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
     pending.forEach(function (el) { io.observe(el); });
 
-    // safety net: reveal anything still pending after a short while
-    setTimeout(function () { pending.forEach(function (el) { el.classList.add('in'); }); }, 1600);
+    setTimeout(function () { pending.forEach(function (el) { el.classList.add('in'); }); }, 1800);
   }
 
-  // measure after two frames so layout + fonts are settled
   requestAnimationFrame(function () { requestAnimationFrame(arm); });
-
-  // expose so the Tweaks motion toggle can disable the effect live
-  window.__revealReset = function () { els.forEach(function (el) { el.classList.remove('pending'); el.classList.add('in'); }); };
 })();
 </script>
 
-</body></html>
+</body>
+</html>
